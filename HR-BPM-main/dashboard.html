@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hospital HR · Role Dashboard</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/seodashlogo.png" />
+  <style>
+    /* RESET & GLOBAL - FIXED SCROLLING ISSUE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* THIS FIXES THE SCROLLING ERROR */
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      background-color: #f4f6fb;
+    }
+
+    /* DASHBOARD WRAPPER - FIXED LAYOUT */
+    .dashboard-wrapper {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden; /* Prevents double scrollbars */
+    }
+
+    /* ------ SIDEBAR – FIXED, NO SCROLL ISSUES ------ */
+    /* ------ SIDEBAR CONTAINER ------ */
+.hr-sidebar {
+  width: 280px;
+  height: 100vh;
+  background: white; /* Dark Navy from your code */
+  color: black;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: relative;
+  transition: .2s ease-in;
+  z-index: 11;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ------ HEADER & LOGO ------ */
+.sidebar-header {
+  padding: 24px 20px 16px;
+  min-height: 70px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.hospital-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.hospital-badge span {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: white;
+}
+
+/* ------ NAVIGATION AREA ------ */
+.sidebar-nav {
+  flex: 1;             /* This tells the nav to take up all middle space */
+  padding: 20px 16px;
+  overflow-y: auto;    /* This enables the scroll */
+  overflow-x: hidden;
+  min-height: 0;
+  /* Hide scrollbar for Internet Explorer, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+/* Hide scrollbar for a cleaner look while allowing scroll */
+.sidebar-nav::-webkit-scrollbar {
+  width: 6px;
+  display: block;
+  display: none;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+      background: #f1f1f1; /* Light gray track */
+      border-radius: 10px;
+    }
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: #5d87ff; /* The SEODash blue color */
+  border-radius: 10px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+      background: #4570e6;
+    }
+
+/* Category Headers (SEODash Style) */
+.menu-category, .nav-small-cap {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: black;
+  margin: 16px 0 8px 12px;
+  font-weight: 700;
+  list-style: none;
+}
+
+/* ------ SIDEBAR LINKS (The "Blue Pill" Logic) ------ */
+.menu-item, .sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  margin-bottom: 4px;
+  border-radius: 50px; /* Force the pill shape from SEODash */
+  color: rgb(88, 87, 87);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  line-height: 25px;
+}
+
+/* Standard Hover */
+.menu-item:hover, .sidebar-link:hover {
+  background-color: rgba(93, 135, 255, 0.15); /* Soft primary tint */
+  color: #5d87ff; /* Highlight color */
+}
+
+/* THE ACTIVE STATE (The Blue Pill) */
+.menu-item.active, .sidebar-link.active,
+.sidebar-item.selected > .sidebar-link {
+  background-color: #5d87ff !important; /* SEODash Primary Blue */
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon Alignment within links */
+.menu-item i, .sidebar-link span:first-child {
+  width: 22px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+/* Targets the icon container in the sidebar */
+.sidebar-link span:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  margin-right: 12px;
+  
+  /* The "Gray Out" Logic */
+  filter: grayscale(100%); 
+  opacity: 0.6; /* Makes them "light" gray */
+  transition: all 0.3s ease;
+}
+
+/* When the item is active (Blue Pill), make the icon white */
+.sidebar-link.active span:first-child {
+  filter: grayscale(0%) brightness(200%); /* Makes it white/bright */
+  opacity: 1;
+}
+
+/* Optional: Slight highlight when hovering */
+.sidebar-link:hover span:first-child {
+  opacity: 1;
+  filter: grayscale(0%); /* Shows original color slightly on hover */
+}
+
+/* Ensures the active "Blue Pill" highlight looks correct */
+.sidebar-link.active {
+  background-color: #5d87ff !important;
+  color: white !important;
+}
+
+/* Sub-menu Container */
+.sidebar-submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0; /* Hidden by default */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: rgba(0, 0, 0, 0.02); /* Very subtle contrast */
+  border-radius: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* 2. Ensure the list items themselves don't trigger bullets */
+.sidebar-item {
+  list-style: none; /* Secondary protection against bullets */
+  padding: 0;
+  margin: 0;
+}
+
+/* Show submenu when parent is open */
+.sidebar-item.open .sidebar-submenu {
+  max-height: 1000px; /* Large enough to fit the lists */
+  padding-bottom: 8px 0;
+  margin-bottom: 10px;
+}
+
+/* Sub-menu Links */
+.submenu-link {
+  display: flex;
+  align-items: center;
+  padding: 10px 18px 10px 45px; /* Aligns text under the parent text */
+  font-size: 13.5px;
+  color: #5b6f7e;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.2s ease;
+  margin: 2px 8px;
+}
+
+.submenu-link:hover {
+  color: #5d87ff;
+  background: rgba(93, 135, 255, 0.08);
+}
+
+/* Active state for sub-menu items */
+.submenu-link.active {
+    background-color: #5d87ff !important;
+    color: white !important;
+}
+
+/* Chevron indicator */
+.chevron {
+  margin-left: auto;
+  font-size: 0.65rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.sidebar-item.open .chevron {
+  transform: rotate(90deg);
+}
+
+/* ------ SIDEBAR FOOTER ------ */
+.sidebar-footer {
+  padding: 20px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+  
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  /* Updated to a clearer red text */
+  color: #ff4d4d; 
+  font-weight: 700;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  /* Subtle red border */
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  /* Very light red tint for background */
+  background: rgba(255, 77, 77, 0.08);
+  width: 100%;
+}
+
+.logout-btn:hover {
+  /* Solid Red background on hover */
+  background: #ff4d4d;
+  /* White text on hover for high contrast */
+  color: #ffffff;
+  border-color: #ff4d4d;
+  transform: translateY(-2px);
+  /* Added shadow to give it a "pop" effect on hover */
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+}
+
+/* Optional: If you use an icon inside, this ensures the icon changes color too */
+.logout-btn:hover i {
+  color: #ffffff;
+}
+
+    /* ------ MAIN PANEL – CORRECT SCROLLING ------ */
+    .main-panel {
+      flex: 1;
+      height: 100vh;
+      background-color: #f4f6fb;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden; /* Critical - prevents double scroll */
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 28px 32px;
+      overflow-y: auto; /* ONLY main content scrolls - FIXES THE ISSUE */
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+
+    .welcome-area h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: #0b2a45;
+      margin: 0 0 6px;
+    }
+
+    .badge-role {
+      background: white;
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #1e3a5f;
+      border: 1px solid #dde7f0;
+      display: inline-block;
+    }
+
+    .employee-badge {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      background: #cbdde8;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e3a5f;
+      font-weight: 700;
+    }
+
+    /* CARDS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px 24px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      border: 1px solid #edf2f7;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .module-card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      border: 1px solid #edf2f7;
+      transition: all 0.2s;
+    }
+    
+    .module-card:hover {
+      border-color: #bdd3e3;
+      box-shadow: 0 8px 18px rgba(30,58,95,0.06);
+    }
+
+    .card-icon {
+      background: #eef6fc;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      margin-bottom: 16px;
+    }
+
+    .module-title {
+      font-weight: 700;
+      color: #0b2a45;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .module-desc {
+      color: #5b6f7e;
+      font-size: 0.85rem;
+    }
+
+    .footer-meta {
+      border-top: 1px solid #e2eaf0;
+      margin-top: 40px;
+      padding-top: 20px;
+      color: #6b8496;
+      font-size: 0.8rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Login prompt */
+    .login-prompt {
+      background: white;
+      padding: 40px;
+      border-radius: 24px;
+      text-align: center;
+      max-width: 500px;
+      margin: 40px auto;
+    }
+    
+    .btn {
+      background-color: #1e3a5f;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #2c4e76;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-wrapper">
+    <!-- SIDEBAR -->
+    <div class="hr-sidebar" id="hrSidebar">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <a href="#" class="text-nowrap logo-img">
+            <img src="C:\Users\John Emmanuel\HR_DEPT\SEODash-1.0.0\src\assets\images\logos\logo-light.svg" alt="Seodash" />
+          </a>
+        </div>
+        <div class="role-tag" id="sidebarRoleTag">
+          <i>🔹</i> <span id="roleNameSpan">Loading...</span>
+        </div>
+      </div>
+      <div class="sidebar-nav">
+      <ul class="sidebar-menu" id="sidebarMenuList">
+        <!-- Dynamic menu injected via JS -->
+      </ul>
+      </div>
+      <!-- SIDEBAR FOOTER WITH LOGOUT BUTTON -->
+      <div class="sidebar-footer">
+        <div class="logout-btn" id="logoutButton">
+          <i>🚪</i> 
+          <span>Logout</span>
+          <span style="margin-left: auto; font-size: 0.75rem; opacity: 0.7;" id="logoutRoleHint"></span>
+        </div>
+      </div>
+    </div>
+  
+
+    <!-- MAIN PANEL -->
+    <div class="main-panel">
+      <div class="main-content" id="mainContent"> <!-- THIS SCROLLS, not the whole page -->
+        <div class="top-bar">
+          <div class="welcome-area">
+            <h1 id="dashboardTitle">Dashboard</h1>
+            <div class="badge-role" id="roleSubtitle"></div>
+          </div>
+          <div class="employee-badge">
+            <span id="employeeIdDisplay" style="font-weight: 500; color:#1f4a6e;">👤 </span>
+            <div class="avatar" id="userAvatar">HR</div>
+          </div>
+        </div>
+
+        <!-- ROLE CONTENT CONTAINER -->
+        <div id="roleContentContainer">
+          <!-- HR1 CONTENT -->
+          <div id="contentHR1" class="role-content hidden">
+            <div class="stats-grid">
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">📋 Open positions</span> <h2 style="font-weight: 700; margin-top: 12px;">14</h2><span style="color: #457b9d;">+3 this week</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">👥 In review</span> <h2 style="font-weight: 700; margin-top: 12px;">38</h2><span style="color: #457b9d;">applicants</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">⏳ Onboarding</span> <h2 style="font-weight: 700; margin-top: 12px;">7</h2><span style="color: #457b9d;">scheduled</span></div>
+            </div>
+            <h3 style="font-weight: 600; color:#0b2a45; margin-bottom: 16px;">🔹 HR1 – Talent Acquisition</h3>
+            <div class="module-grid">
+              <div class="module-card"><div class="card-icon">📌</div><div class="module-title">Applicant Management</div><div class="module-desc">Track, filter, and rank candidates</div></div>
+              <div class="module-card"><div class="card-icon">🔍</div><div class="module-title">Recruitment Management</div><div class="module-desc">Job posts, sourcing, interviews</div></div>
+              <div class="module-card"><div class="card-icon">🚀</div><div class="module-title">New Hire Onboarding</div><div class="module-desc">Paperwork, orientation, buddies</div></div>
+              <div class="module-card"><div class="card-icon">🏅</div><div class="module-title">Social Recognition</div><div class="module-desc">Peer-to-peer kudos</div></div>
+            </div>
+          </div>
+          
+          <!-- HR2 CONTENT -->
+          <div id="contentHR2" class="role-content hidden">
+            <div class="stats-grid">
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">📚 Training programs</span><h2 style="font-weight: 700; margin-top: 12px;">23</h2><span style="color: #457b9d;">active</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">🎯 Succession candidates</span><h2 style="font-weight: 700; margin-top: 12px;">16</h2><span style="color: #457b9d;">pipeline</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">🧑‍🏫 ESS</span><h2 style="font-weight: 700; margin-top: 12px;">89%</h2><span style="color: #457b9d;">engagement</span></div>
+            </div>
+            <h3 style="font-weight: 600; color:#0b2a45;">🧠 HR2 – Talent Development</h3>
+            <div class="module-grid">
+               <div class="module-card"><div class="card-icon">📊</div><div class="module-title">Competency Management</div><div class="module-desc">Skill matrices</div></div>
+              <div class="module-card"><div class="card-icon">🎓</div><div class="module-title">Training Management</div><div class="module-desc">ILT, virtual, compliance</div></div>
+              <div class="module-card"><div class="card-icon">📖</div><div class="module-title">Learning Management</div><div class="module-desc">Advanced track</div></div>
+              <div class="module-card"><div class="card-icon">🧭</div><div class="module-title">Succession Planning</div><div class="module-desc">9-box, readiness</div></div>
+              <div class="module-card"><div class="card-icon">👤</div><div class="module-title">Employee Self-Service</div><div class="module-desc">Career path preferences</div></div>
+            </div>
+          </div>
+          
+          <!-- HR3 CONTENT -->
+          <div id="contentHR3" class="role-content hidden">
+            <div class="stats-grid">
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">⏱️ Present today</span><h2 style="font-weight: 700; margin-top: 12px;">312</h2><span style="color: #457b9d;">out of 412</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">🔄 Pending shifts</span><h2 style="font-weight: 700; margin-top: 12px;">24</h2><span style="color: #457b9d;">swap requests</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">🌴 Leave approvals</span><h2 style="font-weight: 700; margin-top: 12px;">11</h2><span style="color: #457b9d;">awaiting</span></div>
+            </div>
+            <h3 style="font-weight: 600; color:#0b2a45;">⏰ HR3 – Workforce Operations</h3>
+            <div class="module-grid">
+              <div class="module-card"><div class="card-icon">🕒</div><div class="module-title">Time & Attendance</div><div class="module-desc">Biometric, exceptions</div></div>
+              <div class="module-card"><div class="card-icon">📅</div><div class="module-title">Shift & Schedule</div><div class="module-desc">Auto-scheduling, rotations</div></div>
+              <div class="module-card"><div class="card-icon">📝</div><div class="module-title">Timesheet Management</div><div class="module-desc">Approve hours</div></div>
+              <div class="module-card"><div class="card-icon">🏖️</div><div class="module-title">Leave Management</div><div class="module-desc">PTO, sick, LWOP</div></div>
+              <div class="module-card"><div class="card-icon">💰</div><div class="module-title">Claims & Reimbursement</div><div class="module-desc">Mileage, expenses</div></div>
+            </div>
+          </div>
+          
+          <!-- HR4 CONTENT -->
+          <div id="contentHR4" class="role-content hidden">
+            <div class="stats-grid">
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">💰 Payroll processed</span><h2 style="font-weight: 700; margin-top: 12px;">$1.42M</h2><span style="color: #457b9d;">this period</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">📊 HMO enrollments</span><h2 style="font-weight: 700; margin-top: 12px;">398</h2><span style="color: #457b9d;">active</span></div>
+              <div class="stat-card"><span style="font-weight: 600; color:#1e3a5f;">📈 Retention risk</span><h2 style="font-weight: 700; margin-top: 12px;">12%</h2><span style="color: #457b9d;">analytics</span></div>
+            </div>
+            <h3 style="font-weight: 600; color:#0b2a45;">📊 HR4 – Compensation & HR Intel</h3>
+            <div class="module-grid">
+              <div class="module-card"><div class="card-icon">🧾</div><div class="module-title">Core HCM</div><div class="module-desc">Employee records</div></div>
+              <div class="module-card"><div class="card-icon">💵</div><div class="module-title">Payroll Management</div><div class="module-desc">Processing, tax</div></div>
+              <div class="module-card"><div class="card-icon">📈</div><div class="module-title">Compensation Planning</div><div class="module-desc">Merit, bonuses</div></div>
+              <div class="module-card"><div class="card-icon">📉</div><div class="module-title">HR Analytics Dashboard</div><div class="module-desc">Turnover, DEI</div></div>
+              <div class="module-card"><div class="card-icon">🏥</div><div class="module-title">HMO & Benefits</div><div class="module-desc">Insurances</div></div>
+              <div class="module-card"><div class="card-icon">🤝</div><div class="module-title">Smart Patient Recruiting</div><div class="module-desc">Internal gigs</div></div>
+            </div>
+          </div>
+          
+          <!-- FALLBACK CONTENT -->
+          <div id="contentFallback" class="role-content hidden">
+            <div class="login-prompt">
+              <h3>👋 Please log in first</h3>
+              <p>You need to select an HR role to access the dashboard.</p>
+              <button onclick="redirectToLogin()" class="btn">Go to Login</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer-meta">
+          ⚕️ Hospital HRMS · Role-based access · modules aligned with master table
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+  "use strict";
+
+  // ---------- RETRIEVE SESSION FROM LOGIN ----------
+  let currentRole = sessionStorage.getItem('userRole');
+  let employeeId = sessionStorage.getItem('employeeId');
+  let isLogged = sessionStorage.getItem('isLoggedIn');
+
+  // Role mapping
+  const roleMap = {
+    'hr1': { name: 'HR1 · Talent Acquisition', desc: 'Applicant Management, Recruitment, Onboarding' },
+    'hr2': { name: 'HR2 · Talent Development', desc: 'Training, Learning, Succession Planning' },
+    'hr3': { name: 'HR3 · Workforce Operations', desc: 'Attendance, Shift, Leave Management' },
+    'hr4': { name: 'HR4 · Compensation & Analytics', desc: 'Payroll, Benefits, HR Analytics' }
+  };
+
+  // --- NEW DROPDOWN DATA MAP ---
+  const subMenuMap = {
+    'Applicant Management': ['Applicant List', 'Application Tracking', 'Interview Scheduling', 'Applicant Status Monitoring'],
+    'Recruitment Management': ['Job Posting Management', 'Vacancy Requests', 'Candidate Shortlisting', 'Hiring Approval'],
+    'New Hire Onboarding': ['Pre-Employment Requirements', 'Document Submission', 'Contract Management', 'Orientation Scheduling'],
+    'Performance Management (Initial)': ['Probation Evaluation', 'Initial KPI Setup', 'Evaluation Results'],
+    'Social Recognition': ['Employee Recognition', 'Awards & Commendations', 'Recognition History'],
+    'Competency Management': ['Skill Inventory', 'Competency Assessment', 'Competency Gap Analysis'],
+    'Learning Management': ['Course Catalog', 'Assigned Courses', 'Course Completion Tracking', 'Certifications'],
+    'Training Management': ['Training Programs', 'Training Schedule', 'Training Attendance', 'Training Evaluation'],
+    'Succession Planning': ['Position Planning', 'Successor Identification', 'Readiness Assessment'],
+    'Employee Self-Service (ESS)': ['View Profile', 'Update Personal Info', 'Submit Requests', 'View Employment Records'],
+    'Time and Attendance System': ['Attendance Monitoring', 'Attendance Validation', 'Attendance Reports', 'Correction Requests'],
+    'Shift and Schedule Management': ['Shift Creation', 'Staff Scheduling', 'Shift Assignment', 'Schedule Reports'],
+    'Timesheet Management': ['Timesheet Submission', 'Timesheet Approval', 'Overtime Tracking'],
+    'Leave Management': ['Leave Dashboard', 'Leave Request', 'Leave Approval', 'Leave Balance', 'Leave Reports'],
+    'Claims and Reimbursement': ['Claim Submission', 'Claim Review', 'Reimbursement Processing', 'Claim History'],
+    'Core Human Capital Management (HCM)': ['Employee Master Data', 'Employment Records', 'Position Management', 'Organizational Structure'],
+    'Payroll Management': ['Payroll Processing', 'Salary Computation', 'Payslip Generation', 'Payroll Reports'],
+    'Compensation Planning': ['Salary Adjustment', 'Incentive Management', 'Bonus Allocation'],
+    'HR Analytics Dashboard': ['Workforce Reports', 'Turnover Analysis', 'Attendance Analytics', 'Performance Metrics'],
+    'HMO & Benefits Administration': ['HMO Enrollment', 'Benefits Management', 'Benefits Claims', 'Benefits Reports']
+  };
+
+  // Sidebar menu by role
+  const menuByRole = {
+    hr1: [
+      { category: 'APPLICANT MANAGEMENT', items: ['Applicant Management', 'Recruitment Management', 'New Hire Onboarding', 'Performance Management (Initial)', 'Social Recognition'] }
+    ],
+    hr2: [
+      { category: 'TALENT DEVELOPMENT', items: ['Competency Management', 'Learning Management', 'Training Management', 'Succession Planning', 'Employee Self-Service (ESS)'] }
+    ],
+    hr3: [
+      { category: 'WORKFORCE OPERATIONS', items: ['Time and Attendance System', 'Shift and Schedule Management', 'Timesheet Management', 'Leave Management', 'Claims and Reimbursement'] }
+    ],
+    hr4: [
+      { category: 'COMPENSATION & HR INTELLIGENCE', items: ['Core Human Capital Management (HCM)', 'Payroll Management', 'Compensation Planning', 'HR Analytics Dashboard', 'HMO & Benefits Administration'] }
+    ]
+  };
+
+  // --- HELPER: TOGGLE DROPDOWN ---
+  window.toggleDropdown = function(element) {
+    const parent = element.parentElement;
+    parent.classList.toggle('open');
+  };
+
+  // Render sidebar
+  function renderSidebar(role) {
+    const roleNameSpan = document.getElementById('roleNameSpan');
+    const menuListEl = document.getElementById('sidebarMenuList');
+    const logoutRoleHint = document.getElementById('logoutRoleHint');
+
+    if (!role || !roleMap[role]) return;
+
+    roleNameSpan.innerText = roleMap[role].name;
+    if (logoutRoleHint) logoutRoleHint.innerText = role.toUpperCase();
+
+    const iconMap = {
+      'Applicant Management': '👥', 'Recruitment Management': '🔍', 'New Hire Onboarding': '🚀',
+      'Performance Management (Initial)': '📈', 'Social Recognition': '🏅', 'Competency Management': '📊',
+      'Training Management': '🎓', 'Learning Management': '📖', 'Succession Planning': '🧭',
+      'Employee Self-Service (ESS)': '👤', 'Time and Attendance System': '🕒', 'Shift and Schedule Management': '📅',
+      'Timesheet Management': '📝', 'Leave Management': '🏖️', 'Claims and Reimbursement': '💰',
+      'Core Human Capital Management (HCM)': '🧾', 'Payroll Management': '💵', 'Compensation Planning': '💹',
+      'HR Analytics Dashboard': '📉', 'HMO & Benefits Administration': '🏥'
+    };
+
+    let html = '';
+
+    // --- HOME SECTION ---
+    html += `<li class="nav-small-cap"><span>HOME</span></li>`;
+    html += `
+      <li class="sidebar-item">
+        <a href="#" class="sidebar-link active" onclick="setActive(this); showRoleContent('${role}'); return false;">
+          <span>🏠</span>
+          <span class="hide-menu">Dashboard</span>
+        </a>
+      </li>`;
+
+    // --- ROLE CATEGORIES ---
+    const sections = menuByRole[role] || [];
+    sections.forEach(section => {
+      html += `<li class="nav-small-cap"><span>${section.category}</span></li>`;
+      section.items.forEach(item => {
+        const icon = iconMap[item] || '📄';
+        const subItems = subMenuMap[item];
+
+          if (subItems) {
+          // RENDER DROPDOWN ITEM
+          html += `
+            <li class="sidebar-item">
+              <a href="#" class="sidebar-link" onclick="toggleDropdown(this); return false;">
+                <span>${icon}</span>
+                <span class="hide-menu">${item}</span>
+                <span class="chevron">▶</span>
+              </a>
+              <ul class="sidebar-submenu">
+                ${subItems.map(sub => `
+                  <li>
+                    <a href="#" class="submenu-link" onclick="setActive(this); return false;">
+                      ${sub}
+                    </a>
+                  </li>`).join('')}
+              </ul>
+            </li>`;
+        } else {
+          // RENDER STANDARD ITEM
+          html += `
+            <li class="sidebar-item">
+              <a href="#" class="sidebar-link" onclick="setActive(this); return false;">
+                <span>${icon}</span>
+                <span class="hide-menu">${item}</span>
+              </a>
+            </li>`;
+        }
+      });
+    });
+
+    menuListEl.innerHTML = html;
+  }
+
+  // Show role content
+  function showRoleContent(role) {
+    document.querySelectorAll('.role-content').forEach(el => {
+      el.classList.add('hidden');
+    });
+
+    let contentId = '';
+    if (role === 'hr1') contentId = 'contentHR1';
+    else if (role === 'hr2') contentId = 'contentHR2';
+    else if (role === 'hr3') contentId = 'contentHR3';
+    else if (role === 'hr4') contentId = 'contentHR4';
+    else contentId = 'contentFallback';
+
+    const activeContent = document.getElementById(contentId);
+    if (activeContent) {
+      activeContent.classList.remove('hidden');
+    }
+
+    const titleEl = document.getElementById('dashboardTitle');
+    const subEl = document.getElementById('roleSubtitle');
+    if (roleMap[role]) {
+      titleEl.innerText = roleMap[role].name.split('·')[1] || 'Dashboard';
+      subEl.innerText = roleMap[role].desc || '';
+    } else {
+      titleEl.innerText = 'HR Dashboard';
+      subEl.innerText = 'Please log in';
+    }
+
+    document.getElementById('employeeIdDisplay').innerHTML = `👤 ${employeeId || 'Not logged in'}`;
+    const avatar = document.getElementById('userAvatar');
+    if (avatar) {
+      if (role) {
+        let roleNum = role.replace('hr', '');
+        avatar.innerText = `HR${roleNum}`;
+      } else {
+        avatar.innerText = 'HR';
+      }
+    }
+  }
+
+  // ---------- LOGOUT FUNCTION ----------
+  window.logout = function() {
+    sessionStorage.removeItem('userRole');
+    sessionStorage.removeItem('employeeId');
+    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('employeeName');
+    window.location.href = 'login.html';
+  };
+
+  window.redirectToLogin = function() {
+    window.location.href = 'login.html';
+  };
+
+  // Initialize dashboard
+  if (!currentRole || !isLogged) {
+    document.querySelectorAll('.role-content').forEach(el => el.classList.add('hidden'));
+    document.getElementById('contentFallback').classList.remove('hidden');
+    document.getElementById('dashboardTitle').innerText = 'Access Denied';
+    document.getElementById('roleSubtitle').innerText = 'Please login first';
+    document.getElementById('employeeIdDisplay').innerHTML = '👤 Not logged in';
+    document.getElementById('roleNameSpan').innerText = 'Not logged in';
+    document.getElementById('logoutRoleHint').innerText = '';
+  } else {
+    renderSidebar(currentRole);
+    showRoleContent(currentRole);
+  }
+
+  // Attach logout event listener
+  const logoutBtn = document.getElementById('logoutButton');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const confirmLogout = confirm("Are you sure you want to log out?");
+      if (confirmLogout) {
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+      }
+    });
+  }
+
+  // Helper function to move highlight
+  window.setActive = function(element) {
+    document.querySelectorAll('.sidebar-link, .submenu-link').forEach(link => link.classList.remove('active'));
+    element.classList.add('active');
+  };
+})();
+  </script>
+</body>
+</html>
