@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HR Department - Hospital Management System</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/seodashlogo.png" />
+  <link rel="stylesheet" href="styles.min.css" />
+  <style>
+    /* Add missing alert styles */
+    .alert-info {
+      background-color: #e8f4fd;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 15px;
+    }
+    .alert-warning {
+      background-color: #fff3e0;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="../assets/images/logos/logo-light.svg" alt="Hospital HR System">
+                </a>
+                <p class="text-center">HR Department - Hospital Management System</p>
+              
+                <!-- Add an alert container for role notifications -->
+                <div id="roleAlert" class="alert alert-info py-2 px-3 mb-4" role="alert" style="display: none;">
+                  <small id="roleAlertMessage"></small>
+                </div>
+
+                <form id="registerForm">
+                  <div class="mb-3">
+                    <label for="employeeName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="employeeName" placeholder="Enter your full name" required>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="employeeId" class="form-label">Employee ID</label>
+                    <input type="text" class="form-control" id="employeeId" placeholder="e.g., HR-2024-001" required>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="hrRole" class="form-label">HR Role</label>
+                    <select class="form-select" id="hrRole" aria-label="HR role selection" required>
+                      <option selected disabled>Select your HR level</option>
+                      <option value="HR1">HR 1 - Talent Acquisition & Workforce Entry</option>
+                      <option value="HR2">HR 2 - Talent Development & Career Pathing</option>
+                      <option value="HR3">HR 3 - Workforce Operations & Time Management</option>
+                      <option value="HR4">HR 4 - Compensation & HR Intelligence</option>
+                    </select>
+                    <small class="text-muted">Select your current HR position level</small>
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Register</button>
+
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p class="fs-4 mb-0 fw-bold">Already registered?</p>
+                    <a class="text-primary fw-bold ms-2" href="login.html">Sign In to HR Dashboard</a>
+                  </div>
+
+                  <!-- HR Support Line -->
+                  <div class="text-center mt-3">
+                    <small class="text-muted">
+                      Need help? Contact HR IT Support at ext. 4567
+                    </small>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      // Show/hide role alert based on selection
+      $('#hrRole').change(function() {
+        var selectedRole = $(this).val();
+        var alertDiv = $('#roleAlert');
+        var alertMessage = $('#roleAlertMessage');
+        
+        if (selectedRole && selectedRole !== 'Select your HR level') {
+          var roleText = '';
+          var alertClass = 'alert-info';
+          
+          switch(selectedRole) {
+            case 'HR1':
+              roleText = 'You are registering as HR1 - Talent Acquisition. You will have access to recruitment and onboarding modules.';
+              alertClass = 'alert-info';
+              break;
+            case 'HR2':
+              roleText = 'You are registering as HR2 - Talent Development. You will have access to training and career development modules.';
+              alertClass = 'alert-success';
+              break;
+            case 'HR3':
+              roleText = 'You are registering as HR3 - Workforce Operations. You will have access to attendance and leave management.';
+              alertClass = 'alert-warning';
+              break;
+            case 'HR4':
+              roleText = 'You are registering as HR4 - Compensation & Intelligence. You will have access to payroll and analytics.';
+              alertClass = 'alert-primary';
+              break;
+          }
+          
+          alertMessage.text(roleText);
+          alertDiv.removeClass('alert-info alert-success alert-warning alert-primary').addClass(alertClass);
+          alertDiv.show();
+        } else {
+          alertDiv.hide();
+        }
+      });
+
+      // Handle form submission
+      $('#registerForm').submit(function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const employeeName = $('#employeeName').val().trim();
+        const employeeId = $('#employeeId').val().trim();
+        const selectedRole = $('#hrRole').val();
+        const password = $('#password').val().trim();
+        const confirmPassword = $('#confirmPassword').val().trim();
+        
+        // Validation
+        if (!employeeName) {
+          alert('Please enter your full name');
+          $('#employeeName').focus();
+          return;
+        }
+        
+        if (!employeeId) {
+          alert('Please enter your Employee ID');
+          $('#employeeId').focus();
+          return;
+        }
+        
+        if (!selectedRole || selectedRole === 'Select your HR level') {
+          alert('Please select your HR role');
+          $('#hrRole').focus();
+          return;
+        }
+        
+        if (!password) {
+          alert('Please enter a password');
+          $('#password').focus();
+          return;
+        }
+        
+        if (password.length < 6) {
+          alert('Password must be at least 6 characters long');
+          $('#password').focus();
+          return;
+        }
+        
+        if (password !== confirmPassword) {
+          alert('Passwords do not match');
+          $('#confirmPassword').focus();
+          return;
+        }
+        
+        // Store registration info in sessionStorage
+        try {
+          sessionStorage.setItem('userRole', selectedRole);
+          sessionStorage.setItem('employeeId', employeeId);
+          sessionStorage.setItem('employeeName', employeeName);
+          sessionStorage.setItem('isLoggedIn', 'true');
+          sessionStorage.setItem('registrationTime', new Date().toISOString());
+          
+          console.log('Registration successful:', { employeeName, employeeId, selectedRole });
+          
+          // Show success message and redirect
+          alert('Registration successful! You will now be redirected to your dashboard.');
+          
+          // Role-based dashboard redirection
+          let dashboardUrl = '';
+          switch(selectedRole) {
+            case 'HR1':
+              dashboardUrl = 'dashboard-hr1.html';
+              break;
+            case 'HR2':
+              dashboardUrl = 'dashboard-hr2.html';
+              break;
+            case 'HR3':
+              dashboardUrl = 'dashboard-hr3.html';
+              break;
+            case 'HR4':
+              dashboardUrl = 'dashboard-hr4.html';
+              break;
+            default:
+              dashboardUrl = 'dashboard.html';
+          }
+          
+          // Redirect to role-specific dashboard
+          window.location.href = dashboardUrl;
+        } catch (error) {
+          console.error('Error during registration:', error);
+          alert('An error occurred during registration. Please try again.');
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

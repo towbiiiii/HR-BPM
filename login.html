@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HR Department - Hospital Management System Login</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/seodashlogo.png" />
+  <link rel="stylesheet" href="styles.min.css" />
+  <style>
+    /* Additional styles to match register.html */
+    .role-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .role-badge-hr1 { background-color: #e3f2fd; color: #0d47a1; }
+    .role-badge-hr2 { background-color: #e8f5e9; color: #1b5e20; }
+    .role-badge-hr3 { background-color: #fff3e0; color: #e65100; }
+    .role-badge-hr4 { background-color: #f3e5f5; color: #4a148c; }
+    
+    .form-select {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #2c3e50;
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      transition: border-color 0.15s ease-in-out;
+    }
+    .form-select:focus {
+      border-color: #1e3a5f;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(30, 58, 95, 0.25);
+    }
+    
+    /* Make sure button matches register.html */
+    .btn-primary {
+      background-color: #1e3a5f !important;
+      border-color: #1e3a5f !important;
+      padding: 12px !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+    }
+    .btn-primary:hover {
+      background-color: #0d2c4a !important;
+      border-color: #0d2c4a !important;
+    }
+    
+    /* Alert styling to match register */
+    .alert-info {
+      background-color: #e8f4fd;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-3">
+            <div class="card mb-0">
+              <div class="card-body">
+                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <img src="../assets/images/logos/logo-light.svg" alt="Hospital HR System">
+                </a>
+                <p class="text-center">HR Department - Hospital Management System</p>
+              
+               
+                <form id="loginForm">
+                  <div class="mb-3">
+                    <label for="employeeId" class="form-label">Employee ID</label>
+                    <input type="text" class="form-control" id="employeeId" placeholder="e.g., HR-2024-001" required>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="hrRole" class="form-label">HR Role</label>
+                    <select class="form-select" id="hrRole" aria-label="HR role selection" required>
+                      <option selected disabled>Select your HR level</option>
+                      <option value="HR1">HR 1 - Talent Acquisition & Workforce Entry</option>
+                      <option value="HR2">HR 2 - Talent Development & Career Pathing</option>
+                      <option value="HR3">HR 3 - Workforce Operations & Time Management</option>
+                      <option value="HR4">HR 4 - Compensation & HR Intelligence</option>
+                    </select>
+                    <small class="text-muted">Select your HR role to access your dashboard</small>
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                  </div>
+
+                  <!-- Role-specific access notice (matching register's style) -->
+                  <div class="alert alert-info py-2 px-3 mb-4" role="alert" id="roleAccessNotice">
+                    <small>
+                      <strong>Your Access Level:</strong> Select a role to see your permissions
+                    </small>
+                  </div>
+
+                  <!-- Remember me checkbox (optional - can remove if not needed) -->
+                  <div class="d-flex align-items-center justify-content-between mb-4">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="rememberDevice">
+                      <label class="form-check-label text-dark" for="rememberDevice" style="font-size: 14px;">
+                        Remember this device
+                      </label>
+                    </div>
+                    <a class="text-primary fw-bold" href="#" style="font-size: 14px; text-decoration: none;">Forgot Password?</a>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4">Sign In to HR Dashboard</button>
+
+                  <div class="d-flex align-items-center justify-content-center">
+                    <p class="fs-4 mb-0 fw-bold">New to HR Portal?</p>
+                    <a class="text-primary fw-bold ms-2" href="register.html">Create an account</a>
+                  </div>
+
+                  <!-- HR Support Line (matching register.html) -->
+                  <div class="text-center mt-3">
+                    <small class="text-muted">
+                      Need help? Contact HR IT Support at ext. 4567
+                    </small>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const hrRole = document.getElementById('hrRole');
+      const roleAccessNotice = document.getElementById('roleAccessNotice');
+      const loginForm = document.getElementById('loginForm');
+      const employeeIdInput = document.getElementById('employeeId');
+      const passwordInput = document.getElementById('password');
+
+      function setNotice(selectedRole) {
+        let accessText = '<strong>Your Access Level:</strong> Select a role to see your permissions';
+        let alertClass = 'alert-info';
+        switch (selectedRole) {
+          case 'HR1':
+            accessText = '<strong>HR1 Access:</strong> Talent Acquisition - Applicant tracking, recruitment workflows, onboarding documents';
+            alertClass = 'alert-info';
+            break;
+          case 'HR2':
+            accessText = '<strong>HR2 Access:</strong> Talent Development - Training programs, learning management, career pathing tools';
+            alertClass = 'alert-success';
+            break;
+          case 'HR3':
+            accessText = '<strong>HR3 Access:</strong> Workforce Operations - Attendance tracking, shift scheduling, leave management';
+            alertClass = 'alert-warning';
+            break;
+          case 'HR4':
+            accessText = '<strong>HR4 Access:</strong> Compensation & Intelligence - Payroll processing, benefits admin, HR analytics dashboard';
+            alertClass = 'alert-primary';
+            break;
+          default:
+            accessText = '<strong>Your Access Level:</strong> Select a role to see your permissions';
+            alertClass = 'alert-info';
+        }
+        roleAccessNotice.className = 'alert ' + alertClass + ' py-2 px-3 mb-4';
+        roleAccessNotice.innerHTML = '<small>' + accessText + '</small>';
+      }
+
+      hrRole.addEventListener('change', function () {
+        setNotice(hrRole.value);
+      });
+
+      loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const employeeId = employeeIdInput.value.trim();
+        const password = passwordInput.value.trim();
+        const roleIndex = hrRole.selectedIndex;
+        const selectedRole = hrRole.value;
+
+        if (!employeeId) {
+          alert('Please enter your Employee ID');
+          employeeIdInput.focus();
+          return;
+        }
+
+        if (roleIndex <= 0 || !selectedRole || !selectedRole.startsWith('HR')) {
+          alert('Please select your HR role');
+          hrRole.focus();
+          return;
+        }
+
+        if (!password) {
+          alert('Please enter your password');
+          passwordInput.focus();
+          return;
+        }
+
+        try {
+          sessionStorage.setItem('userRole', selectedRole);
+          sessionStorage.setItem('employeeId', employeeId);
+          sessionStorage.setItem('isLoggedIn', 'true');
+          sessionStorage.setItem('loginTime', new Date().toISOString());
+
+          let dashboardUrl = 'dashboard.html';
+          if (selectedRole === 'HR1') dashboardUrl = 'dashboard-hr1.html';
+          if (selectedRole === 'HR2') dashboardUrl = 'dashboard-hr2.html';
+          if (selectedRole === 'HR3') dashboardUrl = 'dashboard-hr3.html';
+          if (selectedRole === 'HR4') dashboardUrl = 'dashboard-hr4.html';
+
+          window.location.href = dashboardUrl;
+        } catch (err) {
+          console.error('Error during login:', err);
+          alert('An error occurred during login. Please try again.');
+        }
+      });
+
+      if (sessionStorage.getItem('isLoggedIn') === 'true') {
+        const userRole = sessionStorage.getItem('userRole');
+        let dashboardUrl = 'dashboard.html';
+        if (userRole === 'HR1') dashboardUrl = 'dashboard-hr1.html';
+        if (userRole === 'HR2') dashboardUrl = 'dashboard-hr2.html';
+        if (userRole === 'HR3') dashboardUrl = 'dashboard-hr3.html';
+        if (userRole === 'HR4') dashboardUrl = 'dashboard-hr4.html';
+        window.location.href = dashboardUrl;
+      }
+    });
+  </script>
+</body>
+</html>
