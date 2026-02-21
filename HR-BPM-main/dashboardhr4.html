@@ -1,0 +1,138 @@
+<style>
+  /* 1. CONTAINER & GRID SYSTEM */
+  .hr-content-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .modern-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  /* 2. GLASS CARD UI */
+  .glass-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.7);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(93, 135, 255, 0.1);
+  }
+
+  /* 3. COLOR GRADIENTS (FINANCIAL THEME) */
+  .kpi-modern { color: white; position: relative; overflow: hidden; }
+  .kpi-modern::after {
+    content: ""; position: absolute; width: 100px; height: 100px;
+    background: rgba(255, 255, 255, 0.1); border-radius: 50%; top: -20px; right: -20px;
+  }
+
+  .grad-slate { background: linear-gradient(135deg, #334155 0%, #1e293b 100%); }
+  .grad-gold { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); }
+  .grad-cyan { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+  .grad-violet { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); }
+
+  /* 4. TYPOGRAPHY & TABLE */
+  .kpi-label { font-size: 0.85rem; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 8px; }
+  .kpi-value { font-size: 2.0rem; font-weight: 800; margin: 10px 0 5px 0; letter-spacing: -1px; }
+  .kpi-sub { font-size: 0.75rem; opacity: 0.8; }
+
+  .modern-table { width: 100%; border-collapse: collapse; }
+  .modern-table th { text-align: left; padding: 12px; font-size: 0.75rem; color: #64748b; text-transform: uppercase; border-bottom: 1px solid #f1f5f9; }
+  .modern-table td { padding: 15px 12px; border-bottom: 1px solid #f8fafc; font-size: 0.85rem; }
+
+  .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+  .pill-violet { background: #f5f3ff; color: #7c3aed; }
+  .pill-slate { background: #f1f5f9; color: #475569; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<div class="hr-content-wrapper">
+    <div class="modern-stats-grid">
+        <div class="glass-card kpi-modern grad-slate">
+            <div class="kpi-label">💵 Monthly Payroll</div>
+            <div class="kpi-value">₱4.2M</div>
+            <div class="kpi-sub">Total Disbursement (Current)</div>
+        </div>
+        <div class="glass-card kpi-modern grad-violet">
+            <div class="kpi-label">🏥 HMO Enrollment</div>
+            <div class="kpi-value">98.2%</div>
+            <div class="kpi-sub">Total active coverage</div>
+        </div>
+        <div class="glass-card kpi-modern grad-cyan">
+            <div class="kpi-label">📉 Turnover Rate</div>
+            <div class="kpi-value">2.4%</div>
+            <div class="kpi-sub">↓ 0.8% from last month</div>
+        </div>
+        <div class="glass-card kpi-modern grad-gold">
+            <div class="kpi-label">📊 Compa-Ratio</div>
+            <div class="kpi-value">0.94</div>
+            <div class="kpi-sub">Market competitiveness index</div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.5fr 1.5fr; gap: 25px;">
+        <div class="glass-card" style="padding: 0; overflow: hidden;">
+            <div style="padding: 20px;">
+                <h4 style="margin:0; color: #1e293b; font-weight: 700;">Payroll Cycle Progress</h4>
+            </div>
+            <div style="padding: 0 20px 20px 20px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 10px;">
+                    <span>Verification Phase</span>
+                    <span style="font-weight: 700;">85%</span>
+                </div>
+                <div style="height: 10px; background: #f1f5f9; border-radius: 5px; overflow: hidden; margin-bottom: 25px;">
+                    <div style="width: 85%; height: 100%; background: #8b5cf6;"></div>
+                </div>
+                
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Benefit Component</th>
+                            <th>Administered</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>HMO Premiums</b></td>
+                            <td>₱1.2M</td>
+                            <td><span class="status-pill pill-violet">Processed</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Statutory Contributions</b></td>
+                            <td>₱850K</td>
+                            <td><span class="status-pill pill-slate">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h4 style="margin: 0 0 20px 0; color: #1e293b; font-weight: 700;">Intelligence Brief</h4>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border-left: 4px solid #fbbf24;">
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #1e293b;">Salary Gap Alert</div>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;">3 Senior Nurses are currently below the mid-point market range for Q1.</p>
+                </div>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border-left: 4px solid #06b6d4;">
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #1e293b;">Benefits ROI</div>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;">HMO utilization decreased by 12% following the Wellness Program launch.</p>
+                </div>
+                <button style="width: 100%; padding: 12px; border: none; background: #1e293b; color: white; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                    Export Comprehensive BI Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
