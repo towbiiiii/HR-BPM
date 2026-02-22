@@ -1,0 +1,68 @@
+<div class="stat-card" style="width: 100%; border-radius: 20px; background: white; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; gap: 15px; flex-wrap: wrap;">
+        <div>
+            <h2 style="color: #0b2a45; font-size: 1.4rem; margin-bottom: 5px;">Applicant List</h2>
+            <p style="color: #6b8496; font-size: 0.85rem;">Review and manage incoming job applications</p>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <input type="text" placeholder="Search by name or position..." 
+                   style="padding: 10px 16px; border-radius: 10px; border: 1px solid #dde7f0; width: 280px; font-size: 0.9rem; outline: none;">
+            <button class="btn" style="margin: 0; padding: 10px 20px; background-color: #5d87ff;">+ Add New</button>
+        </div>
+    </div>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; min-width: 800px;">
+            <thead>
+                <tr style="text-align: left; border-bottom: 2px solid #f4f6fb; color: #5b6f7e; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                    <th style="padding: 12px 15px;">Candidate Info</th>
+                    <th style="padding: 12px 15px;">Target Position</th>
+                    <th style="padding: 12px 15px;">Applied Date</th>
+                    <th style="padding: 12px 15px;">Status</th>
+                    <th style="padding: 12px 15px; text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #f4f6fb; transition: background 0.2s;" onmouseover="this.style.background='#f9fbff'" onmouseout="this.style.background='transparent'">
+                    <td style="padding: 15px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 35px; height: 35px; background: #eef6fc; color: #5d87ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem;">JD</div>
+                            <div>
+                                <div style="font-weight: 600; color: #1e3a5f;">John Doe</div>
+                                <div style="font-size: 0.75rem; color: #6b8496;">j.doe@email.com</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 15px; color: #1e3a5f; font-size: 0.9rem;">Registered Nurse</td>
+                    <td style="padding: 15px; color: #6b8496; font-size: 0.9rem;">Feb 18, 2026</td>
+                    <td style="padding: 15px;">
+                        <span style="background: #eef6fc; color: #5d87ff; padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">IN REVIEW</span>
+                    </td>
+                    <td style="padding: 15px; text-align: right;">
+                        <button style="background: none; border: none; color: #5d87ff; cursor: pointer; font-weight: 600; font-size: 0.85rem;">View Profile</button>
+                    </td>
+                </tr>
+                <tr style="border-bottom: 1px solid #f4f6fb; transition: background 0.2s;" onmouseover="this.style.background='#f9fbff'" onmouseout="this.style.background='transparent'">
+                    <td style="padding: 15px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 35px; height: 35px; background: #fff8e1; color: #ffb300; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem;">AS</div>
+                            <div>
+                                <div style="font-weight: 600; color: #1e3a5f;">Alice Smith</div>
+                                <div style="font-size: 0.75rem; color: #6b8496;">a.smith@email.com</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding: 15px; color: #1e3a5f; font-size: 0.9rem;">Medical Technologist</td>
+                    <td style="padding: 15px; color: #6b8496; font-size: 0.9rem;">Feb 15, 2026</td>
+                    <td style="padding: 15px;">
+                        <span style="background: #fff8e1; color: #ffb300; padding: 5px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">SHORTLISTED</span>
+                    </td>
+                    <td style="padding: 15px; text-align: right;">
+                        <button style="background: none; border: none; color: #5d87ff; cursor: pointer; font-weight: 600; font-size: 0.85rem;">View Profile</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

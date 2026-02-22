@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SeoDash - Create Account</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/seodashlogo.png" />
+  <link rel="stylesheet" href="login.css" />
+  <style>
+    .role-selection {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 10;
+      overflow: visible;
+    }
+    .role-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #2BA3D8;
+    }
+    .role-select-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+    .role-select-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #2BA3D8;
+      pointer-events: none;
+      z-index: 100;
+    }
+    .role-select {
+      width: 100%;
+      padding: 12px 16px;
+      padding-right: 40px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #2c3e50;
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      transition: border-color 0.15s ease-in-out;
+      appearance: none;
+      background-image: none;
+      position: relative;
+      z-index: 2;
+    }
+    .role-select:focus {
+      border-color: #2BA3D8;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(43, 163, 216, 0.25);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .password-group {
+      position: relative;
+    }
+    .password-input-wrapper {
+      position: relative;
+    }
+    .form-control {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #2c3e50;
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      transition: border-color 0.15s ease-in-out;
+    }
+    .form-control:focus {
+      border-color: #2BA3D8;
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(43, 163, 216, 0.25);
+    }
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear {
+      display: none;
+    }
+    .password-group .form-control {
+      padding-right: 95px;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: #5f6b7a;
+      cursor: pointer;
+      padding: 2px;
+      line-height: 1;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .toggle-password:focus {
+      outline: 0;
+    }
+    .toggle-password:hover {
+      background: rgba(95, 107, 122, 0.12);
+    }
+    .toggle-password .icon {
+      font-size: 18px;
+    }
+    .strength-meter {
+      width: 100%;
+      height: 8px;
+      background: #e9edf3;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+    .strength-fill {
+      width: 0%;
+      height: 100%;
+      background: #d9dee7;
+      border-radius: 999px;
+      transition: width 0.2s ease, background-color 0.2s ease;
+    }
+    .strength-text {
+      font-size: 13px;
+      color: #5f6b7a;
+      margin-bottom: 8px;
+    }
+    .password-rules {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+    }
+    .password-helper {
+      display: none;
+      margin-top: 10px;
+    }
+    .password-helper.show {
+      display: block;
+    }
+    .rule-pill {
+      display: none;
+      font-size: 12px;
+      border: 1px solid #e3e8ef;
+      background: #f8fafc;
+      color: #7e8b98;
+      border-radius: 8px;
+      padding: 7px 9px;
+      line-height: 1.35;
+      transition: all 0.2s ease;
+    }
+    .rule-pill.valid {
+      border-color: #b6f0d1;
+      background: #e9fdf2;
+      color: #1c7a46;
+    }
+    .rule-pill.invalid {
+      border-color: #e3e8ef;
+      background: #f8fafc;
+      color: #7e8b98;
+    }
+    .rule-pill.show {
+      display: block;
+    }
+    .confirm-feedback {
+      font-size: 12px;
+      margin-top: 8px;
+      color: #9aa6b2;
+    }
+    .confirm-feedback.match {
+      color: #1c7a46;
+    }
+    .confirm-feedback.no-match {
+      color: #c0392b;
+    }
+    label {
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: block;
+      color: #2BA3D8;
+    }
+    .logo-img {
+      margin-bottom: 8px;
+    }
+    .logo-img img {
+      max-width: 160px;
+    }
+    .system-title {
+      text-align: center;
+      color: #2BA3D8;
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 24px;
+      letter-spacing: -0.3px;
+    }
+    .btn-signup {
+      background-color: #2BA3D8 !important;
+      border-color: #2BA3D8 !important;
+      color: white !important;
+      padding: 12px !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      width: 100%;
+      border: none !important;
+      font-size: 16px;
+      transition: background-color 0.2s;
+      cursor: pointer;
+    }
+    .btn-signup:hover {
+      background-color: #1FA8CD !important;
+      border-color: #1FA8CD !important;
+      color: white !important;
+    }
+    .btn-signup:focus {
+      color: white !important;
+      background-color: #2BA3D8 !important;
+    }
+    .card {
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      border: 1px solid #f0f0f0;
+    }
+    .card-body {
+      padding: 32px;
+    }
+    .text-primary {
+      color: #2BA3D8 !important;
+    }
+    .auth-spacing {
+      padding-top: 32px;
+      padding-bottom: 32px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <div
+      class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center auth-spacing">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="row justify-content-center w-100">
+          <div class="col-md-8 col-lg-6 col-xxl-4">
+            <div class="card mb-0">
+              <div class="card-body">
+                <div class="text-center d-block py-2 w-100 logo-img">
+                  <img src="https://img.icons8.com/?size=100&id=mYBvS970TJoA&format=png&color=2BA3D8" alt="Hospital" style="width: 72px; height: 72px;">
+                </div>
+
+                <div class="system-title">
+                  Hospital HR Management System
+                </div>
+
+                <form id="registerForm">
+                  <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="employeeId">Employee ID</label>
+                    <input type="text" class="form-control" id="employeeId" placeholder="Enter your employee ID" required>
+                  </div>
+
+                  <div class="form-group password-group">
+                    <label for="password">Password</label>
+                    <div class="password-input-wrapper">
+                      <input type="password" class="form-control" id="password" placeholder="Create a password" required>
+                      <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password" title="Show password">
+                        <iconify-icon class="icon" id="passwordToggleIcon" icon="mdi:eye-outline" aria-hidden="true"></iconify-icon>
+                      </button>
+                    </div>
+                    <div class="password-helper" id="passwordHelper">
+                      <div class="strength-meter">
+                        <div class="strength-fill" id="strengthFill"></div>
+                      </div>
+                      <div class="strength-text" id="strengthText">Password strength: Too weak</div>
+                      <div class="password-rules" id="passwordRules">
+                        <div id="ruleLength" class="rule-pill invalid">8+ characters</div>
+                        <div id="ruleUpper" class="rule-pill invalid">Uppercase letter</div>
+                        <div id="ruleLower" class="rule-pill invalid">Lowercase letter</div>
+                        <div id="ruleNumber" class="rule-pill invalid">Number</div>
+                        <div id="ruleSpecial" class="rule-pill invalid">Special character</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group password-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="password-input-wrapper">
+                      <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" required>
+                      <button type="button" class="toggle-password" id="toggleConfirmPassword" aria-label="Show confirm password" title="Show confirm password">
+                        <iconify-icon class="icon" id="confirmPasswordToggleIcon" icon="mdi:eye-outline" aria-hidden="true"></iconify-icon>
+                      </button>
+                    </div>
+                    <div class="confirm-feedback" id="confirmFeedback">Re-enter your password to confirm</div>
+                  </div>
+
+                  <div class="role-selection">
+                    <div class="role-title">Select Your HR Role:</div>
+                    <div class="role-select-wrapper">
+                      <select id="hrRoleSelect" class="role-select" required>
+                        <option value="" selected disabled>Select a role</option>
+                        <option value="hr1">HR1 - Talent Acquisition (Applicant Management, Recruitment, Onboarding)</option>
+                        <option value="hr2">HR2 - Talent Development (Training, Learning, Succession Planning)</option>
+                        <option value="hr3">HR3 - Workforce Operations (Attendance, Shift, Leave Management)</option>
+                        <option value="hr4">HR4 - Compensation & Analytics (Payroll, Benefits, HR Analytics)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn-signup" style="color: white !important; background-color: #2BA3D8 !important;">
+                    Create Account
+                  </button>
+
+                  <div class="d-flex align-items-center justify-content-center mt-4">
+                    <p class="mb-0" style="font-size: 14px; color: #5f6b7a;">Already have an account?</p>
+                    <a class="text-primary fw-bold ms-2" href="login.html" style="font-size: 14px; text-decoration: none; color: #2BA3D8 !important;">Sign In</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const togglePasswordBtn = document.getElementById('togglePassword');
+    const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
+    const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+    const confirmPasswordToggleIcon = document.getElementById('confirmPasswordToggleIcon');
+    const strengthFill = document.getElementById('strengthFill');
+    const strengthText = document.getElementById('strengthText');
+    const confirmFeedback = document.getElementById('confirmFeedback');
+    const passwordHelper = document.getElementById('passwordHelper');
+
+    const ruleLength = document.getElementById('ruleLength');
+    const ruleUpper = document.getElementById('ruleUpper');
+    const ruleLower = document.getElementById('ruleLower');
+    const ruleNumber = document.getElementById('ruleNumber');
+    const ruleSpecial = document.getElementById('ruleSpecial');
+
+    function toggleVisibility(inputElement, buttonElement, iconElement, showLabel, hideLabel) {
+      const isPassword = inputElement.type === 'password';
+      inputElement.type = isPassword ? 'text' : 'password';
+      iconElement.setAttribute('icon', isPassword ? 'mdi:eye-off-outline' : 'mdi:eye-outline');
+      buttonElement.setAttribute('aria-label', isPassword ? hideLabel : showLabel);
+      buttonElement.setAttribute('title', isPassword ? hideLabel : showLabel);
+    }
+
+    togglePasswordBtn.addEventListener('click', function() {
+      toggleVisibility(passwordInput, togglePasswordBtn, passwordToggleIcon, 'Show password', 'Hide password');
+    });
+
+    toggleConfirmPasswordBtn.addEventListener('click', function() {
+      toggleVisibility(confirmPasswordInput, toggleConfirmPasswordBtn, confirmPasswordToggleIcon, 'Show confirm password', 'Hide confirm password');
+    });
+
+    function evaluatePassword(password) {
+      return {
+        length: password.length >= 8,
+        upper: /[A-Z]/.test(password),
+        lower: /[a-z]/.test(password),
+        number: /\d/.test(password),
+        special: /[^A-Za-z0-9]/.test(password)
+      };
+    }
+
+    function setRuleState(element, isValid, isVisible) {
+      element.classList.toggle('valid', isValid);
+      element.classList.toggle('invalid', !isValid);
+      element.classList.toggle('show', isVisible);
+    }
+
+    function updateStrengthUI() {
+      const password = passwordInput.value;
+      const checks = evaluatePassword(password);
+      const score = Object.values(checks).filter(Boolean).length;
+
+      const rulesInOrder = [
+        { element: ruleLength, valid: checks.length },
+        { element: ruleUpper, valid: checks.upper },
+        { element: ruleLower, valid: checks.lower },
+        { element: ruleNumber, valid: checks.number },
+        { element: ruleSpecial, valid: checks.special }
+      ];
+
+      const firstMissingIndex = rulesInOrder.findIndex(function(rule) {
+        return !rule.valid;
+      });
+
+      rulesInOrder.forEach(function(rule, index) {
+        const showThisRule = firstMissingIndex !== -1 && index === firstMissingIndex;
+        setRuleState(rule.element, rule.valid, showThisRule);
+      });
+
+      const width = (score / 5) * 100;
+      strengthFill.style.width = width + '%';
+
+      if (score <= 2) {
+        strengthFill.style.backgroundColor = '#e74c3c';
+        strengthText.textContent = 'Password strength: Weak';
+      } else if (score <= 4) {
+        strengthFill.style.backgroundColor = '#f39c12';
+        strengthText.textContent = 'Password strength: Medium';
+      } else {
+        strengthFill.style.backgroundColor = '#27ae60';
+        strengthText.textContent = 'Password strength: Strong';
+      }
+
+      if (!password) {
+        strengthFill.style.width = '0%';
+        strengthFill.style.backgroundColor = '#d9dee7';
+        strengthText.textContent = 'Password strength: Too weak';
+      }
+
+      const isStrong = score === 5;
+      const shouldShowHelper = password.length > 0 && !isStrong;
+      passwordHelper.classList.toggle('show', shouldShowHelper);
+
+      updateConfirmFeedback();
+    }
+
+    function updateConfirmFeedback() {
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+
+      confirmFeedback.classList.remove('match', 'no-match');
+
+      if (!confirmPassword) {
+        confirmFeedback.textContent = 'Re-enter your password to confirm';
+        return;
+      }
+
+      if (password === confirmPassword) {
+        confirmFeedback.textContent = 'Passwords match';
+        confirmFeedback.classList.add('match');
+      } else {
+        confirmFeedback.textContent = 'Passwords do not match';
+        confirmFeedback.classList.add('no-match');
+      }
+    }
+
+    passwordInput.addEventListener('input', updateStrengthUI);
+    confirmPasswordInput.addEventListener('input', updateConfirmFeedback);
+    passwordInput.addEventListener('focus', updateStrengthUI);
+    passwordInput.addEventListener('blur', function() {
+      const password = passwordInput.value;
+      const checks = evaluatePassword(password);
+      const isStrong = Object.values(checks).every(Boolean);
+      passwordHelper.classList.toggle('show', password.length > 0 && !isStrong);
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const selectedRole = document.getElementById('hrRoleSelect').value;
+      const employeeId = document.getElementById('employeeId').value;
+      const name = document.getElementById('fullName').value;
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
+      const checks = evaluatePassword(password);
+      const isPasswordStrong = Object.values(checks).every(Boolean);
+
+      if (!selectedRole) {
+        alert('Please select your HR role to continue');
+        return;
+      }
+
+      if (!employeeId) {
+        alert('Please enter your Employee ID');
+        return;
+      }
+
+      if (!name) {
+        alert('Please enter your Full Name');
+        return;
+      }
+
+      if (!isPasswordStrong) {
+        alert('Password is too weak. Please meet all password requirements.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match. Please confirm your password.');
+        return;
+      }
+
+      sessionStorage.setItem('userRole', selectedRole);
+      sessionStorage.setItem('employeeId', employeeId);
+      sessionStorage.setItem('employeeName', name);
+      sessionStorage.setItem('isLoggedIn', 'true');
+
+      alert('Registration Successful! Welcome to the team.');
+      window.location.href = 'dashboard.html';
+    });
+  </script>
+
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+</body>
+</html>
