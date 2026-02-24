@@ -1,0 +1,101 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+    <div>
+      <h2 style="color:#0b2a45; font-size:1.35rem; margin-bottom:4px;"><i class="ti ti-edit-circle" style="color:#5d87ff; margin-right:8px;"></i>Correction Requests</h2>
+      <p style="color:#6b8496; font-size:0.85rem;">Review, approve, or reject attendance correction requests.</p>
+    </div>
+    <select id="crFilter" style="padding:10px 12px; border:1px solid #dde7f0; border-radius:10px;">
+      <option value="all">All Requests</option>
+      <option value="pending">Pending</option>
+      <option value="approved">Approved</option>
+      <option value="rejected">Rejected</option>
+    </select>
+  </div>
+
+  <div id="crToast" style="display:none; margin-bottom:12px; padding:10px 12px; border-radius:10px; background:#eef6ff; color:#1e3a5f; font-size:0.88rem;"></div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:820px;">
+      <thead>
+        <tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:0.82rem; text-transform:uppercase;">
+          <th style="padding:10px 12px;">Employee</th>
+          <th style="padding:10px 12px;">Date</th>
+          <th style="padding:10px 12px;">Requested Change</th>
+          <th style="padding:10px 12px;">Reason</th>
+          <th style="padding:10px 12px;">Status</th>
+          <th style="padding:10px 12px; text-align:right;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="crBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function() {
+  const HR3_STORAGE_KEY = 'hr3WorkforceSummary';
+  const requests = [
+    {id:1, emp:'Alex Morgan', date:'2026-02-20', change:'Time In 08:47 → 08:00', reason:'Biometric scanner issue', status:'pending'},
+    {id:2, emp:'Bianca Reyes', date:'2026-02-20', change:'Add Time Out 05:00 PM', reason:'Forgot to tap out', status:'pending'},
+    {id:3, emp:'Carlo Diaz', date:'2026-02-18', change:'Mark as On Duty', reason:'Field assignment', status:'approved'}
+  ];
+
+  const body = document.getElementById('crBody');
+  const filter = document.getElementById('crFilter');
+  const toast = document.getElementById('crToast');
+
+  function writeSummary(patch) {
+    try {
+      const current = JSON.parse(localStorage.getItem(HR3_STORAGE_KEY) || '{}');
+      const next = { ...current, ...patch };
+      localStorage.setItem(HR3_STORAGE_KEY, JSON.stringify(next));
+      window.dispatchEvent(new CustomEvent('hr3:refresh-summary'));
+    } catch (e) {}
+  }
+
+  function notify(text) {
+    toast.style.display = 'block';
+    toast.innerText = text;
+  }
+
+  function setStatus(id, newStatus) {
+    const row = requests.find(r => r.id === id);
+    if (!row) return;
+    row.status = newStatus;
+    notify(`Request ${newStatus}.`);
+    render();
+  }
+
+  function render() {
+    const mode = filter.value;
+    const data = requests.filter(r => mode === 'all' ? true : r.status === mode);
+
+    body.innerHTML = data.map(r => {
+      const chipBg = r.status === 'approved' ? '#eefcf4' : r.status === 'rejected' ? '#fff0f0' : '#fff8e8';
+      const chipColor = r.status === 'approved' ? '#17a96b' : r.status === 'rejected' ? '#d33f3f' : '#b88a00';
+
+      return `
+      <tr style="border-bottom:1px solid #f4f6fb;">
+        <td style="padding:12px; font-weight:600; color:#1e3a5f;">${r.emp}</td>
+        <td style="padding:12px; color:#506072;">${r.date}</td>
+        <td style="padding:12px; color:#506072;">${r.change}</td>
+        <td style="padding:12px; color:#506072;">${r.reason}</td>
+        <td style="padding:12px;"><span style="padding:5px 10px; border-radius:20px; font-size:0.75rem; font-weight:700; background:${chipBg}; color:${chipColor}; text-transform:capitalize;">${r.status}</span></td>
+        <td style="padding:12px; text-align:right;">${r.status === 'pending' ? `<button data-id="${r.id}" data-act="approved" style="margin-right:6px; padding:7px 10px; border:1px solid #d5e7dc; background:#fff; border-radius:8px; cursor:pointer;">Approve</button><button data-id="${r.id}" data-act="rejected" style="padding:7px 10px; border:1px solid #f0d3d3; background:#fff; border-radius:8px; cursor:pointer;">Reject</button>` : '<span style="color:#70859a;">Completed</span>'}</td>
+      </tr>`;
+    }).join('');
+
+    body.querySelectorAll('button[data-id]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        setStatus(Number(this.getAttribute('data-id')), this.getAttribute('data-act'));
+      });
+    });
+
+    const pendingCount = requests.filter(r => r.status === 'pending').length;
+    writeSummary({ pendingTimesheets: pendingCount });
+  }
+
+  filter.addEventListener('change', render);
+  render();
+})();
+</script>

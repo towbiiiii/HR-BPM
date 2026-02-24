@@ -1,0 +1,77 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-report-analytics" style="margin-right:8px; color:#5d87ff;"></i>Benefits Reports</h2>
+      <p style="margin:6px 0 0; color:#6b8496; font-size:.9rem;">Summary of enrollment, benefit status, and claims outcomes.</p>
+    </div>
+    <button id="brExport" type="button" style="padding:10px 14px; border:none; border-radius:10px; background:#5d87ff; color:#fff; font-weight:600;">Export Report</button>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(4,minmax(140px,1fr)); gap:10px; margin-bottom:14px;">
+    <div style="background:#f8fbff; border:1px solid #e8f1fc; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Total Members</div><div id="brMembers" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">0</div></div>
+    <div style="background:#eefcf4; border:1px solid #d7f5e5; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Active Coverage</div><div id="brActive" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">0</div></div>
+    <div style="background:#fff8e8; border:1px solid #ffebc2; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Pending Claims</div><div id="brPending" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">0</div></div>
+    <div style="background:#eef6ff; border:1px solid #dce9fa; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Approved Claim Total</div><div id="brApprovedTotal" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">₱0.00</div></div>
+  </div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:960px;">
+      <thead><tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;"><th style="padding:10px 12px;">Member ID</th><th style="padding:10px 12px;">Employee</th><th style="padding:10px 12px;">Plan</th><th style="padding:10px 12px;">Coverage</th><th style="padding:10px 12px;">Benefits</th><th style="padding:10px 12px;">Claim Status</th><th style="padding:10px 12px;">Claim Amount</th></tr></thead>
+      <tbody id="brBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  const KEY = 'benefitsRecordsData';
+
+  function read(){
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  }
+
+  function peso(v){ return `₱${Number(v || 0).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })}`; }
+
+  function badge(status){
+    const ok = status === 'Active' || status === 'Enabled' || status === 'Approved';
+    const pending = status === 'Pending';
+    const bg = ok ? '#eefcf4' : pending ? '#fff8e8' : '#f4f6fb';
+    const color = ok ? '#17a96b' : pending ? '#b88a00' : '#6b8496';
+    return `<span style="padding:5px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:${bg}; color:${color};">${status}</span>`;
+  }
+
+  function render(){
+    const rows = read();
+    const active = rows.filter(r => (r.coverageStatus || 'Active') === 'Active').length;
+    const pending = rows.filter(r => (r.claimStatus || 'None') === 'Pending').length;
+    const approvedTotal = rows.filter(r => (r.claimStatus || 'None') === 'Approved').reduce((s, r) => s + Number(r.claimAmount || 0), 0);
+
+    document.getElementById('brMembers').innerText = rows.length;
+    document.getElementById('brActive').innerText = active;
+    document.getElementById('brPending').innerText = pending;
+    document.getElementById('brApprovedTotal').innerText = peso(approvedTotal);
+
+    document.getElementById('brBody').innerHTML = rows.map(r => `
+      <tr style="border-bottom:1px solid #f4f6fb;">
+        <td style="padding:12px; font-weight:700; color:#1e3a5f;">${r.id}</td>
+        <td style="padding:12px; color:#506072;">${r.employee}</td>
+        <td style="padding:12px; color:#506072;">${r.plan}</td>
+        <td style="padding:12px;">${badge(r.coverageStatus || 'Active')}</td>
+        <td style="padding:12px;">${badge(r.benefitsStatus || 'Enabled')}</td>
+        <td style="padding:12px;">${badge(r.claimStatus || 'None')}</td>
+        <td style="padding:12px; color:#506072;">${peso(r.claimAmount || 0)}</td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('brExport').addEventListener('click', function(){
+    const rows = read();
+    const msg = `Success: Benefits Report | Members: ${rows.length} | Pending Claims: ${rows.filter(r => (r.claimStatus || 'None') === 'Pending').length}`;
+    alert(msg);
+  });
+
+  window.addEventListener('storage', function(e){ if (!e || e.key === KEY) render(); });
+  window.addEventListener('benefits:updated', render);
+  render();
+})();
+</script>

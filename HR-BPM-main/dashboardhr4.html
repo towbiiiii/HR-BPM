@@ -1,0 +1,284 @@
+<style>
+  /* 1. CONTAINER & GRID SYSTEM */
+  .hr-content-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .modern-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  /* 2. GLASS CARD UI */
+  .glass-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.7);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(93, 135, 255, 0.1);
+  }
+
+    .kpi-clickable { cursor: pointer; }
+
+  /* 3. COLOR GRADIENTS (FINANCIAL THEME) */
+  .kpi-modern { color: white; position: relative; overflow: hidden; }
+  .kpi-modern::after {
+    content: ""; position: absolute; width: 100px; height: 100px;
+    background: rgba(255, 255, 255, 0.1); border-radius: 50%; top: -20px; right: -20px;
+  }
+
+  .grad-slate { background: linear-gradient(135deg, #334155 0%, #1e293b 100%); }
+  .grad-gold { background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); }
+  .grad-cyan { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+  .grad-violet { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); }
+
+  /* 4. TYPOGRAPHY & TABLE */
+  .kpi-label { font-size: 0.85rem; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 8px; }
+  .kpi-value { font-size: 2.0rem; font-weight: 800; margin: 10px 0 5px 0; letter-spacing: -1px; }
+  .kpi-sub { font-size: 0.75rem; opacity: 0.8; }
+
+  .modern-table { width: 100%; border-collapse: collapse; }
+  .modern-table th { text-align: left; padding: 12px; font-size: 0.75rem; color: #64748b; text-transform: uppercase; border-bottom: 1px solid #f1f5f9; }
+  .modern-table td { padding: 15px 12px; border-bottom: 1px solid #f8fafc; font-size: 0.85rem; }
+
+  .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+  .pill-violet { background: #f5f3ff; color: #7c3aed; }
+  .pill-slate { background: #f1f5f9; color: #475569; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<div class="hr-content-wrapper">
+    <div class="modern-stats-grid">
+        <div class="glass-card kpi-modern grad-slate kpi-clickable" data-submodule="Payroll Reports">
+            <div class="kpi-label"><i class="ti ti-credit-card me-1"></i>Monthly Payroll</div>
+            <div class="kpi-value" id="hr4MonthlyPayrollValue">₱0.00</div>
+            <div class="kpi-sub" id="hr4MonthlyPayrollSub">Total Disbursement (Current)</div>
+        </div>
+        <div class="glass-card kpi-modern grad-violet kpi-clickable" data-submodule="HMO Enrollment">
+            <div class="kpi-label"><i class="ti ti-building-hospital me-1"></i>HMO Enrollment</div>
+            <div class="kpi-value" id="hr4HmoEnrollmentValue">0.0%</div>
+            <div class="kpi-sub" id="hr4HmoEnrollmentSub">Total active coverage</div>
+        </div>
+        <div class="glass-card kpi-modern grad-cyan kpi-clickable" data-submodule="Turnover Analysis">
+            <div class="kpi-label"><i class="ti ti-chart-histogram me-1"></i>Turnover Rate</div>
+            <div class="kpi-value" id="hr4TurnoverRateValue">0.0%</div>
+            <div class="kpi-sub" id="hr4TurnoverRateSub">Attrition (Year-to-Date)</div>
+        </div>
+        <div class="glass-card kpi-modern grad-gold kpi-clickable" data-submodule="Salary Adjustment">
+            <div class="kpi-label"><i class="ti ti-chart-bar me-1"></i>Compa-Ratio</div>
+            <div class="kpi-value" id="hr4CompaRatioValue">0.00</div>
+            <div class="kpi-sub" id="hr4CompaRatioSub">Market competitiveness index</div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.5fr 1.5fr; gap: 25px;">
+        <div class="glass-card" style="padding: 0; overflow: hidden;">
+            <div style="padding: 20px;">
+                <h4 style="margin:0; color: #1e293b; font-weight: 700;">Payroll Cycle Progress</h4>
+            </div>
+            <div style="padding: 0 20px 20px 20px;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 10px;">
+                    <span>Verification Phase</span>
+                    <span style="font-weight: 700;" id="hr4VerificationPercent">0%</span>
+                </div>
+                <div style="height: 10px; background: #f1f5f9; border-radius: 5px; overflow: hidden; margin-bottom: 25px;">
+                    <div id="hr4VerificationBar" style="width: 0%; height: 100%; background: #8b5cf6;"></div>
+                </div>
+                
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Benefit Component</th>
+                            <th>Administered</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>HMO Premiums</b></td>
+                            <td id="hr4HmoPremiumValue">₱0.00</td>
+                            <td><span class="status-pill pill-violet" id="hr4HmoPremiumStatus">Processed</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>Statutory Contributions</b></td>
+                            <td id="hr4StatutoryValue">₱0.00</td>
+                            <td><span class="status-pill pill-slate" id="hr4StatutoryStatus">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <h4 style="margin: 0 0 20px 0; color: #1e293b; font-weight: 700;">Intelligence Brief</h4>
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border-left: 4px solid #fbbf24;">
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #1e293b;">Salary Gap Alert</div>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;" id="hr4SalaryGapText">No salary variance data yet.</p>
+                </div>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 12px; border-left: 4px solid #06b6d4;">
+                    <div style="font-weight: 700; font-size: 0.85rem; color: #1e293b;">Benefits ROI</div>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;" id="hr4BenefitsRoiText">Benefits utilization data will appear after claim updates.</p>
+                </div>
+                <button id="hr4ExportBiBtn" style="width: 100%; padding: 12px; border: none; background: #1e293b; color: white; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                    Export Comprehensive BI Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const PAYROLL_KEY = 'payrollRecordsData';
+    const BENEFITS_KEY = 'benefitsRecordsData';
+    const COMPENSATION_KEY = 'compensationPlanData';
+    const EMPLOYEE_KEY = 'hcmEmployeeMasterData';
+    const TURNOVER_KEY = 'hcmTurnoverData';
+
+    function readArray(key) {
+        try {
+            const raw = localStorage.getItem(key);
+            const parsed = raw ? JSON.parse(raw) : [];
+            return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function readObject(key) {
+        try {
+            const raw = localStorage.getItem(key);
+            return raw ? JSON.parse(raw) : {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function peso(value) {
+        return `₱${Number(value || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function renderDashboard() {
+        const payroll = readArray(PAYROLL_KEY);
+        const benefits = readArray(BENEFITS_KEY);
+        const compensation = readArray(COMPENSATION_KEY);
+        const employees = readArray(EMPLOYEE_KEY);
+        const turnover = readObject(TURNOVER_KEY);
+
+        const currentPeriod = new Date().toISOString().slice(0, 7);
+        const periodPayroll = payroll.filter(item => (item.period || currentPeriod) === currentPeriod);
+        const monthlyPayroll = periodPayroll.reduce((sum, item) => sum + Number(item.net || 0), 0);
+        const processedCount = payroll.filter(item => item.status === 'Processed').length;
+        const verificationPercent = payroll.length ? Math.round((processedCount / payroll.length) * 100) : 0;
+
+        const activeCoverage = benefits.filter(item => (item.coverageStatus || 'Active') === 'Active').length;
+        const hmoEnrollmentRate = benefits.length ? (activeCoverage / benefits.length) * 100 : 0;
+
+        const headcount = Math.max(1, employees.length);
+        const attritionYtd = Number(turnover.attritionYTD || 0);
+        const turnoverRate = (attritionYtd / headcount) * 100;
+
+        const compaRatio = compensation.length
+            ? compensation.reduce((sum, item) => {
+                const base = Number(item.baseSalary || 0);
+                const adjusted = Number(item.adjustedSalary || 0);
+                return sum + (base > 0 ? adjusted / base : 0);
+              }, 0) / compensation.length
+            : 0;
+
+        const belowMarket = compensation.filter(item => Number(item.adjustedSalary || 0) < Number(item.baseSalary || 0)).length;
+        const approvedClaims = benefits.filter(item => (item.claimStatus || 'None') === 'Approved');
+        const approvedClaimTotal = approvedClaims.reduce((sum, item) => sum + Number(item.claimAmount || 0), 0);
+        const pendingClaims = benefits.filter(item => (item.claimStatus || 'None') === 'Pending').length;
+
+        const monthlyPayrollValue = document.getElementById('hr4MonthlyPayrollValue');
+        const monthlyPayrollSub = document.getElementById('hr4MonthlyPayrollSub');
+        const hmoEnrollmentValue = document.getElementById('hr4HmoEnrollmentValue');
+        const hmoEnrollmentSub = document.getElementById('hr4HmoEnrollmentSub');
+        const turnoverRateValue = document.getElementById('hr4TurnoverRateValue');
+        const turnoverRateSub = document.getElementById('hr4TurnoverRateSub');
+        const compaRatioValue = document.getElementById('hr4CompaRatioValue');
+        const compaRatioSub = document.getElementById('hr4CompaRatioSub');
+
+        if (monthlyPayrollValue) monthlyPayrollValue.innerText = peso(monthlyPayroll);
+        if (monthlyPayrollSub) monthlyPayrollSub.innerText = `${processedCount} of ${payroll.length} payroll entries processed`;
+        if (hmoEnrollmentValue) hmoEnrollmentValue.innerText = `${hmoEnrollmentRate.toFixed(1)}%`;
+        if (hmoEnrollmentSub) hmoEnrollmentSub.innerText = `${activeCoverage} active of ${benefits.length} enrolled members`;
+        if (turnoverRateValue) turnoverRateValue.innerText = `${turnoverRate.toFixed(1)}%`;
+        if (turnoverRateSub) turnoverRateSub.innerText = `${attritionYtd} attrition YTD across ${headcount} employees`;
+        if (compaRatioValue) compaRatioValue.innerText = compaRatio ? compaRatio.toFixed(2) : '0.00';
+        if (compaRatioSub) compaRatioSub.innerText = `${compensation.length} compensation plans tracked`;
+
+        const verificationPercentEl = document.getElementById('hr4VerificationPercent');
+        const verificationBar = document.getElementById('hr4VerificationBar');
+        if (verificationPercentEl) verificationPercentEl.innerText = `${verificationPercent}%`;
+        if (verificationBar) verificationBar.style.width = `${verificationPercent}%`;
+
+        const hmoPremiumValue = document.getElementById('hr4HmoPremiumValue');
+        const hmoPremiumStatus = document.getElementById('hr4HmoPremiumStatus');
+        const statutoryValue = document.getElementById('hr4StatutoryValue');
+        const statutoryStatus = document.getElementById('hr4StatutoryStatus');
+        if (hmoPremiumValue) hmoPremiumValue.innerText = peso(approvedClaimTotal);
+        if (hmoPremiumStatus) hmoPremiumStatus.innerText = approvedClaimTotal > 0 ? 'Processed' : 'Pending';
+
+        const statutoryTotal = payroll.reduce((sum, item) => sum + Number(item.deductions || 0), 0);
+        if (statutoryValue) statutoryValue.innerText = peso(statutoryTotal);
+        if (statutoryStatus) statutoryStatus.innerText = verificationPercent >= 100 ? 'Processed' : 'Pending';
+
+        const salaryGapText = document.getElementById('hr4SalaryGapText');
+        if (salaryGapText) {
+            salaryGapText.innerText = belowMarket > 0
+                ? `${belowMarket} employee plan(s) are below base-to-adjusted target and need review.`
+                : 'No salary gap alerts in current compensation plans.';
+        }
+
+        const benefitsRoiText = document.getElementById('hr4BenefitsRoiText');
+        if (benefitsRoiText) {
+            benefitsRoiText.innerText = pendingClaims > 0
+                ? `${pendingClaims} pending benefit claim(s); approved total ${peso(approvedClaimTotal)}.`
+                : `All processed benefit claims approved total ${peso(approvedClaimTotal)}.`;
+        }
+    }
+
+    function bindClicks() {
+        document.querySelectorAll('.kpi-clickable[data-submodule]').forEach(card => {
+            if (card.dataset.boundClick === 'true') return;
+            card.addEventListener('click', function() {
+                const submodule = card.getAttribute('data-submodule');
+                if (window.loadSubmodule) window.loadSubmodule(submodule, card);
+            });
+            card.dataset.boundClick = 'true';
+        });
+
+        const exportBtn = document.getElementById('hr4ExportBiBtn');
+        if (exportBtn && exportBtn.dataset.boundClick !== 'true') {
+            exportBtn.addEventListener('click', function() {
+                if (window.loadSubmodule) window.loadSubmodule('Payroll Reports', exportBtn);
+            });
+            exportBtn.dataset.boundClick = 'true';
+        }
+    }
+
+    renderDashboard();
+    bindClicks();
+
+    window.addEventListener('storage', renderDashboard);
+    window.addEventListener('hcm:updated', renderDashboard);
+    window.addEventListener('payroll:updated', renderDashboard);
+    window.addEventListener('benefits:updated', renderDashboard);
+    window.addEventListener('compensation:updated', renderDashboard);
+    window.addEventListener('hr4:refresh-summary', renderDashboard);
+})();
+</script>

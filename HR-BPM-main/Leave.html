@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leave Management · SeoDash (BPMN To‑be)</title>
+  <!-- favicon -->
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/seodashlogo.png" />
+  <!-- simplebar, bootstrap, custom styles -->
+  <link rel="stylesheet" href="../../node_modules/simplebar/dist/simplebar.min.css">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* additional process-aware styling */
+    .bpmn-badge {
+      background-color: #e8f4ff;
+      border-left: 4px solid #0d6efd;
+      padding: 1rem 1.25rem;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 2rem;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .flow-step-icon {
+      background: #e9ecef;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #2b3c4f;
+      flex-shrink: 0;
+    }
+    .flow-step-content {
+      background: white;
+      border: 1px solid #edf2f7;
+      border-radius: 16px;
+      padding: 1rem 1.5rem;
+      width: 100%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .decision-tag {
+      background-color: #fff3e0;
+      color: #b76e00;
+      font-weight: 600;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+    .output-pill {
+      background: #f8fafc;
+      border: 1px dashed #8a9aa8;
+      color: #1e2a36;
+      border-radius: 40px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-block;
+      margin: 0.2rem 0.2rem;
+    }
+    .hr-feed {
+      background-color: #f4f7fb;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: 1.8rem;
+    }
+    .btn-leave {
+      padding: 0.6rem 1.8rem;
+      font-weight: 500;
+    }
+    .process-map {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+      margin-top: 0.8rem;
+    }
+    @media (max-width: 768px) {
+      .process-map { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!--  Body Wrapper (exactly as template, keep layout) -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    
+    <!-- ======== SIDEBAR (identical to template, Leave active) ======== -->
+    <aside class="left-sidebar">
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="dashboard.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/logo-light.svg" alt="logo" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-6"></i><span class="hide-menu">Home</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="dashboard.html"><span><iconify-icon icon="solar:home-smile-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Dashboard</span></a></li>
+            <li class="nav-small-cap"><i class="ti ti-dots nav-small-cap-icon fs-6"></i><span class="hide-menu">UI COMPONENTS</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./ui-buttons.html"><span><iconify-icon icon="solar:layers-minimalistic-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Applicant Management</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./ui-alerts.html"><span><iconify-icon icon="solar:danger-circle-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Recruitment Management</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./ui-card.html"><span><iconify-icon icon="solar:bookmark-square-minimalistic-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">New Hire Onboarding</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./ui-forms.html"><span><iconify-icon icon="solar:file-text-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Performance Management</span></a></li>
+            <!-- ACTIVE: Leave Management with BPMN focus -->
+            <li class="sidebar-item active-page bg-primary-subtle">
+              <a class="sidebar-link" href="./LeaveManagement/Leave.html" aria-expanded="false">
+                <span><iconify-icon icon="solar:text-field-focus-bold-duotone" class="fs-6"></iconify-icon></span>
+                <span class="hide-menu">Leave Management (BPMN)</span>
+              </a>
+            </li>
+            <li class="nav-small-cap"><iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-6"></iconify-icon><span class="hide-menu">AUTH</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./authentication-login.html"><span><iconify-icon icon="solar:login-3-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Login</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./authentication-register.html"><span><iconify-icon icon="solar:user-plus-rounded-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Register</span></a></li>
+            <li class="nav-small-cap"><iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon><span class="hide-menu">EXTRA</span></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./icon-tabler.html"><span><iconify-icon icon="solar:sticker-smile-circle-2-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Icons</span></a></li>
+            <li class="sidebar-item"><a class="sidebar-link" href="./sample-page.html"><span><iconify-icon icon="solar:planet-3-bold-duotone" class="fs-6"></iconify-icon></span><span class="hide-menu">Sample Page</span></a></li>
+          </ul>
+          <!-- upgrade to pro (same) -->
+          <div class="unlimited-access hide-menu bg-primary-subtle position-relative mb-7 mt-7 rounded-3">
+            <div class="d-flex">
+              <div class="unlimited-access-title me-3"><h6 class="fw-semibold fs-4 mb-6 text-dark w-75">Upgrade to pro</h6><a href="#" class="btn btn-primary fs-2 fw-semibold lh-sm">Buy Pro</a></div>
+              <div class="unlimited-access-img"><img src="../assets/images/backgrounds/rocket.png" alt="rocket" class="img-fluid"></div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </aside>
+    
+    <!-- ======== MAIN WRAPPER : BPMN LEAVE MANAGEMENT CONTENT ======== -->
+    <div class="body-wrapper">
+      <!-- Header (identical) -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                <i class="ti ti-bell-ringing"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <a href="#" target="_blank" class="btn btn-primary me-2"><span class="d-none d-md-block">Check Pro Version</span><span class="d-block d-md-none">Pro</span></a>
+              <a href="#" target="_blank" class="btn btn-success"><span class="d-none d-md-block">Download Free </span><span class="d-block d-md-none">Free</span></a>
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="../assets/images/profile/user-1.jpg" alt="user" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item"><i class="ti ti-user fs-6"></i><p class="mb-0 fs-3">My Profile</p></a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item"><i class="ti ti-mail fs-6"></i><p class="mb-0 fs-3">My Account</p></a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item"><i class="ti ti-list-check fs-6"></i><p class="mb-0 fs-3">My Task</p></a>
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      
+      <!-- ===== BPMN LEAF PROCESS — TO‑BE BPMN IMPLEMENTATION ===== -->
+      <div class="container-fluid">
+        <!-- BPMN TITLE & BADGE (Inputs / Outputs semantic) -->
+        <div class="bpmn-badge d-flex flex-wrap align-items-center justify-content-between">
+          <div>
+            <h3 class="fw-bold mb-1 fs-2"><i class="ti ti-map-pin me-1"></i>Leave Management · BPMN To‑be</h3>
+            <p class="text-secondary mb-0">Process modelled from <strong>image.png</strong> – Start ➔ Submit via HMS ➔ Review ➔ HR System ➔ End</p>
+          </div>
+          <div class="mt-2 mt-sm-0">
+            <span class="output-pill bg-primary bg-opacity-10"><i class="ti ti-arrow-bar-to-down me-1"></i>Inputs: Start, Submit, Receive, Review</span>
+            <span class="output-pill bg-success bg-opacity-10"><i class="ti ti-arrow-bar-up me-1"></i>Outputs: Approve, Update, Notify, Reject</span>
+          </div>
+        </div>
+
+        <!-- FIRST ROW: LEAVE REQUEST CARD (Submit via HMS) + REVIEW DECISION -->
+        <div class="row">
+          <div class="col-lg-7 mb-4">
+            <div class="card h-100 border shadow-sm">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-primary me-2 p-2"><iconify-icon icon="solar:inbox-letter-bold-duotone" width="20"></iconify-icon></span>
+                  <h5 class="fw-semibold mb-0"><i class="ti ti-clipboard-list me-1"></i>Submit Leave Request (via HMS)</h5>
+                  <span class="ms-auto small text-muted">Step 1 · Input</span>
+                </div>
+                <!-- mimic HMS form -->
+                <form id="leaveRequestForm">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label">Employee name</label>
+                      <input type="text" class="form-control" placeholder="e.g. John Carter" value="Alex Morgan" id="empName">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">Leave type</label>
+                      <select class="form-select" id="leaveType">
+                        <option>Annual</option>
+                        <option selected>Sick</option>
+                        <option>Personal</option>
+                        <option>Unpaid</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">From date</label>
+                      <input type="date" class="form-control" value="2025-06-10">
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label">To date</label>
+                      <input type="date" class="form-control" value="2025-06-15">
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label">Reason</label>
+                      <textarea class="form-control" rows="2">Medical appointment</textarea>
+                    </div>
+                  </div>
+                  <div class="mt-4 d-flex gap-3 align-items-center">
+                    <button type="button" class="btn btn-primary btn-leave" id="submitHmsBtn">
+                      <iconify-icon icon="solar:send-square-bold-duotone" class="me-1"></iconify-icon> Submit via HMS
+                    </button>
+                    <span class="small text-success" id="submitFeedback" style="display: none;"><i class="ti ti-check"></i> Request submitted</span>
+                  </div>
+                </form>
+                <!-- link to BPMN: Receive Leave Request -->
+                <div class="mt-4 pt-2 border-top">
+                  <div class="d-flex justify-content-between">
+                    <span><iconify-icon icon="solar:inbox-archive-bold-duotone" class="me-1"></iconify-icon> <strong>Receive Leave Request</strong> – automatically after submit</span>
+                    <span class="badge bg-light text-dark">System auto‑receive</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- REVIEW & DECISION GATEWAY (Is Leave acceptable?) -->
+          <div class="col-lg-5 mb-4">
+            <div class="card border shadow-sm h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <span class="badge bg-warning me-2 p-2"><iconify-icon icon="solar:eye-bold-duotone" width="20"></iconify-icon></span>
+                  <h5 class="fw-semibold mb-0"><i class="ti ti-search me-1"></i>Review Leave Request</h5>
+                  <span class="ms-auto small text-muted">Manager / auto‑review</span>
+                </div>
+                <!-- current request context -->
+                <div class="bg-light p-3 rounded-3 mb-3">
+                  <div class="d-flex justify-content-between">
+                    <span>Employee: <strong id="reviewEmpName">Alex Morgan</strong></span>
+                    <span>Type: <span class="badge bg-info" id="reviewLeaveType">Sick</span></span>
+                  </div>
+                  <div class="mt-2 text-muted small">Leave period: 2025-06-10 → 2025-06-15 (5 days)</div>
+                </div>
+                <div class="d-flex gap-3 mt-3">
+                  <button class="btn btn-success flex-fill" id="decisionYesBtn">
+                    <i class="ti ti-circle-check"></i> Yes → Endorsed
+                  </button>
+                  <button class="btn btn-outline-danger flex-fill" id="decisionNoBtn">
+                    <i class="ti ti-circle-x"></i> No → Reject path
+                  </button>
+                </div>
+                <!-- endorsed request data display (shown after Yes) -->
+                <div id="endorsedBlock" style="display: none;" class="mt-3 p-2 bg-white border rounded-2">
+                  <small class="text-primary fw-bold"><iconify-icon icon="solar:check-circle-bold" class="me-1"></iconify-icon> Endorsed Leave Request (output)</small>
+                  <p class="mb-0 small text-muted mt-1">"Endorsed Request data" ready for HR System.</p>
+                </div>
+                <!-- auto reject / reject message (shown after No) -->
+                <div id="rejectBlock" style="display: none;" class="mt-3 p-2 bg-white border rounded-2">
+                  <span class="badge bg-danger">Reject Leave Request</span>
+                  <span class="badge bg-secondary">Auto Reject Leave</span>
+                  <p class="mb-0 small text-muted mt-1"><i class="ti ti-ban me-1"></i>Request rejected – notification will be sent.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> <!-- end row -->
+
+        <!-- PROCESS MAP: Endorsed path + HR System + Outputs + Notification -->
+        <div class="process-map mb-4">
+          <!-- Left side: Endorsed flow -->
+          <div class="card border shadow-sm">
+            <div class="card-body">
+              <h6 class="fw-semibold fs-5 mb-3"><iconify-icon icon="solar:clipboard-check-bold-duotone" class="me-2"></iconify-icon> Endorsed path · HR integration</h6>
+              <!-- flow step: endorsed request -->
+              <div class="flow-step">
+                <div class="flow-step-icon bg-success-subtle"><iconify-icon icon="solar:verified-check-bold-duotone" class="text-success"></iconify-icon></div>
+                <div class="flow-step-content">
+                  <strong>Endorsed Leave Request</strong> 
+                  <span class="badge bg-light text-dark ms-2">output</span>
+                  <div class="mt-2 text-success small"><i class="ti ti-arrow-right"></i> triggers HR System</div>
+                </div>
+              </div>
+              <!-- HR SYSTEM BLOCK (explicit from BPMN) -->
+              <div class="hr-feed">
+                <div class="d-flex align-items-center">
+                  <iconify-icon icon="solar:server-square-bold-duotone" width="32" class="me-2 text-primary"></iconify-icon>
+                  <h6 class="fw-semibold mb-0"><i class="ti ti-building me-1"></i>HR System</h6>
+                </div>
+                <p class="mb-1 small mt-2"><span class="fw-medium">Receive Reviewed Leave Request</span> — main input from review</p>
+                <div class="bg-white p-2 rounded-2 border mt-2 d-flex flex-wrap gap-2">
+                  <span class="output-pill bg-white"><i class="ti ti-checkbox"></i> Approve Leave</span>
+                  <span class="output-pill bg-white"><i class="ti ti-database"></i> Update Leave Records</span>
+                  <span class="output-pill bg-white"><i class="ti ti-send"></i> Send Notification to Employee</span>
+                </div>
+                <p class="text-muted mt-2 mb-0 small fst-italic">Outputs executed after HR receives endorsed request</p>
+              </div>
+              <!-- Final end event: End -->
+              <div class="mt-3 d-flex align-items-center">
+                <iconify-icon icon="solar:round-alt-arrow-right-bold-duotone" class="fs-5 me-1"></iconify-icon>
+                <span><strong>End</strong> (successful leave approval)</span>
+                <span class="ms-2 output-pill bg-light">End (BPMN)</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right side: Reject path + Notification + End -->
+          <div class="card border shadow-sm">
+            <div class="card-body">
+              <h6 class="fw-semibold fs-5 mb-3"><iconify-icon icon="solar:shield-warning-bold-duotone" class="me-2 text-danger"></iconify-icon> Reject / Decline path</h6>
+              <!-- explicit 'Endorsed Request data' from NO? Actually BPMN: No → Endorsed Request data (maybe an artifact) we show as data object -->
+              <div class="flow-step">
+                <div class="flow-step-icon bg-danger-subtle"><iconify-icon icon="solar:forbidden-circle-bold-duotone" class="text-danger"></iconify-icon></div>
+                <div class="flow-step-content">
+                  <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <span class="badge bg-secondary">Endorsed Request data</span>
+                    <span class="small">(from 'No' decision, attached to rejection)</span>
+                  </div>
+                  <div class="mt-2">
+                    <span class="output-pill bg-danger bg-opacity-10">Auto Reject Leave</span>
+                    <span class="output-pill bg-danger bg-opacity-10">Reject Leave Request</span>
+                  </div>
+                  <div class="mt-2 small">
+                    <iconify-icon icon="solar:notification-unread-bold-duotone" class="me-1"></iconify-icon>
+                    <strong>Send Notification to Employee</strong> (rejection reason)
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 d-flex align-items-center">
+                <iconify-icon icon="solar:round-alt-arrow-right-bold-duotone" class="fs-5 me-1"></iconify-icon>
+                <span><strong>End</strong> (rejected, process finished)</span>
+                <span class="ms-2 output-pill bg-light">End</span>
+              </div>
+              <!-- extra: wait for notification (from inputs) we display as subtle -->
+              <div class="mt-4 pt-2 border-top small text-secondary">
+                <iconify-icon icon="solar:clock-circle-bold-duotone"></iconify-icon> Wait for notification – active on both paths (employee notified)
+              </div>
+            </div>
+          </div>
+        </div> <!-- end process map -->
+
+        <!-- complete flow summary - quick BPMN trace -->
+        <div class="card bg-light-subtle border-start border-primary border-4">
+          <div class="card-body py-3">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+              <div class="d-flex gap-3 align-items-center">
+                <iconify-icon icon="solar:diagram-up-bold-duotone" width="30"></iconify-icon>
+                <span class="fw-semibold">BPMN flow active:</span>
+              </div>
+              <div id="bpmnStatusBadge" class="d-flex gap-2 flex-wrap">
+                <span class="output-pill bg-white">Start → Submit → Receive → Review</span>
+                <span class="output-pill bg-white" id="liveDecisionBadge"><i class="ti ti-clock-hour-3 me-1"></i>Decision: pending</span>
+                <span class="output-pill bg-white"><i class="ti ti-arrow-right"></i> HR System (on Yes)</span>
+                <span class="output-pill bg-white"><i class="ti ti-arrow-right"></i> Auto Reject (on No)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- sample page footer as per template (same) -->
+        <div class="py-6 px-6 text-center mt-3">
+          <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">ThemeWagon</a></p>
+          <p class="mb-0 fs-5 mt-2 text-muted"><i class="ti ti-puzzle me-1"></i>BPMN to‑be implemented — Leave Management conforms to <strong>image.png</strong> (Inputs/Outputs & HR System)</p>
+        </div>
+      </div> <!-- end container-fluid -->
+    </div> <!-- end body-wrapper -->
+  </div> <!-- end page-wrapper -->
+
+  <!-- scripts (same template) -->
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <!-- custom BPMN interaction script (to reflect decision) -->
+  <script>
+    (function() {
+      // capture elements
+      const submitBtn = document.getElementById('submitHmsBtn');
+      const submitFeedback = document.getElementById('submitFeedback');
+      const decisionYes = document.getElementById('decisionYesBtn');
+      const decisionNo = document.getElementById('decisionNoBtn');
+      const endorsedBlock = document.getElementById('endorsedBlock');
+      const rejectBlock = document.getElementById('rejectBlock');
+      const liveDecisionBadge = document.getElementById('liveDecisionBadge');
+      const empNameInput = document.getElementById('empName');
+      const reviewEmpName = document.getElementById('reviewEmpName');
+      const leaveTypeSelect = document.getElementById('leaveType');
+      const reviewLeaveType = document.getElementById('reviewLeaveType');
+
+      // Update review panel when employee name / type changes
+      function updateReviewContext() {
+        if (reviewEmpName) reviewEmpName.innerText = empNameInput.value || 'Alex Morgan';
+        if (reviewLeaveType) reviewLeaveType.innerText = leaveTypeSelect.options[leaveTypeSelect.selectedIndex]?.text || 'Sick';
+      }
+      empNameInput?.addEventListener('input', updateReviewContext);
+      leaveTypeSelect?.addEventListener('change', updateReviewContext);
+
+      // Submit via HMS – just feedback
+      if (submitBtn) {
+        submitBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          submitFeedback.style.display = 'inline-block';
+          setTimeout(() => { submitFeedback.style.opacity = '0.8'; }, 100);
+          // also update receive step visual (already auto)
+        });
+      }
+
+      // reset endorsements / reject blocks when new decision
+      function resetDecisionHighlights() {
+        if (endorsedBlock) endorsedBlock.style.display = 'none';
+        if (rejectBlock) rejectBlock.style.display = 'none';
+      }
+
+      // YES = endorsed path
+      if (decisionYes) {
+        decisionYes.addEventListener('click', function() {
+          resetDecisionHighlights();
+          endorsedBlock.style.display = 'block';
+          rejectBlock.style.display = 'none';
+          liveDecisionBadge.innerHTML = '<i class="ti ti-circle-check me-1"></i>Decision: YES → Endorsed, HR System';
+          // optional: simulate HR system activity (visual only)
+        });
+      }
+
+      // NO = reject path
+      if (decisionNo) {
+        decisionNo.addEventListener('click', function() {
+          resetDecisionHighlights();
+          endorsedBlock.style.display = 'none';
+          rejectBlock.style.display = 'block';
+          liveDecisionBadge.innerHTML = '<i class="ti ti-circle-x me-1"></i>Decision: NO → Auto Reject, Notify';
+        });
+      }
+
+      // initialize with no decision (but show pending)
+      if (liveDecisionBadge) liveDecisionBadge.innerHTML = '<i class="ti ti-clock-hour-3 me-1"></i>Decision: pending (choose Yes/No)';
+      // ensure default no highlights
+      resetDecisionHighlights();
+    })();
+  </script>
+  <!-- ensure any iconify fallback (already set) -->
+</body>
+</html>

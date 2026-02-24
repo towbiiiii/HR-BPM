@@ -1,0 +1,68 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+    <div>
+      <h2 style="color:#0b2a45; font-size:1.35rem; margin-bottom:4px;"><i class="ti ti-chart-bar" style="color:#5d87ff; margin-right:8px;"></i>Attendance Reports</h2>
+      <p style="color:#6b8496; font-size:0.85rem;">Generate and preview attendance summaries by date range.</p>
+    </div>
+    <button id="arExport" type="button" style="padding:10px 14px; border:none; border-radius:10px; background:#5d87ff; color:#fff; font-weight:600; cursor:pointer;">Export CSV</button>
+  </div>
+
+  <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+    <input id="arFrom" type="date" style="padding:10px 12px; border:1px solid #dde7f0; border-radius:10px;">
+    <input id="arTo" type="date" style="padding:10px 12px; border:1px solid #dde7f0; border-radius:10px;">
+    <button id="arGenerate" type="button" style="padding:10px 14px; border:1px solid #d2dfef; border-radius:10px; background:#fff; color:#1e3a5f; font-weight:600; cursor:pointer;">Generate</button>
+  </div>
+
+  <div id="arSummary" style="display:grid; grid-template-columns:repeat(3, minmax(120px,1fr)); gap:12px; margin-bottom:18px;">
+    <div style="background:#f8fbff; border:1px solid #e8f1fc; border-radius:12px; padding:12px;"><div style="font-size:0.75rem; color:#6b8496;">Avg Attendance</div><div id="arAvg" style="font-size:1.15rem; font-weight:700; color:#0b2a45;">--</div></div>
+    <div style="background:#fffaf1; border:1px solid #ffebc2; border-radius:12px; padding:12px;"><div style="font-size:0.75rem; color:#6b8496;">Late Incidents</div><div id="arLate" style="font-size:1.15rem; font-weight:700; color:#0b2a45;">--</div></div>
+    <div style="background:#fff5f5; border:1px solid #ffd9d9; border-radius:12px; padding:12px;"><div style="font-size:0.75rem; color:#6b8496;">Absences</div><div id="arAbsent" style="font-size:1.15rem; font-weight:700; color:#0b2a45;">--</div></div>
+  </div>
+
+  <div id="arMessage" style="display:none; padding:10px 12px; border-radius:10px; background:#eef6ff; color:#1e3a5f; font-size:0.88rem;"></div>
+</div>
+
+<script>
+(function() {
+  const HR3_STORAGE_KEY = 'hr3WorkforceSummary';
+  const msg = document.getElementById('arMessage');
+
+  function writeSummary(patch) {
+    try {
+      const current = JSON.parse(localStorage.getItem(HR3_STORAGE_KEY) || '{}');
+      const next = { ...current, ...patch };
+      localStorage.setItem(HR3_STORAGE_KEY, JSON.stringify(next));
+      window.dispatchEvent(new CustomEvent('hr3:refresh-summary'));
+    } catch (e) {}
+  }
+
+  function generate() {
+    const from = document.getElementById('arFrom').value;
+    const to = document.getElementById('arTo').value;
+
+    if (!from || !to) {
+      msg.style.display = 'block';
+      msg.innerText = 'Select both From and To dates to generate a report.';
+      return;
+    }
+
+    document.getElementById('arAvg').innerText = '94.6%';
+    document.getElementById('arLate').innerText = '18';
+    document.getElementById('arAbsent').innerText = '7';
+    msg.style.display = 'block';
+    msg.innerText = `Success: Report generated for ${from} to ${to}.`;
+
+    writeSummary({
+      attendanceRate: 94.6,
+      overtimeHours: 142,
+      pendingTimesheets: 18
+    });
+  }
+
+  document.getElementById('arGenerate').addEventListener('click', generate);
+  document.getElementById('arExport').addEventListener('click', function() {
+    msg.style.display = 'block';
+    msg.innerText = 'Success: Export started. CSV file is being prepared.';
+  });
+})();
+</script>
