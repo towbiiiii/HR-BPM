@@ -1,0 +1,41 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-calendar-time" style="margin-right:8px; color:#5d87ff;"></i>Staff Scheduling</h2>
+      <p style="margin:6px 0 0; color:#64748b; font-size:.9rem;">Plan weekly schedules per department and shift.</p>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <select id="ssDept" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;"><option>All Departments</option><option>Emergency</option><option>ICU</option><option>Laboratory</option></select>
+      <input id="ssSearch" placeholder="Search staff" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    </div>
+  </div>
+
+  <div style="overflow:auto;">
+    <table id="ssTable" style="width:100%; border-collapse:collapse; min-width:840px;">
+      <thead><tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;"><th style="padding:10px;">Staff</th><th style="padding:10px;">Department</th><th style="padding:10px;">Mon</th><th style="padding:10px;">Tue</th><th style="padding:10px;">Wed</th><th style="padding:10px;">Thu</th><th style="padding:10px;">Fri</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eef2f6;"><td style="padding:12px; font-weight:600;">Maria Santos</td><td style="padding:12px;">Emergency</td><td style="padding:12px;">Morning</td><td style="padding:12px;">Morning</td><td style="padding:12px;">Off</td><td style="padding:12px;">Evening</td><td style="padding:12px;">Evening</td></tr>
+        <tr style="border-bottom:1px solid #eef2f6;"><td style="padding:12px; font-weight:600;">Carlos Reyes</td><td style="padding:12px;">ICU</td><td style="padding:12px;">Night</td><td style="padding:12px;">Night</td><td style="padding:12px;">Night</td><td style="padding:12px;">Off</td><td style="padding:12px;">Off</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+(function(){
+  const table = document.getElementById('ssTable');
+  const dept = document.getElementById('ssDept');
+  const search = document.getElementById('ssSearch');
+  function apply(){
+    const q = (search.value||'').toLowerCase();
+    const d = dept.value;
+    Array.from(table.querySelectorAll('tbody tr')).forEach(r => {
+      const name = r.cells[0].innerText.toLowerCase();
+      const dep = r.cells[1].innerText;
+      const ok = (!q || name.includes(q)) && (d==='All Departments' || dep===d);
+      r.style.display = ok ? '' : 'none';
+    });
+  }
+  dept.addEventListener('change', apply);
+  search.addEventListener('input', apply);
+})();
+</script>

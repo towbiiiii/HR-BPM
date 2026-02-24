@@ -1,0 +1,86 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-id"></i> Employee Master Data</h2>
+      <p style="margin:6px 0 0; color:#6b8496; font-size:.9rem;">Manage central employee profiles and core details.</p>
+    </div>
+  </div>
+
+  <div style="border:1px solid #eef2f6; border-radius:14px; padding:14px; margin-bottom:14px;">
+    <div style="display:grid; grid-template-columns:repeat(5,minmax(140px,1fr)); gap:10px;">
+      <input id="emdId" placeholder="Employee ID" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+      <input id="emdName" placeholder="Full Name" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+      <select id="emdDept" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;"><option>HR</option><option>Finance</option><option>Operations</option><option>Clinical</option></select>
+      <input id="emdEmail" type="email" placeholder="Email" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+      <button id="emdAdd" type="button" style="padding:10px 14px; border:none; border-radius:10px; background:#5d87ff; color:#fff; font-weight:600;">Add Employee</button>
+    </div>
+    <div id="emdMsg" style="display:none; margin-top:10px; padding:10px 12px; border-radius:10px; background:#eef6ff; color:#1e3a5f; font-size:.88rem;"></div>
+  </div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:850px;">
+      <thead><tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;"><th style="padding:10px 12px;">Employee ID</th><th style="padding:10px 12px;">Name</th><th style="padding:10px 12px;">Department</th><th style="padding:10px 12px;">Email</th><th style="padding:10px 12px;">Status</th></tr></thead>
+      <tbody id="emdBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  const KEY = 'hcmEmployeeMasterData';
+
+  function read(){
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (e) {}
+    const seed = [
+      { id:'EMP-1001', name:'Maria Santos', dept:'HR', email:'maria.santos@company.com', status:'Active' },
+      { id:'EMP-1002', name:'Carlos Reyes', dept:'Operations', email:'carlos.reyes@company.com', status:'Active' }
+    ];
+    localStorage.setItem(KEY, JSON.stringify(seed));
+    return seed;
+  }
+
+  function write(data){
+    localStorage.setItem(KEY, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent('hcm:updated'));
+  }
+
+  function render(){
+    const rows = read();
+    document.getElementById('emdBody').innerHTML = rows.map(r => `
+      <tr style="border-bottom:1px solid #f4f6fb;">
+        <td style="padding:12px; font-weight:700; color:#1e3a5f;">${r.id}</td>
+        <td style="padding:12px; color:#506072;">${r.name}</td>
+        <td style="padding:12px; color:#506072;">${r.dept}</td>
+        <td style="padding:12px; color:#506072;">${r.email}</td>
+        <td style="padding:12px;"><span style="padding:5px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:#eefcf4; color:#17a96b;">${r.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('emdAdd').addEventListener('click', function(){
+    const id = document.getElementById('emdId').value.trim();
+    const name = document.getElementById('emdName').value.trim();
+    const dept = document.getElementById('emdDept').value;
+    const email = document.getElementById('emdEmail').value.trim();
+    const msg = document.getElementById('emdMsg');
+    if (!id || !name || !email) {
+      msg.style.display='block'; msg.innerText='Please complete Employee ID, Name, and Email.'; return;
+    }
+    const data = read();
+    data.unshift({ id, name, dept, email, status:'Active' });
+    write(data);
+    document.getElementById('emdId').value='';
+    document.getElementById('emdName').value='';
+    document.getElementById('emdEmail').value='';
+    msg.style.display='block'; msg.innerText=`Success: Employee ${id} added to master data.`;
+    render();
+  });
+
+  window.addEventListener('storage', function(e){ if (!e || e.key === KEY) render(); });
+  window.addEventListener('hcm:updated', render);
+  render();
+})();
+</script>

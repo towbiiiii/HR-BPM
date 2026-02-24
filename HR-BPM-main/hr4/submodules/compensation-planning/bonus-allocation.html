@@ -1,0 +1,88 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-gift" style="margin-right:8px; color:#5d87ff;"></i>Bonus Allocation</h2>
+      <p style="margin:6px 0 0; color:#6b8496; font-size:.9rem;">Allocate and monitor bonus amounts across compensation plans.</p>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,minmax(160px,1fr)); gap:10px; margin-bottom:12px;">
+    <select id="baPlan" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;"></select>
+    <input id="baAmount" type="number" min="0" step="0.01" placeholder="Bonus Amount" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    <button id="baAllocate" type="button" style="padding:10px 14px; border:none; border-radius:10px; background:#5d87ff; color:#fff; font-weight:600;">Allocate Bonus</button>
+  </div>
+  <div id="baMsg" style="display:none; margin-bottom:12px; padding:10px 12px; border-radius:10px; background:#eef6ff; color:#1e3a5f; font-size:.88rem;"></div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,minmax(140px,1fr)); gap:10px; margin-bottom:12px;">
+    <div style="background:#f8fbff; border:1px solid #e8f1fc; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Plans</div><div id="baPlans" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">0</div></div>
+    <div style="background:#eefcf4; border:1px solid #d7f5e5; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">With Bonus</div><div id="baWithBonus" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">0</div></div>
+    <div style="background:#fff8e8; border:1px solid #ffebc2; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Total Bonus</div><div id="baTotalBonus" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">₱0.00</div></div>
+  </div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:900px;">
+      <thead><tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;"><th style="padding:10px 12px;">Plan ID</th><th style="padding:10px 12px;">Employee</th><th style="padding:10px 12px;">Adjusted Salary</th><th style="padding:10px 12px;">Incentive</th><th style="padding:10px 12px;">Bonus</th><th style="padding:10px 12px;">Grand Total</th></tr></thead>
+      <tbody id="baBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  const KEY = 'compensationPlanData';
+  function peso(v){ return `₱${Number(v || 0).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })}`; }
+
+  function read(){
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  }
+
+  function write(data){
+    localStorage.setItem(KEY, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent('compensation:updated'));
+  }
+
+  function grand(row){ return Number(row.adjustedSalary || 0) + Number(row.incentive || 0) + Number(row.bonus || 0); }
+
+  function render(){
+    const rows = read();
+    document.getElementById('baPlan').innerHTML = rows.map(r => `<option value="${r.id}">${r.id} - ${r.employee}</option>`).join('');
+
+    document.getElementById('baPlans').innerText = rows.length;
+    document.getElementById('baWithBonus').innerText = rows.filter(r => Number(r.bonus || 0) > 0).length;
+    document.getElementById('baTotalBonus').innerText = peso(rows.reduce((s, r) => s + Number(r.bonus || 0), 0));
+
+    document.getElementById('baBody').innerHTML = rows.map(r => `
+      <tr style="border-bottom:1px solid #f4f6fb;">
+        <td style="padding:12px; font-weight:700; color:#1e3a5f;">${r.id}</td>
+        <td style="padding:12px; color:#506072;">${r.employee}</td>
+        <td style="padding:12px; color:#506072;">${peso(r.adjustedSalary)}</td>
+        <td style="padding:12px; color:#506072;">${peso(r.incentive)}</td>
+        <td style="padding:12px; color:#506072;">${peso(r.bonus)}</td>
+        <td style="padding:12px; color:#0b2a45; font-weight:700;">${peso(grand(r))}</td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('baAllocate').addEventListener('click', function(){
+    const id = document.getElementById('baPlan').value;
+    const amount = Number(document.getElementById('baAmount').value || 0);
+    const msg = document.getElementById('baMsg');
+    if (!id || amount < 0) {
+      msg.style.display='block'; msg.innerText='Please choose a plan and valid bonus amount.'; return;
+    }
+    const rows = read();
+    const target = rows.find(r => r.id === id);
+    if (!target) return;
+    target.bonus = amount;
+    target.status = 'Updated';
+    write(rows);
+    msg.style.display='block'; msg.innerText=`Success: Bonus allocated for ${id}.`;
+    document.getElementById('baAmount').value='';
+    render();
+  });
+
+  window.addEventListener('storage', function(e){ if (!e || e.key === KEY) render(); });
+  window.addEventListener('compensation:updated', render);
+  render();
+})();
+</script>

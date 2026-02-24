@@ -1,0 +1,196 @@
+<style>
+  /* 1. CONTAINER & GRID SYSTEM */
+  .hr-content-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .modern-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  /* 2. GLASS CARD UI */
+  .glass-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(226, 232, 240, 0.7);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(93, 135, 255, 0.1);
+  }
+
+    .kpi-clickable { cursor: pointer; }
+
+  /* 3. COLOR GRADIENTS */
+  .kpi-modern { color: white; position: relative; overflow: hidden; }
+  .kpi-modern::after {
+    content: ""; position: absolute; width: 100px; height: 100px;
+    background: rgba(255, 255, 255, 0.1); border-radius: 50%; top: -20px; right: -20px;
+  }
+
+  .grad-indigo { background: linear-gradient(135deg, #6610f2 0%, #4b0db8 100%); }
+  .grad-emerald { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+  .grad-amber { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+  .grad-rose { background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); }
+
+  /* 4. TYPOGRAPHY & TABLE */
+  .kpi-label { font-size: 0.85rem; font-weight: 500; opacity: 0.9; display: flex; align-items: center; gap: 8px; }
+  .kpi-value { font-size: 2.2rem; font-weight: 800; margin: 10px 0 5px 0; letter-spacing: -1px; }
+  .kpi-sub { font-size: 0.75rem; opacity: 0.8; }
+
+  .modern-table { width: 100%; border-collapse: collapse; }
+  .modern-table th { text-align: left; padding: 12px; font-size: 0.75rem; color: #5a6a85; text-transform: uppercase; border-bottom: 1px solid #f1f1f1; }
+  .modern-table td { padding: 15px 12px; border-bottom: 1px solid #f8fafd; font-size: 0.85rem; vertical-align: middle; }
+
+  .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+  .pill-green { background: #ecfdf5; color: #10b981; }
+  .pill-yellow { background: #fffbeb; color: #d97706; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<div class="hr-content-wrapper">
+    <div class="modern-stats-grid">
+        <div class="glass-card kpi-modern grad-indigo kpi-clickable" data-submodule="Attendance Monitoring">
+            <div class="kpi-label"><i class="ti ti-clock-hour-3 me-1"></i>Attendance Rate</div>
+            <div class="kpi-value" id="hr3AttendanceRateValue">96.4%</div>
+            <div class="kpi-sub" id="hr3AttendanceRateSub">Today's active headcount</div>
+        </div>
+        <div class="glass-card kpi-modern grad-rose kpi-clickable" data-submodule="Overtime Tracking">
+            <div class="kpi-label"><i class="ti ti-alert-triangle me-1"></i>Overtime Hours</div>
+            <div class="kpi-value" id="hr3OvertimeValue">142h</div>
+            <div class="kpi-sub" id="hr3OvertimeSub">Total accumulated this week</div>
+        </div>
+        <div class="glass-card kpi-modern grad-emerald kpi-clickable" data-submodule="Leave Dashboard">
+            <div class="kpi-label"><i class="ti ti-beach me-1"></i>On Leave</div>
+            <div class="kpi-value" id="hr3OnLeaveValue">14</div>
+            <div class="kpi-sub" id="hr3OnLeaveSub">8 Approved, 6 Pending</div>
+        </div>
+        <div class="glass-card kpi-modern grad-amber kpi-clickable" data-submodule="Timesheet Approval">
+            <div class="kpi-label"><i class="ti ti-file-text me-1"></i>Pending Timesheets</div>
+            <div class="kpi-value" id="hr3PendingTimesheetsValue">45</div>
+            <div class="kpi-sub" id="hr3PendingTimesheetsSub">Require supervisor approval</div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 25px;">
+        <div class="glass-card" style="padding: 0; overflow: hidden;">
+            <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin:0; color: #2a3547; font-weight: 700;">Shift Coverage (Nursing)</h4>
+                <span class="status-pill pill-green">Optimal Staffing</span>
+            </div>
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>Department</th>
+                        <th>Shift</th>
+                        <th>Coverage</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Emergency Room</b></td>
+                        <td>Morning (6AM-2PM)</td>
+                        <td>12 / 12</td>
+                        <td><span class="status-pill pill-green">Full</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>ICU Ward</b></td>
+                        <td>Night (10PM-6AM)</td>
+                        <td>8 / 10</td>
+                        <td><span class="status-pill pill-yellow">Understaffed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="glass-card">
+            <h4 style="margin: 0 0 20px 0; color: #2a3547; font-weight: 700;">Leave Requests</h4>
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px; border-bottom: 1px solid #f8fafd;">
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.85rem;">Mark Wilson</div>
+                        <div style="font-size: 0.75rem; color: #7c8fac;">Sick Leave • 2 Days</div>
+                    </div>
+                    <button style="border: none; background: #5d87ff; color: white; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; cursor: pointer;">Review</button>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.85rem;">Anna Lee</div>
+                        <div style="font-size: 0.75rem; color: #7c8fac;">Vacation • 5 Days</div>
+                    </div>
+                    <button style="border: none; background: #5d87ff; color: white; border-radius: 6px; padding: 4px 8px; font-size: 0.7rem; cursor: pointer;">Review</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const HR3_STORAGE_KEY = 'hr3WorkforceSummary';
+
+    const defaults = {
+        attendanceRate: 96.4,
+        overtimeHours: 142,
+        onLeaveTotal: 14,
+        onLeaveApproved: 8,
+        onLeavePending: 6,
+        pendingTimesheets: 45
+    };
+
+    function readSummary() {
+        try {
+            const raw = localStorage.getItem(HR3_STORAGE_KEY);
+            if (!raw) return { ...defaults };
+            return { ...defaults, ...JSON.parse(raw) };
+        } catch (e) {
+            return { ...defaults };
+        }
+    }
+
+    function renderSummary() {
+        const data = readSummary();
+
+        const attendanceRateValue = document.getElementById('hr3AttendanceRateValue');
+        const attendanceRateSub = document.getElementById('hr3AttendanceRateSub');
+        const overtimeValue = document.getElementById('hr3OvertimeValue');
+        const onLeaveValue = document.getElementById('hr3OnLeaveValue');
+        const onLeaveSub = document.getElementById('hr3OnLeaveSub');
+        const pendingTimesheetsValue = document.getElementById('hr3PendingTimesheetsValue');
+
+        if (attendanceRateValue) attendanceRateValue.innerText = `${Number(data.attendanceRate).toFixed(1)}%`;
+        if (attendanceRateSub) attendanceRateSub.innerText = `${Math.round(Number(data.attendanceRate || 0))}% current attendance performance`;
+        if (overtimeValue) overtimeValue.innerText = `${Number(data.overtimeHours || 0)}h`;
+        if (onLeaveValue) onLeaveValue.innerText = `${Number(data.onLeaveTotal || 0)}`;
+        if (onLeaveSub) onLeaveSub.innerText = `${Number(data.onLeaveApproved || 0)} Approved, ${Number(data.onLeavePending || 0)} Pending`;
+        if (pendingTimesheetsValue) pendingTimesheetsValue.innerText = `${Number(data.pendingTimesheets || 0)}`;
+    }
+
+    function bindSubmoduleCards() {
+        document.querySelectorAll('.kpi-clickable[data-submodule]').forEach(card => {
+            if (card.dataset.boundClick === 'true') return;
+            card.addEventListener('click', function() {
+                const sub = card.getAttribute('data-submodule');
+                if (window.loadSubmodule) window.loadSubmodule(sub, card);
+            });
+            card.dataset.boundClick = 'true';
+        });
+    }
+
+    renderSummary();
+    bindSubmoduleCards();
+    window.addEventListener('storage', renderSummary);
+    window.addEventListener('hr3:refresh-summary', renderSummary);
+})();
+</script>
