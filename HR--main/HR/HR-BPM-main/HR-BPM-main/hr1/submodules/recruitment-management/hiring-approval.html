@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- HIRING APPROVAL EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; /* Matching Dashboard Primary */
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-danger: #fa896b;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .approval-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s ease-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section */
+    .ap-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .ap-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Approval Card Layout */
+    .approval-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: var(--shadow-refined);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .approval-card:hover {
+      border-color: var(--hr-primary);
+      transform: translateY(-4px);
+    }
+
+    /* Candidate Overview Section */
+    .candidate-brief {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-right: 1px solid #f1f5f9;
+      padding-right: 20px;
+    }
+
+    .candidate-identity {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar-pill {
+      width: 48px;
+      height: 48px;
+      background: #f0f5ff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hr-primary);
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    /* Salary & Offer Details */
+    .offer-details {
+      padding-right: 20px;
+      border-right: 1px solid #f1f5f9;
+    }
+
+    .data-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .label-caps {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .value-bold {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--hr-text);
+    }
+
+    /* Approval Flow UI */
+    .approval-flow {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .status-stepper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .step {
+      height: 6px;
+      flex: 1;
+      border-radius: 10px;
+      background: #f1f5f9;
+    }
+
+    .step.active { background: var(--hr-primary); }
+    .step.complete { background: var(--hr-success); }
+
+    /* Action Buttons - Blue Pill Inspired */
+    .action-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-approve {
+      flex: 1;
+      background: var(--hr-primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 50px; /* Force Pill Shape */
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-approve:hover {
+      background: #4570e6;
+      box-shadow: 0 8px 20px rgba(93, 135, 255, 0.25);
+    }
+
+    .btn-reject {
+      background: #fff5f5;
+      color: var(--hr-danger);
+      border: 1px solid #ffebeb;
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-reject:hover {
+      background: var(--hr-danger);
+      color: white;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="approval-container">
+    
+    <div class="ap-header">
+        <div>
+            <h2>Hiring Approval</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Final review of employment offers and department staffing requests.</p>
+        </div>
+        <div style="background: white; padding: 12px 24px; border-radius: 20px; box-shadow: var(--shadow-refined); text-align: right;">
+            <span class="label-caps">Pending Approval</span>
+            <div style="font-size: 22px; font-weight: 800; color: var(--hr-primary);">04 Candidates</div>
+        </div>
+    </div>
+
+    <div class="approval-list">
+        
+        <div class="approval-card">
+            <div class="candidate-brief">
+                <div class="candidate-identity">
+                    <div class="avatar-pill">RM</div>
+                    <div>
+                        <div class="value-bold">Robert Miller</div>
+                        <div style="font-size: 12px; color: var(--hr-text-light);">Senior Clinical Nurse</div>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="label-caps">Department</span>
+                    <div class="value-bold">Emergency Medicine</div>
+                </div>
+            </div>
+
+            <div class="offer-details">
+                <div class="data-row">
+                    <span class="label-caps">Proposed Salary</span>
+                    <span class="value-bold">$84,500 / yr</span>
+                </div>
+                <div class="data-row">
+                    <span class="label-caps">Start Date</span>
+                    <span class="value-bold">March 15, 2026</span>
+                </div>
+                <div class="data-row">
+                    <span class="label-caps">Employment Type</span>
+                    <span class="value-bold">Full-Time (Regular)</span>
+                </div>
+            </div>
+
+            <div class="approval-flow">
+                <div class="status-stepper">
+                  <div class="step complete"></div>
+                  <div class="step complete"></div>
+                  <div class="step active"></div>
+                </div>
+                <div style="text-align: center; margin-bottom: 15px; font-size: 11px; font-weight: 700; color: var(--hr-text-light);">
+                    STAGE: <span style="color: var(--hr-primary);">HR DIRECTOR APPROVAL</span>
+                </div>
+                <div class="action-group">
+                    <button class="btn-approve">Approve Offer</button>
+                    <button class="btn-reject">Decline</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="approval-card">
+            <div class="candidate-brief">
+                <div class="candidate-identity">
+                    <div class="avatar-pill" style="background: #fef2f2; color: #ef4444;">LS</div>
+                    <div>
+                        <div class="value-bold">Linda Sterling</div>
+                        <div style="font-size: 12px; color: var(--hr-text-light);">Radiology Admin</div>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <span class="label-caps">Department</span>
+                    <div class="value-bold">Medical Imaging</div>
+                </div>
+            </div>
+
+            <div class="offer-details">
+                <div class="data-row">
+                    <span class="label-caps">Proposed Salary</span>
+                    <span class="value-bold">$52,000 / yr</span>
+                </div>
+                <div class="data-row">
+                    <span class="label-caps">Start Date</span>
+                    <span class="value-bold">April 02, 2026</span>
+                </div>
+                <div class="data-row">
+                    <span class="label-caps">Employment Type</span>
+                    <span class="value-bold">Contractual</span>
+                </div>
+            </div>
+
+            <div class="approval-flow">
+                <div class="status-stepper">
+                  <div class="step complete"></div>
+                  <div class="step active"></div>
+                  <div class="step"></div>
+                </div>
+                <div style="text-align: center; margin-bottom: 15px; font-size: 11px; font-weight: 700; color: var(--hr-text-light);">
+                    STAGE: <span style="color: var(--hr-primary);">DEPT. HEAD REVIEW</span>
+                </div>
+                <div class="action-group">
+                    <button class="btn-approve">Approve Offer</button>
+                    <button class="btn-reject">Decline</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

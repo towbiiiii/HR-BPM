@@ -1,0 +1,323 @@
+<div class="stat-card overtime-page" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div class="page-header">
+    <h2><i class="ti ti-clock-hour-4"></i> Overtime Tracking</h2>
+    <p>Track overtime records and monitor accumulated overtime hours.</p>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi-card">
+      <span>Total Overtime Hours</span>
+      <strong id="totalOvertimeHours">0.0</strong>
+    </div>
+    <div class="kpi-card">
+      <span>Overtime Entries</span>
+      <strong id="entryCount">0</strong>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3><i class="ti ti-plus"></i> Add Overtime Record</h3>
+    <form id="overtimeForm" class="form-grid">
+      <label>
+        Employee
+        <input type="text" id="employee" placeholder="Employee name" required />
+      </label>
+      <label>
+        Date
+        <input type="date" id="date" required />
+      </label>
+      <label>
+        Overtime Hours
+        <input type="number" id="hours" min="0.5" step="0.5" max="12" placeholder="2.0" required />
+      </label>
+      <label>
+        Reason
+        <input type="text" id="reason" placeholder="Business reason" required />
+      </label>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="ti ti-device-floppy"></i> Save Record</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel">
+    <div class="table-header">
+      <h3><i class="ti ti-report"></i> Overtime Records</h3>
+      <label class="month-filter">
+        Month
+        <input type="month" id="monthFilter" />
+      </label>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Reason</th>
+            <th>Source</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="recordTableBody"></tbody>
+      </table>
+    </div>
+    <p id="emptyState" class="empty-state">No overtime records available.</p>
+  </div>
+</div>
+
+<style>
+  .overtime-page {
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .page-header h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #0b2a45;
+  }
+  .page-header p {
+    margin: 6px 0 0;
+    color: #6b8496;
+    font-size: 0.85rem;
+  }
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+  }
+  .kpi-card {
+    background: #f8fbff;
+    border: 1px solid #e8f1fc;
+    border-radius: 12px;
+    padding: 12px;
+    display: grid;
+    gap: 4px;
+  }
+  .kpi-card span { font-size: 0.78rem; color: #6b8496; }
+  .kpi-card strong { font-size: 1.3rem; color: #0b2a45; }
+  .panel {
+    border: 1px solid #eef2f6;
+    border-radius: 12px;
+    background: #fff;
+    padding: 14px;
+  }
+  .panel h3 {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+    align-items: end;
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.88rem;
+    color: #5b6f7e;
+  }
+  input {
+    border: 1px solid #dbe4ee;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  .form-actions {
+    display: flex;
+    align-items: end;
+  }
+  .btn {
+    border: none;
+    border-radius: 10px;
+    padding: 9px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn-primary { background: #5d87ff; color: #fff; }
+  .btn-danger { background: #ef4444; color: #fff; }
+  .table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .month-filter input { min-width: 170px; }
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th, td {
+    text-align: left;
+    border-bottom: 1px solid #f4f6fb;
+    padding: 10px 12px;
+  }
+  th {
+    color: #5b6f7e;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+  .tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .tag-system { background: #eef6ff; color: #1e3a5f; }
+  .tag-manual { background: #eefcf4; color: #17a96b; }
+  .empty-state {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 10px 0 0;
+  }
+</style>
+
+<script>
+  (function () {
+    const SUBMISSION_KEY = 'timesheetSubmissions';
+    const OVERTIME_KEY = 'overtimeManualRecords';
+    const SUMMARY_KEY = 'hr3WorkforceSummary';
+
+    const overtimeForm = document.getElementById('overtimeForm');
+    const tableBody = document.getElementById('recordTableBody');
+    const monthFilter = document.getElementById('monthFilter');
+    const emptyState = document.getElementById('emptyState');
+    const totalOvertimeHours = document.getElementById('totalOvertimeHours');
+    const entryCount = document.getElementById('entryCount');
+
+    function parseJSON(key, fallback) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function getSubmissions() {
+      return parseJSON(SUBMISSION_KEY, []);
+    }
+
+    function getManualRecords() {
+      return parseJSON(OVERTIME_KEY, []);
+    }
+
+    function setManualRecords(items) {
+      localStorage.setItem(OVERTIME_KEY, JSON.stringify(items));
+    }
+
+    function getSummary() {
+      return parseJSON(SUMMARY_KEY, {});
+    }
+
+    function setSummary(data) {
+      localStorage.setItem(SUMMARY_KEY, JSON.stringify(data));
+      document.dispatchEvent(new CustomEvent('hr3:refresh-summary'));
+    }
+
+    function buildSystemOvertimeRecords() {
+      return getSubmissions()
+        .filter((entry) => Number(entry.overtime || 0) > 0 && entry.status !== 'Rejected')
+        .map((entry) => ({
+          id: `sys-${entry.id}`,
+          employee: entry.employee,
+          date: entry.date,
+          hours: Number(entry.overtime),
+          reason: `From timesheet (${entry.project})`,
+          source: 'System'
+        }));
+    }
+
+    function getAllOvertimeRecords() {
+      return [...buildSystemOvertimeRecords(), ...getManualRecords()]
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+
+    function syncSummaryOvertime(records) {
+      const total = records.reduce((sum, item) => sum + Number(item.hours || 0), 0);
+      const summary = getSummary();
+      summary.overtimeHours = Number(total.toFixed(1));
+      setSummary(summary);
+    }
+
+    function render() {
+      const month = monthFilter.value;
+      let records = getAllOvertimeRecords();
+
+      if (month) {
+        records = records.filter((item) => String(item.date || '').startsWith(month));
+      }
+
+      tableBody.innerHTML = records.map((record) => `
+        <tr>
+          <td>${record.employee}</td>
+          <td>${record.date}</td>
+          <td>${Number(record.hours).toFixed(1)}</td>
+          <td>${record.reason}</td>
+          <td><span class="tag ${record.source === 'System' ? 'tag-system' : 'tag-manual'}">${record.source}</span></td>
+          <td>
+            ${record.source === 'Manual' ? `<button class="btn btn-danger" data-id="${record.id}"><i class="ti ti-trash"></i> Remove</button>` : '-'}
+          </td>
+        </tr>
+      `).join('');
+
+      const total = records.reduce((sum, item) => sum + Number(item.hours || 0), 0);
+      totalOvertimeHours.textContent = Number(total.toFixed(1)).toFixed(1);
+      entryCount.textContent = String(records.length);
+      emptyState.style.display = records.length ? 'none' : 'block';
+
+      syncSummaryOvertime(getAllOvertimeRecords());
+    }
+
+    overtimeForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const record = {
+        id: `manual-${Date.now()}`,
+        employee: document.getElementById('employee').value.trim(),
+        date: document.getElementById('date').value,
+        hours: Number(document.getElementById('hours').value || 0),
+        reason: document.getElementById('reason').value.trim(),
+        source: 'Manual'
+      };
+
+      const records = getManualRecords();
+      records.unshift(record);
+      setManualRecords(records);
+      overtimeForm.reset();
+      render();
+    });
+
+    tableBody.addEventListener('click', function (event) {
+      const button = event.target.closest('button[data-id]');
+      if (!button) return;
+
+      const id = button.dataset.id;
+      const records = getManualRecords().filter((item) => item.id !== id);
+      setManualRecords(records);
+      render();
+    });
+
+    monthFilter.addEventListener('change', render);
+
+    render();
+  })();
+</script>

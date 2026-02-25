@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- COMPETENCY ASSESSMENT EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .assessment-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s ease-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section */
+    .ca-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .ca-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Assessment Target Card */
+    .target-card {
+      background: white;
+      border-radius: 24px;
+      padding: 25px 35px;
+      box-shadow: var(--shadow-refined);
+      border: 1px solid var(--hr-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .avatar-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #f0f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hr-primary);
+      font-weight: 800;
+    }
+
+    /* Competency Section Grouping */
+    .competency-group {
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+      margin-bottom: 25px;
+    }
+
+    .group-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Assessment Slider Logic */
+    .assessment-row {
+      display: grid;
+      grid-template-columns: 250px 1fr 100px;
+      gap: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid #f1f5f9;
+      align-items: center;
+    }
+
+    .assessment-row:last-child { border-bottom: none; }
+
+    .skill-meta h5 { margin: 0; font-size: 14px; color: var(--hr-text); }
+    .skill-meta p { margin: 4px 0 0; font-size: 11px; color: var(--hr-text-light); }
+
+    /* Custom Range Slider Styling */
+    .prof-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 50px;
+      background: #f1f5f9;
+      outline: none;
+    }
+
+    .prof-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--hr-primary);
+      cursor: pointer;
+      border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .score-label {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--hr-primary);
+      text-align: right;
+    }
+
+    /* Action Pill */
+    .btn-ca-pill {
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+    }
+
+    .btn-save { background: var(--hr-primary); color: white; }
+    .btn-save:hover { background: #4570e6; box-shadow: 0 8px 20px rgba(93, 135, 255, 0.2); }
+
+  </style>
+</head>
+<body>
+
+<div class="assessment-container">
+    
+    <div class="ca-header">
+        <div>
+            <h2>Competency Assessment</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Audit employee proficiency levels against departmental benchmarks.</p>
+        </div>
+        <button class="btn-ca-pill btn-save">Submit Assessment</button>
+    </div>
+
+    <div class="target-card">
+        <div class="user-profile">
+            <div class="avatar-circle">RM</div>
+            <div>
+                <h4 style="margin:0; font-size:16px;">Robert Miller</h4>
+                <p style="margin:2px 0 0; font-size:12px; color:var(--hr-text-light);">ER Senior Nurse · Q1 Evaluation</p>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <span style="font-size: 10px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase;">Overall Rating</span>
+            <div style="font-size: 24px; font-weight: 800; color: var(--hr-primary);">4.2 / 5.0</div>
+        </div>
+    </div>
+
+    <div class="competency-group">
+        <div class="group-title"><i class="ti ti-microscope"></i> Technical & Clinical Skills</div>
+        
+        <div class="assessment-row">
+            <div class="skill-meta">
+                <h5>Advanced Life Support (ACLS)</h5>
+                <p>Knowledge of protocols and defibrillation speed.</p>
+            </div>
+            <input type="range" class="prof-slider" min="1" max="5" value="5">
+            <div class="score-label">Expert (5)</div>
+        </div>
+
+        <div class="assessment-row">
+            <div class="skill-meta">
+                <h5>EHR Documentation</h5>
+                <p>Accuracy and speed in the medical record system.</p>
+            </div>
+            <input type="range" class="prof-slider" min="1" max="5" value="4">
+            <div class="score-label">Advanced (4)</div>
+        </div>
+
+        <div class="assessment-row">
+            <div class="skill-meta">
+                <h5>Pharmacology Knowledge</h5>
+                <p>Understanding of dosage and drug interactions.</p>
+            </div>
+            <input type="range" class="prof-slider" min="1" max="5" value="3">
+            <div class="score-label">Proficient (3)</div>
+        </div>
+    </div>
+
+    <div class="competency-group">
+        <div class="group-title"><i class="ti ti-users"></i> Behavioral & Leadership</div>
+        
+        <div class="assessment-row">
+            <div class="skill-meta">
+                <h5>Crisis Management</h5>
+                <p>Ability to lead during high-stress ER codes.</p>
+            </div>
+            <input type="range" class="prof-slider" min="1" max="5" value="5">
+            <div class="score-label">Expert (5)</div>
+        </div>
+
+        <div class="assessment-row">
+            <div class="skill-meta">
+                <h5>Patient Empathy</h5>
+                <p>Communication style with distressed family members.</p>
+            </div>
+            <input type="range" class="prof-slider" min="1" max="5" value="4">
+            <div class="score-label">Advanced (4)</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

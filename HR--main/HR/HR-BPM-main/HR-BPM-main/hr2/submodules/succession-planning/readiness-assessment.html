@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- READINESS ASSESSMENT EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-warning: #ffae1f;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .ra-container {
+      padding: 10px;
+      animation: fadeInPage 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Candidate Profile Header */
+    .candidate-card {
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .candidate-info { display: flex; align-items: center; gap: 20px; }
+    .avatar-large {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #f0f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--hr-primary);
+      border: 2px solid #e0e7ff;
+    }
+
+    /* Assessment Grid */
+    .assessment-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .ra-group {
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+    }
+
+    .ra-group h3 {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Timeline Selection - Blue Pill Style */
+    .timeline-options {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .pill-option {
+      flex: 1;
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid var(--hr-border);
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .pill-option.active {
+      background: var(--hr-primary);
+      color: white;
+      border-color: var(--hr-primary);
+      box-shadow: 0 8px 15px rgba(93, 135, 255, 0.2);
+    }
+
+    .pill-option h5 { margin: 0; font-size: 14px; }
+    .pill-option p { margin: 4px 0 0; font-size: 10px; opacity: 0.8; }
+
+    /* Competency Row */
+    .comp-row {
+      margin-bottom: 20px;
+    }
+
+    .comp-meta { display: flex; justify-content: space-between; margin-bottom: 8px; }
+    .comp-meta label { font-size: 13px; font-weight: 700; color: var(--hr-text); }
+    .comp-meta span { font-size: 12px; font-weight: 800; color: var(--hr-primary); }
+
+    .progress-rail {
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 50px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--hr-primary);
+      border-radius: 50px;
+    }
+
+    /* Action Footer */
+    .ra-footer {
+      margin-top: 30px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+    }
+
+    .btn-ra {
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-secondary { background: #f1f5f9; color: var(--hr-text-light); }
+    .btn-primary { background: var(--hr-primary); color: white; }
+
+  </style>
+</head>
+<body>
+
+<div class="ra-container">
+    
+    <div class="candidate-card">
+        <div class="candidate-info">
+            <div class="avatar-large">RM</div>
+            <div>
+                <h2 style="margin:0; font-size: 20px; color: var(--hr-text);">Robert Miller</h2>
+                <p style="margin:4px 0 0; color: var(--hr-text-light); font-size: 13px;">Proposed Successor for: <strong>Chief Nursing Officer</strong></p>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <span style="font-size: 10px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase;">Overall Readiness Score</span>
+            <div style="font-size: 28px; font-weight: 800; color: var(--hr-primary);">88%</div>
+        </div>
+    </div>
+
+    <div class="assessment-sections">
+        
+        <div class="ra-group">
+            <h3><i class="ti ti-clock"></i> Succession Timeline</h3>
+            <p style="font-size: 12px; color: var(--hr-text-light); margin-bottom: 20px;">When will this candidate be fully capable of assuming the role?</p>
+            
+            <div class="timeline-options">
+                <div class="pill-option active">
+                    <h5>Ready Now</h5>
+                    <p>0-6 Months</p>
+                </div>
+                <div class="pill-option">
+                    <h5>Emerging</h5>
+                    <p>1-2 Years</p>
+                </div>
+                <div class="pill-option">
+                    <h5>Long Term</h5>
+                    <p>3+ Years</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <label style="font-size: 11px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase;">Executive Summary</label>
+                <textarea style="width: 100%; height: 100px; border-radius: 15px; border: 1px solid var(--hr-border); margin-top: 10px; padding: 15px; font-family: inherit; font-size: 13px; outline: none;" placeholder="Enter assessment notes..."></textarea>
+            </div>
+        </div>
+
+        <div class="ra-group">
+            <h3><i class="ti ti-chart-bar"></i> Leadership Competencies</h3>
+            
+            
+            
+            <div class="comp-row">
+                <div class="comp-meta"><label>Strategic Planning</label><span>85%</span></div>
+                <div class="progress-rail"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+
+            <div class="comp-row">
+                <div class="comp-meta"><label>Financial Oversight</label><span>70%</span></div>
+                <div class="progress-rail"><div class="progress-fill" style="width: 70%; background: var(--hr-warning);"></div></div>
+            </div>
+
+            <div class="comp-row">
+                <div class="comp-meta"><label>Crisis Management</label><span>95%</span></div>
+                <div class="progress-rail"><div class="progress-fill" style="width: 95%;"></div></div>
+            </div>
+
+            <div class="comp-row">
+                <div class="comp-meta"><label>Stakeholder Engagement</label><span>90%</span></div>
+                <div class="progress-rail"><div class="progress-fill" style="width: 90%;"></div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ra-footer">
+        <button class="btn-ra btn-secondary">Discard Draft</button>
+        <button class="btn-ra btn-primary">Finalize Readiness Assessment</button>
+    </div>
+
+</div>
+
+</body>
+</html>

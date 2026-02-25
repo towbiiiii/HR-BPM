@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- ORIENTATION SCHEDULING EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+      --glass-border: rgba(226, 232, 240, 0.8);
+    }
+
+    .os-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Styling */
+    .os-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+    }
+
+    .os-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Calendar Strip / Date Filter */
+    .date-strip {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 35px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .date-pill {
+      min-width: 80px;
+      padding: 15px;
+      background: white;
+      border-radius: 18px;
+      text-align: center;
+      border: 1px solid var(--glass-border);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .date-pill.active {
+      background: var(--hr-primary);
+      border-color: var(--hr-primary);
+      box-shadow: 0 10px 20px rgba(93, 135, 255, 0.2);
+    }
+
+    .date-pill span { display: block; }
+    .day-name { font-size: 10px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase; }
+    .day-num { font-size: 18px; font-weight: 800; color: var(--hr-text); }
+    
+    .date-pill.active .day-name, 
+    .date-pill.active .day-num { color: white; }
+
+    /* Session Cards */
+    .session-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .session-card {
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: var(--shadow-refined);
+      border: 1px solid var(--glass-border);
+      display: grid;
+      grid-template-columns: 120px 2fr 1fr 1fr;
+      align-items: center;
+      transition: transform 0.3s;
+    }
+
+    .session-card:hover {
+      transform: scale(1.005);
+      border-color: var(--hr-primary);
+    }
+
+    /* Time Block */
+    .time-block {
+      border-right: 1px solid #f1f5f9;
+    }
+
+    .time-val { font-size: 16px; font-weight: 800; color: var(--hr-primary); }
+    .duration { font-size: 11px; color: var(--hr-text-light); font-weight: 600; }
+
+    /* Session Info */
+    .session-info { padding-left: 20px; }
+    .session-info h4 { margin: 0; font-size: 16px; font-weight: 700; color: var(--hr-text); }
+    .session-info p { margin: 4px 0 0; font-size: 13px; color: var(--hr-text-light); }
+
+    /* Attendees Avatars */
+    .attendee-stack {
+      display: flex;
+      align-items: center;
+    }
+
+    .mini-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background: #f0f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--hr-primary);
+      margin-left: -8px;
+    }
+
+    .mini-avatar:first-child { margin-left: 0; }
+
+    /* Blue Pill Button */
+    .btn-os-action {
+      padding: 12px 24px;
+      border-radius: 50px; /* Matching Dashboard Side Pills */
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .btn-primary-pill { background: var(--hr-primary); color: white; }
+    .btn-primary-pill:hover { background: #4570e6; box-shadow: 0 8px 20px rgba(93, 135, 255, 0.2); }
+
+    .btn-outline-pill { background: transparent; border: 1px solid #e2e8f0; color: var(--hr-text-light); }
+    .btn-outline-pill:hover { border-color: var(--hr-primary); color: var(--hr-primary); }
+
+  </style>
+</head>
+<body>
+
+<div class="os-container">
+    
+    <div class="os-header">
+        <div>
+            <h2>Orientation Scheduling</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Coordinate onboarding sessions and welcome new hospital staff.</p>
+        </div>
+        <button class="btn-os-action btn-primary-pill">
+            <i class="ti ti-calendar-plus"></i> Schedule Session
+        </button>
+    </div>
+
+    <div class="date-strip">
+        <div class="date-pill active">
+            <span class="day-name">Mon</span>
+            <span class="day-num">27</span>
+        </div>
+        <div class="date-pill">
+            <span class="day-name">Tue</span>
+            <span class="day-num">28</span>
+        </div>
+        <div class="date-pill">
+            <span class="day-name">Wed</span>
+            <span class="day-num">29</span>
+        </div>
+        <div class="date-pill">
+            <span class="day-name">Thu</span>
+            <span class="day-num">30</span>
+        </div>
+        <div class="date-pill">
+            <span class="day-name">Fri</span>
+            <span class="day-num">31</span>
+        </div>
+    </div>
+
+    <div class="session-grid">
+        
+        <div class="session-card">
+            <div class="time-block">
+                <span class="time-val">09:00 AM</span>
+                <span class="duration">2 Hours</span>
+            </div>
+            <div class="session-info">
+                <h4>General Hospital Orientation</h4>
+                <p><i class="ti ti-map-pin"></i> Conference Room A · Main Bldg</p>
+            </div>
+            <div class="attendee-count">
+                <span style="display:block; font-size:10px; font-weight:800; color:var(--hr-text-light); margin-bottom:5px; text-transform:uppercase;">Attendees</span>
+                <div class="attendee-stack">
+                    <div class="mini-avatar">RM</div>
+                    <div class="mini-avatar" style="background:#fef2f2; color:#ef4444;">LS</div>
+                    <div class="mini-avatar" style="background:#f0fdf4; color:#13deb9;">SJ</div>
+                    <div class="mini-avatar" style="background:#f1f5f9; color:#64748b;">+5</div>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <button class="btn-os-action btn-outline-pill">Manage List</button>
+            </div>
+        </div>
+
+        <div class="session-card">
+            <div class="time-block">
+                <span class="time-val">02:00 PM</span>
+                <span class="duration">1.5 Hours</span>
+            </div>
+            <div class="session-info">
+                <h4>Clinical Safety & Protocols</h4>
+                <p><i class="ti ti-map-pin"></i> Training Center · West Wing</p>
+            </div>
+            <div class="attendee-count">
+                <span style="display:block; font-size:10px; font-weight:800; color:var(--hr-text-light); margin-bottom:5px; text-transform:uppercase;">Attendees</span>
+                <div class="attendee-stack">
+                    <div class="mini-avatar">RM</div>
+                    <div class="mini-avatar" style="background:#f0fdf4; color:#13deb9;">SJ</div>
+                    <div class="mini-avatar" style="background:#f1f5f9; color:#64748b;">+1</div>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <button class="btn-os-action btn-outline-pill">Manage List</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

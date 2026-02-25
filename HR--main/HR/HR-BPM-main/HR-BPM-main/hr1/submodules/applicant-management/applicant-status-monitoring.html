@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- MODERN ELEGANCE STYLES --- */
+    :root {
+      --primary: #5d87ff;
+      --bg-soft: #f4f7fb;
+      --text-main: #0b2a45;
+      --text-muted: #7c8fac;
+      --glass: rgba(255, 255, 255, 0.95);
+      --shadow-elegant: 0 10px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .modern-container {
+      padding: 10px;
+      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Floating Summary Header */
+    .elegant-summary {
+      display: flex;
+      gap: 30px;
+      padding: 30px 0;
+      border-bottom: 1px solid #edf2f9;
+      margin-bottom: 30px;
+    }
+
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .summary-item .label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .summary-item .value {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    /* Elegant List Approach (Clean alternative to Grid) */
+    .monitor-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .applicant-row {
+      background: var(--glass);
+      padding: 18px 24px;
+      border-radius: 16px;
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 2fr 1fr;
+      align-items: center;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      box-shadow: var(--shadow-elegant);
+    }
+
+    .applicant-row:hover {
+      border-color: var(--primary);
+      transform: translateX(5px);
+      box-shadow: 0 15px 35px rgba(93, 135, 255, 0.08);
+    }
+
+    /* Typography */
+    .name-stack h4 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .name-stack span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Minimalist Progress Indicator */
+    .progress-track {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e2e8f0;
+    }
+
+    .dot.done { background: var(--primary); }
+    .dot.active { 
+        background: var(--primary); 
+        box-shadow: 0 0 0 3px rgba(93, 135, 255, 0.2);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    .status-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Modern Action Button */
+    .btn-action-minimal {
+      background: #f0f5ff;
+      color: var(--primary);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.2s;
+    }
+
+    .btn-action-minimal:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Minimalist Search */
+    .search-bar-clean {
+      background: #f8fafc;
+      border: 1px solid #edf2f9;
+      padding: 12px 20px;
+      border-radius: 12px;
+      width: 300px;
+      font-size: 14px;
+      color: var(--text-main);
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .search-bar-clean:focus {
+      background: white;
+      border-color: var(--primary);
+      width: 350px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="modern-container">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+        <div>
+            <h2 style="font-weight: 800; color: var(--text-main); margin-bottom: 5px;">Applicant Pipeline</h2>
+            <p style="color: var(--text-muted); font-size: 14px;">Monitoring HR recruitment flow and candidate progression.</p>
+        </div>
+        <input type="text" class="search-bar-clean" placeholder="Search by name or position...">
+    </div>
+
+    <div class="elegant-summary">
+        <div class="summary-item">
+            <span class="label">Total Sourced</span>
+            <span class="value">1,284</span>
+        </div>
+        <div class="summary-item">
+            <span class="label">In Review</span>
+            <span class="value" style="color: var(--primary);">42</span>
+        </div>
+        <div class="summary-item">
+            <span class="label">Interviews</span>
+            <span class="value">18</span>
+        </div>
+        <div class="summary-item">
+            <span class="label">Hired</span>
+            <span class="value" style="color: #22c55e;">09</span>
+        </div>
+    </div>
+
+    <div class="monitor-list">
+        
+        <div class="applicant-row">
+            <div class="name-stack">
+                <h4>Clarisse Henderson</h4>
+                <span>Senior HR Manager · Internal</span>
+            </div>
+            <div class="progress-track">
+                <div class="dot done"></div>
+                <div class="dot done"></div>
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <span class="status-text">Technical Interview</span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+                <i class="ti ti-user-check"></i> Assigned to Admin User
+            </div>
+            <button class="btn-action-minimal">Profile Details</button>
+        </div>
+
+        <div class="applicant-row">
+            <div class="name-stack">
+                <h4>Marcus Velez</h4>
+                <span>Recruitment Officer · External</span>
+            </div>
+            <div class="progress-track">
+                <div class="dot done"></div>
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <span class="status-text">HR Screening</span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+                <i class="ti ti-user-check"></i> Assigned to Admin User
+            </div>
+            <button class="btn-action-minimal">Profile Details</button>
+        </div>
+
+        <div class="applicant-row">
+            <div class="name-stack">
+                <h4>Elena Rodriguez</h4>
+                <span>Payroll Specialist · Internal</span>
+            </div>
+            <div class="progress-track">
+                <div class="dot done"></div>
+                <div class="dot done"></div>
+                <div class="dot done"></div>
+                <div class="dot active"></div>
+                <span class="status-text">Final Selection</span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted);">
+                <i class="ti ti-user-check"></i> Assigned to HR Director
+            </div>
+            <button class="btn-action-minimal">Profile Details</button>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

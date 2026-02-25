@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- COURSE COMPLETION EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .tracking-container {
+      padding: 10px;
+      animation: fadeInPage 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header & Action Row */
+    .ct-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .ct-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Analytics Mini-Cards */
+    .ct-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-pill {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-pill span {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .stat-pill h3 { margin: 8px 0 0; font-size: 20px; color: var(--hr-text); }
+
+    /* Completion Ledger Table */
+    .ledger-card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: var(--shadow-refined);
+      overflow: hidden;
+    }
+
+    .ct-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .ct-table th {
+      text-align: left;
+      background: #f8fafc;
+      padding: 18px 24px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+    }
+
+    .ct-table td {
+      padding: 20px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+      font-size: 13px;
+    }
+
+    /* Professional Badges - Blue Pill Style */
+    .badge-pill {
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .badge-verified { background: #e6fffa; color: var(--hr-success); }
+    .badge-expiring { background: #fff5f5; color: #fa896b; }
+
+    .btn-ct-action {
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--hr-border);
+      background: white;
+      color: var(--hr-text-light);
+      transition: 0.2s;
+    }
+
+    .btn-ct-action:hover {
+      border-color: var(--hr-primary);
+      color: var(--hr-primary);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="tracking-container">
+    
+    <div class="ct-header">
+        <div>
+            <h2>Course Completion Tracking</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Monitor clinical compliance and historical learning achievement.</p>
+        </div>
+        <button class="btn-ct-action" style="background: var(--hr-primary); color: white; border: none; padding: 12px 25px; border-radius: 50px;">
+            <i class="ti ti-file-export"></i> Export Compliance Report
+        </button>
+    </div>
+
+    <div class="ct-stats">
+        <div class="stat-pill"><span>Completed Q1</span><h3>842</h3></div>
+        <div class="stat-pill"><span>Certifications Active</span><h3>156</h3></div>
+        <div class="stat-pill"><span>Avg. Score</span><h3>92%</h3></div>
+        <div class="stat-pill"><span style="color: #fa896b;">Expiring Soon</span><h3>12</h3></div>
+    </div>
+
+    <div class="ledger-card">
+        <table class="ct-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Course Title</th>
+                    <th>Completion Date</th>
+                    <th>Score / Grade</th>
+                    <th>Cert. Status</th>
+                    <th style="text-align: right;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: var(--hr-text);">Robert Miller</div>
+                        <div style="font-size: 11px; color: var(--hr-text-light);">Nursing Dept.</div>
+                    </td>
+                    <td style="color: var(--hr-text);">ACLS Re-certification (v4.0)</td>
+                    <td>Oct 12, 2023</td>
+                    <td><strong style="color: var(--hr-success);">Pass (98/100)</strong></td>
+                    <td><span class="badge-pill badge-verified">Verified</span></td>
+                    <td style="text-align: right;">
+                        <button class="btn-ct-action">View Certificate</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: var(--hr-text);">Maria Alucard</div>
+                        <div style="font-size: 11px; color: var(--hr-text-light);">Lab Services</div>
+                    </td>
+                    <td style="color: var(--hr-text);">HIPAA Data Privacy</td>
+                    <td>Sep 28, 2023</td>
+                    <td><strong style="color: var(--hr-success);">Pass (91/100)</strong></td>
+                    <td><span class="badge-pill badge-expiring">Renewal Due</span></td>
+                    <td style="text-align: right;">
+                        <button class="btn-ct-action">Schedule Renewal</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

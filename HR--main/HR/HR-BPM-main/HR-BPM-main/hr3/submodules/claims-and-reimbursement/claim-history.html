@@ -1,0 +1,107 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-history" style="margin-right:8px; color:#5d87ff;"></i>Claim History</h2>
+      <p style="margin:6px 0 0; color:#6b8496; font-size:.9rem;">View all historical claim and reimbursement transactions.</p>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <input id="chSearch" type="text" placeholder="Search employee or claim id" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px; min-width:220px;">
+      <select id="chStatus" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+        <option value="all">All Review Status</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,minmax(140px,1fr)); gap:10px; margin-bottom:14px;">
+    <div style="background:#f8fbff; border:1px solid #e8f1fc; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Total Claims</div><div id="chTotal" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">0</div></div>
+    <div style="background:#eefcf4; border:1px solid #d7f5e5; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Approved Amount</div><div id="chApprovedAmount" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">₱0.00</div></div>
+    <div style="background:#eef6ff; border:1px solid #dce9fa; border-radius:12px; padding:12px;"><div style="font-size:.75rem; color:#6b8496;">Paid Claims</div><div id="chPaidCount" style="font-size:1.2rem; font-weight:700; color:#0b2a45;">0</div></div>
+  </div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:980px;">
+      <thead>
+        <tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;">
+          <th style="padding:10px 12px;">Claim ID</th>
+          <th style="padding:10px 12px;">Employee</th>
+          <th style="padding:10px 12px;">Type</th>
+          <th style="padding:10px 12px;">Date</th>
+          <th style="padding:10px 12px;">Amount</th>
+          <th style="padding:10px 12px;">Review Status</th>
+          <th style="padding:10px 12px;">Reimbursement</th>
+        </tr>
+      </thead>
+      <tbody id="chBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function () {
+  const CLAIMS_KEY = 'claimsRecordsData';
+
+  function readClaims() {
+    try {
+      return JSON.parse(localStorage.getItem(CLAIMS_KEY) || '[]');
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function badge(status) {
+    const map = {
+      'Pending': ['#fff8e8', '#b88a00'],
+      'Approved': ['#eefcf4', '#17a96b'],
+      'Rejected': ['#fff0f0', '#d33f3f'],
+      'For Processing': ['#fff8e8', '#b88a00'],
+      'In Progress': ['#eef6ff', '#1e3a5f'],
+      'Paid': ['#eefcf4', '#17a96b'],
+      'Not Processed': ['#f4f6fb', '#6b8496']
+    };
+    const colors = map[status] || ['#eef6ff', '#1e3a5f'];
+    return `<span style="padding:5px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:${colors[0]}; color:${colors[1]};">${status}</span>`;
+  }
+
+  function render() {
+    const q = (document.getElementById('chSearch').value || '').toLowerCase().trim();
+    const status = document.getElementById('chStatus').value;
+
+    const all = readClaims();
+    const rows = all.filter(item => {
+      const text = `${item.id} ${item.employee}`.toLowerCase();
+      const matchQ = !q || text.includes(q);
+      const matchS = status === 'all' || item.status === status;
+      return matchQ && matchS;
+    });
+
+    document.getElementById('chTotal').innerText = rows.length;
+    const approvedAmount = rows
+      .filter(i => i.status === 'Approved')
+      .reduce((sum, i) => sum + Number(i.amount || 0), 0);
+    document.getElementById('chApprovedAmount').innerText = `₱${approvedAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    document.getElementById('chPaidCount').innerText = rows.filter(i => i.reimbursementStatus === 'Paid').length;
+
+    document.getElementById('chBody').innerHTML = rows.map(item => `
+      <tr style="border-bottom:1px solid #f4f6fb;">
+        <td style="padding:12px; font-weight:700; color:#1e3a5f;">${item.id}</td>
+        <td style="padding:12px; color:#506072;">${item.employee}</td>
+        <td style="padding:12px; color:#506072;">${item.type}</td>
+        <td style="padding:12px; color:#506072;">${item.date}</td>
+        <td style="padding:12px; color:#506072;">₱${Number(item.amount || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+        <td style="padding:12px;">${badge(item.status)}</td>
+        <td style="padding:12px;">${badge(item.reimbursementStatus || 'For Processing')}</td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('chSearch').addEventListener('input', render);
+  document.getElementById('chStatus').addEventListener('change', render);
+  window.addEventListener('storage', function (e) { if (!e || e.key === CLAIMS_KEY) render(); });
+  window.addEventListener('claims:updated', render);
+
+  render();
+})();
+</script>

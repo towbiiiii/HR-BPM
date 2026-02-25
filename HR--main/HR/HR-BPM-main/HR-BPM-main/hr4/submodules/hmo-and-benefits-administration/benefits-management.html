@@ -1,0 +1,74 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-shield-check" style="margin-right:8px; color:#5d87ff;"></i>Benefits Management</h2>
+      <p style="margin:6px 0 0; color:#6b8496; font-size:.9rem;">Enable, suspend, and monitor member benefits status.</p>
+    </div>
+    <select id="bmFilter" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px; min-width:170px;"><option value="all">All</option><option value="Enabled">Enabled</option><option value="Suspended">Suspended</option></select>
+  </div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:950px;">
+      <thead><tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;"><th style="padding:10px 12px;">Member ID</th><th style="padding:10px 12px;">Employee</th><th style="padding:10px 12px;">Plan</th><th style="padding:10px 12px;">Coverage</th><th style="padding:10px 12px;">Benefits</th><th style="padding:10px 12px; text-align:right;">Action</th></tr></thead>
+      <tbody id="bmBody"></tbody>
+    </table>
+  </div>
+  <div id="bmMsg" style="display:none; margin-top:12px; padding:10px 12px; border-radius:10px; background:#eef6ff; color:#1e3a5f; font-size:.88rem;"></div>
+</div>
+
+<script>
+(function(){
+  const KEY = 'benefitsRecordsData';
+
+  function read(){
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  }
+  function write(data){
+    localStorage.setItem(KEY, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent('benefits:updated'));
+  }
+
+  function badge(status){
+    const ok = status === 'Active' || status === 'Enabled';
+    const bg = ok ? '#eefcf4' : '#fff0f0';
+    const color = ok ? '#17a96b' : '#d33f3f';
+    return `<span style="padding:5px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:${bg}; color:${color};">${status}</span>`;
+  }
+
+  function render(){
+    const filter = document.getElementById('bmFilter').value;
+    const rows = read().filter(r => filter === 'all' ? true : (r.benefitsStatus || 'Enabled') === filter);
+
+    document.getElementById('bmBody').innerHTML = rows.map(r => `
+      <tr style="border-bottom:1px solid #f4f6fb;">
+        <td style="padding:12px; font-weight:700; color:#1e3a5f;">${r.id}</td>
+        <td style="padding:12px; color:#506072;">${r.employee}</td>
+        <td style="padding:12px; color:#506072;">${r.plan}</td>
+        <td style="padding:12px;">${badge(r.coverageStatus || 'Active')}</td>
+        <td style="padding:12px;">${badge(r.benefitsStatus || 'Enabled')}</td>
+        <td style="padding:12px; text-align:right;">
+          <button class="bmToggle" data-id="${r.id}" style="padding:6px 10px; border:none; border-radius:8px; background:${(r.benefitsStatus||'Enabled')==='Enabled' ? '#ef4444' : '#5d87ff'}; color:#fff; font-weight:600;">${(r.benefitsStatus||'Enabled')==='Enabled' ? 'Suspend' : 'Enable'}</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('bmBody').addEventListener('click', function(e){
+    const btn = e.target.closest('.bmToggle');
+    if (!btn) return;
+    const id = btn.dataset.id;
+    const rows = read();
+    const target = rows.find(r => r.id === id);
+    if (!target) return;
+    target.benefitsStatus = (target.benefitsStatus || 'Enabled') === 'Enabled' ? 'Suspended' : 'Enabled';
+    write(rows);
+    const msg = document.getElementById('bmMsg'); msg.style.display='block'; msg.innerText=`Success: Benefits status updated for ${id}.`;
+    render();
+  });
+
+  document.getElementById('bmFilter').addEventListener('change', render);
+  window.addEventListener('storage', function(e){ if (!e || e.key === KEY) render(); });
+  window.addEventListener('benefits:updated', render);
+  render();
+})();
+</script>

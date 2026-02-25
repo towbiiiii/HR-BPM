@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- EMPLOYMENT RECORDS EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .records-container {
+      padding: 10px;
+      animation: fadeInPage 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Executive Header */
+    .er-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .er-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Floating Record Card */
+    .record-card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+      padding: 35px;
+      margin-bottom: 30px;
+    }
+
+    /* Timeline Styling */
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      position: relative;
+      padding-bottom: 40px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 179px;
+      top: 0;
+      height: 100%;
+      width: 2px;
+      background: #f1f5f9;
+    }
+
+    .timeline-item:last-child::before { display: none; }
+
+    .date-column {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      padding-right: 30px;
+      text-align: right;
+    }
+
+    .content-column {
+      padding-left: 40px;
+      position: relative;
+    }
+
+    /* The Timeline Node */
+    .node-pill {
+      position: absolute;
+      left: -9px;
+      top: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--hr-primary);
+      z-index: 2;
+    }
+
+    /* Data Elements */
+    .event-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--hr-text);
+      margin: 0 0 5px 0;
+    }
+
+    .event-desc {
+      font-size: 13px;
+      color: var(--hr-text-light);
+      margin-bottom: 15px;
+    }
+
+    .record-badge {
+      padding: 4px 12px;
+      border-radius: 50px; /* Blue Pill Style */
+      font-size: 10px;
+      font-weight: 800;
+      background: #f0f5ff;
+      color: var(--hr-primary);
+      text-transform: uppercase;
+    }
+
+    /* Quick Info Banner */
+    .contract-banner {
+      display: flex;
+      gap: 50px;
+      background: #f8faff;
+      padding: 20px 30px;
+      border-radius: 15px;
+      margin-bottom: 35px;
+      border: 1px solid #eef2ff;
+    }
+
+    .banner-item span { display: block; font-size: 10px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase; }
+    .banner-item strong { font-size: 15px; color: var(--hr-text); }
+
+    .btn-er-pill {
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--hr-border);
+      background: white;
+      color: var(--hr-text);
+      transition: 0.3s;
+    }
+
+    .btn-er-pill:hover {
+      border-color: var(--hr-primary);
+      color: var(--hr-primary);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="records-container">
+    
+    <div class="er-header">
+        <div>
+            <h2>Employment Records: Robert Miller</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Historical log of movements, compensation adjustments, and contractual changes.</p>
+        </div>
+        <button class="btn-er-pill" style="background: var(--hr-primary); color: white; border: none;">
+            <i class="ti ti-file-export"></i> Export Service Record
+        </button>
+    </div>
+
+    <div class="contract-banner">
+        <div class="banner-item"><span>Current Status</span><strong style="color: var(--hr-success);">Regular Permanent</strong></div>
+        <div class="banner-item"><span>Tenure</span><strong>6 Years, 2 Months</strong></div>
+        <div class="banner-item"><span>Current Grade</span><strong>Grade 14 - Senior</strong></div>
+        <div class="banner-item"><span>Last Increment</span><strong>Oct 2023 (+5%)</strong></div>
+    </div>
+
+    
+    <div class="record-card">
+        <span style="display: block; font-size: 11px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase; margin-bottom: 30px; letter-spacing: 1px;">Movement History</span>
+        
+        <div class="timeline-item">
+            <div class="date-column">Oct 12, 2023</div>
+            <div class="content-column">
+                <div class="node-pill"></div>
+                <h4 class="event-title">Promotion to Senior Registered Nurse</h4>
+                <p class="event-desc">Assigned to Lead Nurse role in the Emergency Department. Salary grade adjusted from 12 to 14.</p>
+                <span class="record-badge">Promotional Movement</span>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="date-column">Jan 20, 2021</div>
+            <div class="content-column">
+                <div class="node-pill" style="border-color: #cbd5e1;"></div>
+                <h4 class="event-title">Departmental Transfer</h4>
+                <p class="event-desc">Transferred from General Ward to Emergency Department (Critical Care Division).</p>
+                <span class="record-badge" style="background: #f1f5f9; color: #64748b;">Lateral Move</span>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="date-column">Jan 15, 2018</div>
+            <div class="content-column">
+                <div class="node-pill" style="border-color: var(--hr-success);"></div>
+                <h4 class="event-title">Initial Appointment: Registered Nurse</h4>
+                <p class="event-desc">Onboarded as Staff Nurse (Probationary) under the Nursing Service Division.</p>
+                <span class="record-badge" style="background: #e6fffa; color: var(--hr-success);">New Hire</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

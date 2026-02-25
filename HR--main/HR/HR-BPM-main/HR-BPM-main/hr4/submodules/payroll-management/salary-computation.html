@@ -1,0 +1,106 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-calculator" style="margin-right:8px; color:#5d87ff;"></i>Salary Computation</h2>
+      <p style="margin:6px 0 0; color:#6b8496; font-size:.9rem;">Compute base pay, deductions, and net salary per employee.</p>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(5,minmax(130px,1fr)); gap:10px; margin-bottom:12px;">
+    <input id="scEmp" placeholder="Employee" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    <input id="scBase" type="number" min="0" step="0.01" placeholder="Base Salary" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    <input id="scAllow" type="number" min="0" step="0.01" placeholder="Allowance" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    <input id="scDed" type="number" min="0" step="0.01" placeholder="Deductions" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    <button id="scCompute" type="button" style="padding:10px 14px; border:none; border-radius:10px; background:#5d87ff; color:#fff; font-weight:600;">Compute & Save</button>
+  </div>
+  <div id="scMsg" style="display:none; margin-bottom:12px; padding:10px 12px; border-radius:10px; background:#eef6ff; color:#1e3a5f; font-size:.88rem;"></div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:900px;">
+      <thead><tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;"><th style="padding:10px 12px;">Payroll ID</th><th style="padding:10px 12px;">Employee</th><th style="padding:10px 12px;">Base</th><th style="padding:10px 12px;">Allowance</th><th style="padding:10px 12px;">Deductions</th><th style="padding:10px 12px;">Net Pay</th><th style="padding:10px 12px;">Status</th></tr></thead>
+      <tbody id="scBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  const KEY = 'payrollRecordsData';
+
+  function peso(v){
+    return `₱${Number(v || 0).toLocaleString(undefined, { minimumFractionDigits:2, maximumFractionDigits:2 })}`;
+  }
+
+  function read(){
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw) return JSON.parse(raw);
+    } catch(e) {}
+    const seed = [
+      { id:'PAY-3001', employee:'Maria Santos', base:25000, allowance:2500, deductions:1800, net:25700, period:'2026-02', status:'Draft', payslipGenerated:false, processed:false },
+      { id:'PAY-3002', employee:'Carlos Reyes', base:30000, allowance:3200, deductions:2400, net:30800, period:'2026-02', status:'Draft', payslipGenerated:false, processed:false }
+    ];
+    localStorage.setItem(KEY, JSON.stringify(seed));
+    return seed;
+  }
+
+  function write(data){
+    localStorage.setItem(KEY, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent('payroll:updated'));
+  }
+
+  function render(){
+    const rows = read();
+    document.getElementById('scBody').innerHTML = rows.map(r => `
+      <tr style="border-bottom:1px solid #f4f6fb;">
+        <td style="padding:12px; font-weight:700; color:#1e3a5f;">${r.id}</td>
+        <td style="padding:12px; color:#506072;">${r.employee}</td>
+        <td style="padding:12px; color:#506072;">${peso(r.base)}</td>
+        <td style="padding:12px; color:#506072;">${peso(r.allowance)}</td>
+        <td style="padding:12px; color:#506072;">${peso(r.deductions)}</td>
+        <td style="padding:12px; color:#0b2a45; font-weight:700;">${peso(r.net)}</td>
+        <td style="padding:12px;"><span style="padding:5px 10px; border-radius:20px; font-size:.75rem; font-weight:700; background:#eef6ff; color:#1e3a5f;">${r.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('scCompute').addEventListener('click', function(){
+    const employee = document.getElementById('scEmp').value.trim();
+    const base = Number(document.getElementById('scBase').value || 0);
+    const allowance = Number(document.getElementById('scAllow').value || 0);
+    const deductions = Number(document.getElementById('scDed').value || 0);
+    const msg = document.getElementById('scMsg');
+
+    if (!employee || base <= 0) {
+      msg.style.display='block'; msg.innerText='Please enter employee and valid base salary.'; return;
+    }
+
+    const net = Math.max(0, Number((base + allowance - deductions).toFixed(2)));
+    const rows = read();
+    const row = {
+      id:`PAY-${Date.now().toString().slice(-4)}`,
+      employee,
+      base,
+      allowance,
+      deductions,
+      net,
+      period:new Date().toISOString().slice(0,7),
+      status:'Draft',
+      payslipGenerated:false,
+      processed:false
+    };
+    rows.unshift(row);
+    write(rows);
+    msg.style.display='block'; msg.innerText=`Success: Saved ${row.id} with net pay ${peso(net)}.`;
+    document.getElementById('scEmp').value='';
+    document.getElementById('scBase').value='';
+    document.getElementById('scAllow').value='';
+    document.getElementById('scDed').value='';
+    render();
+  });
+
+  window.addEventListener('storage', function(e){ if (!e || e.key === KEY) render(); });
+  window.addEventListener('payroll:updated', render);
+  render();
+})();
+</script>

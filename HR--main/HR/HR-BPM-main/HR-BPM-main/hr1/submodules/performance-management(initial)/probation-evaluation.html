@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- PROBATION EVALUATION EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-warning: #ffae1f;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .evaluation-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s ease-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    .pe-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .pe-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Evaluation Summary Cards */
+    .eval-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .eval-card {
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: var(--shadow-refined);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      display: grid;
+      grid-template-columns: 280px 1fr 200px;
+      gap: 40px;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .eval-card:hover {
+      border-color: var(--hr-primary);
+      transform: translateY(-4px);
+    }
+
+    /* Profile Section */
+    .employee-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-right: 1px solid #f1f5f9;
+    }
+
+    .profile-img {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: #f0f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hr-primary);
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .profile-meta h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--hr-text);
+    }
+
+    .profile-meta p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: var(--hr-text-light);
+    }
+
+    /* Progress & Scoring */
+    .score-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .progress-bar-bg {
+      height: 8px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--hr-primary);
+      border-radius: 10px;
+    }
+
+    .label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Action Buttons - Blue Pill Logic */
+    .btn-eval-pill {
+      padding: 12px 24px;
+      border-radius: 50px; /* Force Pill Shape */
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    .btn-primary-pill { background: var(--hr-primary); color: white; }
+    .btn-primary-pill:hover { background: #4570e6; box-shadow: 0 8px 20px rgba(93, 135, 255, 0.2); }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 50px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+    .status-upcoming { background: #fffaf0; color: #f6ad55; }
+    .status-review { background: #f0f5ff; color: var(--hr-primary); }
+
+  </style>
+</head>
+<body>
+
+<div class="evaluation-container">
+    
+    <div class="pe-header">
+        <div>
+            <h2>Probation Evaluation</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Monitor and assess the performance of new hires during their trial period.</p>
+        </div>
+        <div style="text-align: right;">
+            <span class="label-row" style="margin-bottom: 5px;">Evaluations due this month</span>
+            <h3 style="margin:0; color: var(--hr-primary); font-size: 24px;">06</h3>
+        </div>
+    </div>
+
+    <div class="eval-list">
+        
+        <div class="eval-card">
+            <div class="employee-profile">
+                <div class="profile-img">RM</div>
+                <div class="profile-meta">
+                    <h4>Robert Miller</h4>
+                    <p>Clinical Nurse · Joined Oct 2023</p>
+                    <span class="status-badge status-review" style="margin-top: 8px; display: inline-block;">Final Review</span>
+                </div>
+            </div>
+
+            <div class="score-container">
+                <div class="label-row">
+                    <span>Performance Score</span>
+                    <span style="color: var(--hr-text);">88 / 100</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 88%;"></div>
+                </div>
+                <div class="label-row" style="margin-top: 5px;">
+                    <span>Manager: Dr. Michael Thorne</span>
+                    <span style="color: var(--hr-success);">Highly Recommended</span>
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <button class="btn-eval-pill btn-primary-pill">Complete Evaluation</button>
+            </div>
+        </div>
+
+        <div class="eval-card">
+            <div class="employee-profile">
+                <div class="profile-img" style="background: #fff7ed; color: #f59e0b;">MA</div>
+                <div class="profile-meta">
+                    <h4>Maria Alucard</h4>
+                    <p>Lab Tech II · Joined Nov 2023</p>
+                    <span class="status-badge status-upcoming" style="margin-top: 8px; display: inline-block;">Month 3 Review</span>
+                </div>
+            </div>
+
+            <div class="score-container">
+                <div class="label-row">
+                    <span>Performance Score</span>
+                    <span style="color: var(--hr-text);">Pending</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 0%; background: #e2e8f0;"></div>
+                </div>
+                <div class="label-row" style="margin-top: 5px;">
+                    <span>Manager: Sarah Jenkins</span>
+                    <span>Scheduled for Dec 15</span>
+                </div>
+            </div>
+
+            <div style="text-align: right;">
+                <button class="btn-eval-pill" style="background: white; border: 1px solid #e2e8f0; color: var(--hr-text-light);">View Initial Feedback</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

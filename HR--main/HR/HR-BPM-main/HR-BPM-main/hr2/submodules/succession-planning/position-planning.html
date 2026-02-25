@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- POSITION PLANNING EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-warning: #ffae1f;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .planning-container {
+      padding: 10px;
+      animation: fadeInPage 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section */
+    .pp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .pp-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Org Summary Cards */
+    .planning-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-pill {
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+    }
+
+    .stat-pill span {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .stat-pill h3 { margin: 8px 0 0; font-size: 20px; color: var(--hr-text); }
+
+    /* Planning Table */
+    .ledger-card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: var(--shadow-refined);
+      overflow: hidden;
+    }
+
+    .pp-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pp-table th {
+      text-align: left;
+      background: #f8fafc;
+      padding: 18px 24px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+    }
+
+    .pp-table td {
+      padding: 22px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    /* Progress Indicators (Headcount) */
+    .headcount-bar-bg {
+      height: 6px;
+      width: 120px;
+      background: #f1f5f9;
+      border-radius: 50px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .headcount-bar-fill {
+      height: 100%;
+      background: var(--hr-primary);
+      border-radius: 50px;
+    }
+
+    /* Role Pills */
+    .role-badge {
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .badge-budgeted { background: #e6fffa; color: var(--hr-success); }
+    .badge-pending { background: #fff7ed; color: var(--hr-warning); }
+
+    .btn-pp-action {
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--hr-border);
+      background: white;
+      color: var(--hr-text-light);
+      transition: 0.2s;
+    }
+
+    .btn-pp-action:hover {
+      border-color: var(--hr-primary);
+      color: var(--hr-primary);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="planning-container">
+    
+    <div class="pp-header">
+        <div>
+            <h2>Position & Headcount Planning</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Strategize organizational growth and track budgeted positions vs. actual fills.</p>
+        </div>
+        <button class="btn-pp-action" style="background: var(--hr-primary); color: white; border: none; padding: 12px 25px;">
+            <i class="ti ti-binary-tree"></i> Model New Position
+        </button>
+    </div>
+
+    <div class="planning-stats">
+        <div class="stat-pill"><span>Total Budgeted</span><h3>450</h3></div>
+        <div class="stat-pill"><span>Current Fills</span><h3>412</h3></div>
+        <div class="stat-pill"><span>Open Vacancies</span><h3>38</h3></div>
+        <div class="stat-pill"><span style="color: var(--hr-warning);">Q3 Expansion</span><h3>+15</h3></div>
+    </div>
+
+    <div class="ledger-card">
+        <table class="pp-table">
+            <thead>
+                <tr>
+                    <th>Department & Functional Area</th>
+                    <th>Position Title</th>
+                    <th>Headcount Status</th>
+                    <th>Approval Status</th>
+                    <th>Salary Grade</th>
+                    <th style="text-align: right;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: var(--hr-text);">Emergency Department</div>
+                        <div style="font-size: 11px; color: var(--hr-text-light);">Clinical Operations</div>
+                    </td>
+                    <td><strong style="color: var(--hr-text);">Senior Registered Nurse</strong></td>
+                    <td>
+                        <div style="font-size: 12px; font-weight: 700; color: var(--hr-text);">18 / 20</div>
+                        <div class="headcount-bar-bg">
+                            <div class="headcount-bar-fill" style="width: 90%;"></div>
+                        </div>
+                    </td>
+                    <td><span class="role-badge badge-budgeted">Fully Funded</span></td>
+                    <td style="font-weight: 600; color: var(--hr-text-light);">Grade 14</td>
+                    <td style="text-align: right;">
+                        <button class="btn-pp-action">Initiate Hiring</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: var(--hr-text);">Diagnostics & Imaging</div>
+                        <div style="font-size: 11px; color: var(--hr-text-light);">Specialized Services</div>
+                    </td>
+                    <td><strong style="color: var(--hr-text);">Radiology Tech II</strong></td>
+                    <td>
+                        <div style="font-size: 12px; font-weight: 700; color: var(--hr-text);">4 / 5</div>
+                        <div class="headcount-bar-bg">
+                            <div class="headcount-bar-fill" style="width: 80%; background: var(--hr-warning);"></div>
+                        </div>
+                    </td>
+                    <td><span class="role-badge badge-pending">Review Pending</span></td>
+                    <td style="font-weight: 600; color: var(--hr-text-light);">Grade 12</td>
+                    <td style="text-align: right;">
+                        <button class="btn-pp-action">Adjust Budget</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

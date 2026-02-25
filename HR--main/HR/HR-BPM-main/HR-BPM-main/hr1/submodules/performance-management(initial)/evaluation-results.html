@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- EVALUATION RESULTS EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-warning: #ffae1f;
+      --hr-danger: #fa896b;
+      --shadow-refined: 0 15px 35px rgba(0, 0, 0, 0.05);
+    }
+
+    .results-container {
+      padding: 10px;
+      animation: fadeInPage 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section */
+    .er-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .er-header h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.8px;
+      margin: 0;
+    }
+
+    /* Main Result Card */
+    .summary-card {
+      background: white;
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: var(--shadow-refined);
+      border: 1px solid rgba(237, 242, 249, 0.8);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 50px;
+      margin-bottom: 30px;
+    }
+
+    /* Score Circle Visualization */
+    .score-viz {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #f1f5f9;
+      padding-right: 50px;
+    }
+
+    .radial-score {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 12px solid #f0f5ff;
+      border-top-color: var(--hr-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .score-num {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--hr-text);
+    }
+
+    /* Detailed Breakdown */
+    .breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .metric-info h5 { margin: 0; font-size: 14px; color: var(--hr-text); }
+    .metric-info p { margin: 4px 0 0; font-size: 11px; color: var(--hr-text-light); }
+
+    .bar-container {
+      width: 100%;
+      height: 6px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--hr-primary);
+      border-radius: 10px;
+    }
+
+    /* Action Pill Buttons */
+    .btn-pill {
+      padding: 12px 28px;
+      border-radius: 50px; /* Matching Dashboard Sidebars */
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+
+    .btn-print { background: #f0f5ff; color: var(--hr-primary); margin-right: 10px; }
+    .btn-promote { background: var(--hr-success); color: white; }
+    .btn-promote:hover { box-shadow: 0 8px 20px rgba(19, 222, 185, 0.3); }
+
+    .status-badge {
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-excellent { background: #e6fffa; color: var(--hr-success); }
+
+  </style>
+</head>
+<body>
+
+<div class="results-container">
+    
+    <div class="er-header">
+        <div>
+            <h2>Evaluation Results</h2>
+            <p style="color: var(--hr-text-light); font-size: 15px; margin-top: 8px;">Final performance analysis for the probation period ending Oct 2023.</p>
+        </div>
+        <div class="action-group">
+            <button class="btn-pill btn-print"><i class="ti ti-download"></i> Download Report</button>
+            <button class="btn-pill btn-promote">Confirm Regularization</button>
+        </div>
+    </div>
+
+    <div class="summary-card">
+        <div class="score-viz">
+            <div class="radial-score">
+                <span class="score-num">92</span>
+                <span style="position: absolute; bottom: -30px; font-size: 10px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase;">Final Index</span>
+            </div>
+            <div style="margin-top: 60px; text-align: center;">
+                <span class="status-badge badge-excellent">Exceptional Performance</span>
+                <h4 style="margin: 15px 0 5px; color: var(--hr-text);">Robert Miller</h4>
+                <p style="font-size: 12px; color: var(--hr-text-light);">Senior Clinical Nurse · ER Dept.</p>
+            </div>
+        </div>
+
+        <div class="breakdown-list">
+            <h4 style="margin-bottom: 10px; color: var(--hr-text); letter-spacing: -0.5px;">Metric Breakdown</h4>
+            
+            <div class="metric-item">
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <h5>Technical Competency</h5>
+                        <p>Clinical accuracy and adherence to ER protocols.</p>
+                    </div>
+                    <span style="font-weight: 800; color: var(--hr-text); font-size: 14px;">95%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 95%;"></div>
+                </div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <h5>Patient Care & Soft Skills</h5>
+                        <p>Feedback from patient satisfaction surveys and peer reviews.</p>
+                    </div>
+                    <span style="font-weight: 800; color: var(--hr-text); font-size: 14px;">88%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 88%; background: var(--hr-success);"></div>
+                </div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-row">
+                    <div class="metric-info">
+                        <h5>Documentation Efficiency</h5>
+                        <p>Speed and accuracy of EHR (Electronic Health Record) entries.</p>
+                    </div>
+                    <span style="font-weight: 800; color: var(--hr-text); font-size: 14px;">91%</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 91%;"></div>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px; padding: 20px; background: #f8fafc; border-radius: 20px; border-left: 4px solid var(--hr-primary);">
+                <span style="font-size: 10px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase;">Direct Manager Feedback</span>
+                <p style="font-size: 13px; color: var(--hr-text); font-style: italic; margin-top: 8px;">
+                    "Robert has demonstrated exceptional composure during high-stress shifts. His technical skills are already at a veteran level. I fully recommend immediate regularization."
+                </p>
+                <p style="margin-top: 10px; font-size: 12px; font-weight: 700; color: var(--hr-text);">— Dr. Michael Thorne, Head of Emergency</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

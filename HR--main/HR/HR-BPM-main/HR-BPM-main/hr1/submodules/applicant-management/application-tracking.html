@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- HR-SPECIFIC TRACKING STYLES --- */
+    .hr-tracking-wrapper {
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* KPI Cards - Matching Dashboard Stats */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: white;
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid #edf2f7;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #0b2a45;
+    }
+
+    /* Table & Action Area */
+    .hr-table-section {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+    }
+
+    .hr-table-header {
+      padding: 24px;
+      border-bottom: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafbfc;
+    }
+
+    .search-filter-box {
+      display: flex;
+      gap: 12px;
+    }
+
+    .hr-input {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid #dde7f0;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .hr-input:focus {
+      border-color: #5d87ff;
+    }
+
+    /* Table Styling matching dashboard.html */
+    .tracking-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .tracking-table th {
+      text-align: left;
+      padding: 16px 24px;
+      background: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #1e3a5f;
+      text-transform: uppercase;
+      border-bottom: 2px solid #f1f5f9;
+    }
+
+    .tracking-table td {
+      padding: 16px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+      color: #475569;
+    }
+
+    /* Recruitment Pipeline Badges */
+    .status-pill {
+      padding: 6px 14px;
+      border-radius: 50px; /* Matching Sidebar Blue Pill logic */
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-hr-review { background: #eef2ff; color: #5d87ff; }
+    .status-dept-interview { background: #fff7ed; color: #f59e0b; }
+    .status-background-check { background: #f0fdf4; color: #22c55e; }
+    .status-on-hold { background: #f8fafc; color: #64748b; }
+
+    .action-btn {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #5d87ff;
+      padding: 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: #5d87ff;
+      color: white;
+      border-color: #5d87ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="hr-tracking-wrapper">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Active Vacancies</div>
+        <div class="kpi-value">12</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">New Applications</div>
+        <div class="kpi-value">48</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">HR Interviews</div>
+        <div class="kpi-value">14</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Pending Offers</div>
+        <div class="kpi-value">05</div>
+      </div>
+    </div>
+
+    <div class="hr-table-section">
+      <div class="hr-table-header">
+        <h3 style="margin:0; color:#0b2a45; font-weight:700;">HR Recruitment Pipeline</h3>
+        <div class="search-filter-box">
+          <input type="text" class="hr-input" placeholder="Search applicant...">
+          <select class="hr-input">
+            <option>All Statuses</option>
+            <option>HR Review</option>
+            <option>Dept. Interview</option>
+            <option>Background Check</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="tracking-table">
+        <thead>
+          <tr>
+            <th>Applicant</th>
+            <th>Target Position</th>
+            <th>HR Specialist Assigned</th>
+            <th>Applied Date</th>
+            <th>Pipeline Stage</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div style="font-weight: 700; color: #0b2a45;">Clarisse Henderson</div>
+              <div style="font-size: 12px; color: #94a3b8;">clarisse.h@email.com</div>
+            </td>
+            <td>Senior HR Manager</td>
+            <td>Admin User</td>
+            <td>Feb 20, 2026</td>
+            <td><span class="status-pill status-hr-review"><i class="ti ti-search"></i> HR Review</span></td>
+            <td>
+              <button class="action-btn" title="View Profile"><i class="ti ti-eye"></i></button>
+              <button class="action-btn" title="Move Stage"><i class="ti ti-arrow-right"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="font-weight: 700; color: #0b2a45;">Marcus Velez</div>
+              <div style="font-size: 12px; color: #94a3b8;">m.velez@email.com</div>
+            </td>
+            <td>Recruitment Officer</td>
+            <td>Admin User</td>
+            <td>Feb 18, 2026</td>
+            <td><span class="status-pill status-dept-interview"><i class="ti ti-users"></i> Dept. Interview</span></td>
+            <td>
+              <button class="action-btn" title="View Profile"><i class="ti ti-eye"></i></button>
+              <button class="action-btn" title="Move Stage"><i class="ti ti-arrow-right"></i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div style="font-weight: 700; color: #0b2a45;">Elena Rodriguez</div>
+              <div style="font-size: 12px; color: #94a3b8;">e.rod@email.com</div>
+            </td>
+            <td>Payroll Specialist</td>
+            <td>Admin User</td>
+            <td>Feb 15, 2026</td>
+            <td><span class="status-pill status-background-check"><i class="ti ti-shield-check"></i> Background Check</span></td>
+            <td>
+              <button class="action-btn" title="View Profile"><i class="ti ti-eye"></i></button>
+              <button class="action-btn" title="Move Stage"><i class="ti ti-arrow-right"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="padding: 20px; border-top: 1px solid #f1f5f9; color: #64748b; font-size: 13px;">
+        Showing 3 active applications in the HR Department pipeline.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

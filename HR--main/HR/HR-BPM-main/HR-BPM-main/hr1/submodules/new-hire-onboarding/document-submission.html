@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- DOCUMENT SUBMISSION EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .submission-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s ease-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section */
+    .ds-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .ds-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Elegant Upload Zone */
+    .upload-vault {
+      background: white;
+      border: 2px dashed var(--hr-border);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+      cursor: pointer;
+    }
+
+    .upload-vault:hover {
+      border-color: var(--hr-primary);
+      background: rgba(93, 135, 255, 0.02);
+    }
+
+    .upload-icon {
+      font-size: 40px;
+      color: var(--hr-primary);
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    /* Document List Table */
+    .doc-table-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: var(--shadow-refined);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      overflow: hidden;
+    }
+
+    .doc-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      padding: 18px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .doc-row:last-child { border-bottom: none; }
+    .doc-row:hover { background: #fcfdfe; }
+
+    .doc-row.header-row {
+      background: #f8fafc;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* File Type Icons */
+    .file-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--hr-text);
+    }
+
+    .file-icon {
+      width: 36px;
+      height: 36px;
+      background: #f0f5ff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hr-primary);
+    }
+
+    /* Action Buttons - Blue Pill Logic */
+    .btn-action {
+      padding: 8px 18px;
+      border-radius: 50px; /* Matching dashboard pills */
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--hr-border);
+      background: white;
+      color: var(--hr-text-light);
+      transition: 0.2s;
+    }
+
+    .btn-action:hover {
+      border-color: var(--hr-primary);
+      color: var(--hr-primary);
+      background: rgba(93, 135, 255, 0.05);
+    }
+
+    .status-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      display: inline-block;
+    }
+
+    .status-verified { background: #e6fffa; color: var(--hr-success); }
+    .status-review { background: #fffaf0; color: #f6ad55; }
+
+  </style>
+</head>
+<body>
+
+<div class="submission-container">
+    
+    <div class="ds-header">
+        <div>
+            <h2>Document Submission</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">
+                Managing files for: <strong style="color: var(--hr-text);">Robert Miller</strong> (SR-1029)
+            </p>
+        </div>
+        <button class="btn-action" style="background: var(--hr-primary); color: white; border: none; padding: 10px 24px;">
+            Save All Changes
+        </button>
+    </div>
+
+    <div class="upload-vault">
+        <i class="ti ti-cloud-upload upload-icon"></i>
+        <h4 style="color: var(--hr-text); margin-bottom: 5px;">Drag & Drop documents here</h4>
+        <p style="color: var(--hr-text-light); font-size: 13px;">Support for PDF, JPG, PNG up to 10MB each</p>
+    </div>
+
+    <div class="doc-table-card">
+        <div class="doc-row header-row">
+            <span>Document Name</span>
+            <span>Date Uploaded</span>
+            <span>Status</span>
+            <span style="text-align: right;">Actions</span>
+        </div>
+
+        <div class="doc-row">
+            <div class="file-badge">
+                <div class="file-icon"><i class="ti ti-file-certificate"></i></div>
+                <span>Professional Nurse License (PRC)</span>
+            </div>
+            <span style="font-size: 13px; color: var(--hr-text-light);">Oct 24, 2023</span>
+            <div><span class="status-tag status-verified">Verified</span></div>
+            <div style="text-align: right;">
+                <button class="btn-action">View</button>
+                <button class="btn-action"><i class="ti ti-dots"></i></button>
+            </div>
+        </div>
+
+        <div class="doc-row">
+            <div class="file-badge">
+                <div class="file-icon" style="background: #fff5f5; color: #fa896b;"><i class="ti ti-file-text"></i></div>
+                <span>NBI Background Clearance</span>
+            </div>
+            <span style="font-size: 13px; color: var(--hr-text-light);">Oct 25, 2023</span>
+            <div><span class="status-tag status-review">Pending Review</span></div>
+            <div style="text-align: right;">
+                <button class="btn-action">View</button>
+                <button class="btn-action"><i class="ti ti-dots"></i></button>
+            </div>
+        </div>
+
+        <div class="doc-row">
+            <div class="file-badge">
+                <div class="file-icon" style="background: #f0fdf4; color: #13deb9;"><i class="ti ti-shield-check"></i></div>
+                <span>Health & Vaccination Records</span>
+            </div>
+            <span style="font-size: 13px; color: var(--hr-text-light);">Oct 25, 2023</span>
+            <div><span class="status-tag status-verified">Verified</span></div>
+            <div style="text-align: right;">
+                <button class="btn-action">View</button>
+                <button class="btn-action"><i class="ti ti-dots"></i></button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

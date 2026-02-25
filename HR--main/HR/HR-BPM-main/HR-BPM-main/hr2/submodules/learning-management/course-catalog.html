@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- COURSE CATALOG EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .catalog-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header & Filter Row */
+    .catalog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .catalog-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .pill-btn {
+      padding: 10px 22px;
+      border-radius: 50px; /* Matching Blue Pill logic */
+      font-size: 12px;
+      font-weight: 700;
+      background: white;
+      border: 1px solid var(--hr-border);
+      color: var(--hr-text-light);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .pill-btn.active {
+      background: var(--hr-primary);
+      color: white;
+      border-color: var(--hr-primary);
+      box-shadow: 0 6px 15px rgba(93, 135, 255, 0.2);
+    }
+
+    /* Course Grid */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--hr-primary);
+    }
+
+    .course-thumb {
+      height: 140px;
+      background: #f0f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .course-thumb i {
+      font-size: 48px;
+      color: var(--hr-primary);
+      opacity: 0.8;
+    }
+
+    .course-body {
+      padding: 24px;
+    }
+
+    .course-tag {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--hr-primary);
+      background: rgba(93, 135, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .course-body h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--hr-text);
+      line-height: 1.4;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .meta-item {
+      font-size: 12px;
+      color: var(--hr-text-light);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-catalog-action {
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: 0.3s;
+    }
+
+    .btn-primary-pill { background: var(--hr-primary); color: white; width: 100%; margin-top: 15px; }
+  </style>
+</head>
+<body>
+
+<div class="catalog-container">
+    
+    <div class="catalog-header">
+        <div>
+            <h2>Course Catalog</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Empower staff with specialized clinical and administrative learning paths.</p>
+        </div>
+        <button class="pill-btn active">
+            <i class="ti ti-plus"></i> Add New Course
+        </button>
+    </div>
+
+    <div class="filter-pills">
+        <button class="pill-btn active">All Courses</button>
+        <button class="pill-btn">Clinical Skills</button>
+        <button class="pill-btn">Compliance</button>
+        <button class="pill-btn">Soft Skills</button>
+        <button class="pill-btn">Leadership</button>
+    </div>
+
+    <div class="course-grid">
+        
+        <div class="course-card">
+            <div class="course-thumb">
+                <i class="ti ti-heart-rate-monitor"></i>
+            </div>
+            <div class="course-body">
+                <span class="course-tag">Clinical Skills</span>
+                <h4>Advanced Cardiac Life Support (ACLS) Re-certification</h4>
+                <div class="course-meta">
+                    <div class="meta-item"><i class="ti ti-clock"></i> 8 Hours</div>
+                    <div class="meta-item"><i class="ti ti-award"></i> Level 3</div>
+                </div>
+                <button class="btn-catalog-action btn-primary-pill">Manage Enrollment</button>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <div class="course-thumb" style="background: #e6fffa;">
+                <i class="ti ti-shield-check" style="color: var(--hr-success);"></i>
+            </div>
+            <div class="course-body">
+                <span class="course-tag" style="background: #e6fffa; color: var(--hr-success);">Compliance</span>
+                <h4>Healthcare Data Privacy (HIPAA) Masterclass</h4>
+                <div class="course-meta">
+                    <div class="meta-item"><i class="ti ti-clock"></i> 3 Hours</div>
+                    <div class="meta-item"><i class="ti ti-award"></i> Certificate</div>
+                </div>
+                <button class="btn-catalog-action btn-primary-pill">Manage Enrollment</button>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <div class="course-thumb" style="background: #fffaf0;">
+                <i class="ti ti-users" style="color: #ffae1f;"></i>
+            </div>
+            <div class="course-body">
+                <span class="course-tag" style="background: #fffaf0; color: #ffae1f;">Soft Skills</span>
+                <h4>Crisis Communication & De-escalation Techniques</h4>
+                <div class="course-meta">
+                    <div class="meta-item"><i class="ti ti-clock"></i> 5 Hours</div>
+                    <div class="meta-item"><i class="ti ti-award"></i> Intermediate</div>
+                </div>
+                <button class="btn-catalog-action btn-primary-pill">Manage Enrollment</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

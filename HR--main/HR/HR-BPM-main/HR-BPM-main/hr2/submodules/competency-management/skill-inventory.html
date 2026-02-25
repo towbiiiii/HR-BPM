@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- SKILL INVENTORY EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; 
+      --hr-bg: #fbfcfe;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --hr-warning: #ffae1f;
+      --hr-border: #e2e8f0;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .inventory-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s ease-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section */
+    .si-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .si-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Analytics Summary */
+    .si-analytics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .analytic-pill-card {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 20px;
+      border: 1px solid var(--hr-border);
+      box-shadow: var(--shadow-refined);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .analytic-pill-card span {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .analytic-pill-card h3 {
+      margin: 5px 0 0;
+      font-size: 22px;
+      color: var(--hr-text);
+    }
+
+    /* Inventory Table */
+    .inventory-card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: var(--shadow-refined);
+      overflow: hidden;
+    }
+
+    .si-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .si-table th {
+      text-align: left;
+      background: #f8fafc;
+      padding: 18px 24px;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+    }
+
+    .si-table td {
+      padding: 20px 24px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    /* Skill Tags - Blue Pill Logic */
+    .skill-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      background: #f0f5ff;
+      color: var(--hr-primary);
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .skill-tag.advanced { background: #e6fffa; color: var(--hr-success); }
+    .skill-tag.critical { background: #fff5f5; color: #fa896b; }
+
+    /* Action Buttons */
+    .btn-si-action {
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--hr-border);
+      background: white;
+      color: var(--hr-text-light);
+      transition: 0.2s;
+    }
+
+    .btn-si-action:hover {
+      border-color: var(--hr-primary);
+      color: var(--hr-primary);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="inventory-container">
+    
+    <div class="si-header">
+        <div>
+            <h2>Skill Inventory</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">Map competencies and identify expertise across the medical facility.</p>
+        </div>
+        <button class="btn-si-action" style="background: var(--hr-primary); color: white; border: none; padding: 12px 25px;">
+            <i class="ti ti-chart-arrows-vertical"></i> Skill Gap Analysis
+        </button>
+    </div>
+
+    <div class="si-analytics">
+        <div class="analytic-pill-card">
+            <div><span>Tracked Skills</span><h3>124</h3></div>
+            <i class="ti ti-tags" style="font-size: 24px; color: var(--hr-primary); opacity: 0.3;"></i>
+        </div>
+        <div class="analytic-pill-card">
+            <div><span>Certified Experts</span><h3>42</h3></div>
+            <i class="ti ti-certificate" style="font-size: 24px; color: var(--hr-success); opacity: 0.3;"></i>
+        </div>
+        <div class="analytic-pill-card">
+            <div><span>Skill Gaps</span><h3>08</h3></div>
+            <i class="ti ti-alert-circle" style="font-size: 24px; color: var(--hr-warning); opacity: 0.3;"></i>
+        </div>
+    </div>
+
+    <div class="inventory-card">
+        <table class="si-table">
+            <thead>
+                <tr>
+                    <th>Employee / Specialist</th>
+                    <th>Core Competencies</th>
+                    <th>Certification Status</th>
+                    <th style="text-align: right;">Management</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: var(--hr-text); font-size: 14px;">Robert Miller</div>
+                        <div style="font-size: 11px; color: var(--hr-text-light);">Emergency Medicine</div>
+                    </td>
+                    <td style="max-width: 400px;">
+                        <span class="skill-tag advanced">Trauma Care</span>
+                        <span class="skill-tag advanced">ACLS Certified</span>
+                        <span class="skill-tag">Ventilator Mgmt</span>
+                        <span class="skill-tag">Triage Leadership</span>
+                    </td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--hr-success);"></div>
+                            <span style="font-size: 12px; font-weight: 600;">Active (Valid)</span>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <button class="btn-si-action">Update Skills</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: var(--hr-text); font-size: 14px;">Maria Alucard</div>
+                        <div style="font-size: 11px; color: var(--hr-text-light);">Laboratory Services</div>
+                    </td>
+                    <td style="max-width: 400px;">
+                        <span class="skill-tag advanced">Hematology</span>
+                        <span class="skill-tag">LIS Administration</span>
+                        <span class="skill-tag critical">Biosafety L3</span>
+                    </td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--hr-warning);"></div>
+                            <span style="font-size: 12px; font-weight: 600;">Renewal Due</span>
+                        </div>
+                    </td>
+                    <td style="text-align: right;">
+                        <button class="btn-si-action">Update Skills</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

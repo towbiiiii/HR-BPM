@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- CANDIDATE SHORTLISTING EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff; /* Matching your Dashboard Blue */
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      --hr-success: #13deb9;
+      --shadow-refined: 0 12px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .shortlist-container {
+      padding: 10px;
+      animation: fadeInPage 0.7s ease-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Elegant Header Section */
+    .sl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+    }
+
+    .sl-header h2 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.6px;
+      margin: 0;
+    }
+
+    /* Candidate Grid Layout */
+    .candidate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    /* Minimalist Profile Card */
+    .candidate-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow-refined);
+      border: 1px solid rgba(226, 232, 240, 0.6);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .candidate-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--hr-primary);
+      box-shadow: 0 20px 40px rgba(93, 135, 255, 0.1);
+    }
+
+    /* Score Indicator */
+    .match-score {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      text-align: right;
+    }
+
+    .score-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 3px solid #f0f5ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--hr-primary);
+      margin-left: auto;
+    }
+
+    .score-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--hr-text-light);
+      text-transform: uppercase;
+      margin-top: 5px;
+      display: block;
+    }
+
+    /* Candidate Identity */
+    .candidate-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .candidate-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: #f4f7fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--hr-primary);
+    }
+
+    .candidate-meta h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--hr-text);
+    }
+
+    .candidate-meta p {
+      margin: 2px 0 0;
+      font-size: 12px;
+      color: var(--hr-text-light);
+    }
+
+    /* Skill Tags */
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 25px;
+    }
+
+    .pill {
+      padding: 5px 12px;
+      border-radius: 50px; /* Matching dashboard "Blue Pill" style */
+      background: #f8fafc;
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Action Footer */
+    .card-actions {
+      display: flex;
+      gap: 12px;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 18px;
+    }
+
+    .btn-shortlist {
+      flex: 1;
+      background: var(--hr-primary);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-shortlist:hover {
+      background: #4570e6;
+      box-shadow: 0 5px 15px rgba(93, 135, 255, 0.3);
+    }
+
+    .btn-view-cv {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      background: white;
+      color: var(--hr-text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-view-cv:hover {
+      border-color: var(--hr-primary);
+      color: var(--hr-primary);
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="shortlist-container">
+    
+    <div class="sl-header">
+        <div>
+            <h2>Candidate Shortlisting</h2>
+            <p style="color: var(--hr-text-light); font-size: 14px; margin-top: 5px;">
+              Position: <strong>Senior Medical Technologist</strong> · Dept: Diagnostics
+            </p>
+        </div>
+        <div style="text-align: right;">
+            <span style="font-size: 11px; font-weight: 800; color: var(--hr-text-light); text-transform: uppercase;">Candidates Shortlisted</span>
+            <h3 style="margin:0; color: var(--hr-primary); font-size: 24px;">08 / 24</h3>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 30px; display: flex; gap: 15px;">
+        <div style="background: white; padding: 10px 20px; border-radius: 50px; border: 1px solid #edf2f9; flex: 1; display: flex; align-items: center; gap: 10px;">
+            <i class="ti ti-search" style="color: var(--hr-primary);"></i>
+            <input type="text" placeholder="Search by name, skill, or qualification..." style="border: none; outline: none; width: 100%; font-size: 13px;">
+        </div>
+        <button style="background: white; border: 1px solid #edf2f9; padding: 0 20px; border-radius: 50px; font-size: 12px; font-weight: 700; color: var(--hr-text);">Filter <i class="ti ti-adjustments-horizontal"></i></button>
+    </div>
+
+    <div class="candidate-grid">
+        
+        <div class="candidate-card">
+            <div class="match-score">
+                <div class="score-circle">94%</div>
+                <span class="score-label">Match</span>
+            </div>
+            <div class="candidate-profile">
+                <div class="candidate-avatar">JS</div>
+                <div class="candidate-meta">
+                    <h4>Johnathan Smith</h4>
+                    <p>6 Years Experience · MSc Clinical Lab</p>
+                </div>
+            </div>
+            <div class="skill-pills">
+                <span class="pill">Hematology</span>
+                <span class="pill">Quality Control</span>
+                <span class="pill">Lab Information Systems</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn-shortlist">Shortlist for Interview</button>
+                <button class="btn-view-cv" title="View CV"><i class="ti ti-file-text"></i></button>
+            </div>
+        </div>
+
+        <div class="candidate-card">
+            <div class="match-score">
+                <div class="score-circle" style="color: #f59e0b; border-color: #fef3c7;">82%</div>
+                <span class="score-label">Match</span>
+            </div>
+            <div class="candidate-profile">
+                <div class="candidate-avatar" style="background: #fff7ed; color: #f59e0b;">MA</div>
+                <div class="candidate-meta">
+                    <h4>Maria Alucard</h4>
+                    <p>4 Years Experience · BSc MedTech</p>
+                </div>
+            </div>
+            <div class="skill-pills">
+                <span class="pill">Microbiology</span>
+                <span class="pill">Pathology</span>
+                <span class="pill">Phlebotomy</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn-shortlist">Shortlist for Interview</button>
+                <button class="btn-view-cv" title="View CV"><i class="ti ti-file-text"></i></button>
+            </div>
+        </div>
+
+        <div class="candidate-card">
+            <div class="match-score">
+                <div class="score-circle" style="color: #64748b; border-color: #f1f5f9;">71%</div>
+                <span class="score-label">Match</span>
+            </div>
+            <div class="candidate-profile">
+                <div class="candidate-avatar" style="background: #f8fafc; color: #64748b;">DK</div>
+                <div class="candidate-meta">
+                    <h4>David Kringle</h4>
+                    <p>3 Years Experience · BSc Health Sci</p>
+                </div>
+            </div>
+            <div class="skill-pills">
+                <span class="pill">Documentation</span>
+                <span class="pill">General Lab</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn-shortlist">Shortlist for Interview</button>
+                <button class="btn-view-cv" title="View CV"><i class="ti ti-file-text"></i></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

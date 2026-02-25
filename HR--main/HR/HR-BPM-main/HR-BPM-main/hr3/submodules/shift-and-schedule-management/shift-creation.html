@@ -1,0 +1,54 @@
+<div class="stat-card" style="width:100%; border-radius:20px; background:#fff; padding:24px; box-shadow:0 2px 10px rgba(0,0,0,0.02);">
+  <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:18px;">
+    <div>
+      <h2 style="margin:0; color:#0b2a45; font-size:1.35rem;"><i class="ti ti-calendar-plus" style="margin-right:8px; color:#5d87ff;"></i>Shift Creation</h2>
+      <p style="margin:6px 0 0; color:#64748b; font-size:.9rem;">Define new shift templates for departments.</p>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(4,minmax(140px,1fr)); gap:10px; margin-bottom:14px;">
+    <input id="scName" placeholder="Shift name" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    <select id="scDept" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;"><option>Emergency</option><option>ICU</option><option>Laboratory</option><option>Radiology</option></select>
+    <input id="scStart" type="time" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+    <input id="scEnd" type="time" style="padding:10px 12px; border:1px solid #dbe4ee; border-radius:10px;">
+  </div>
+  <div style="display:flex; gap:10px; margin-bottom:18px;">
+    <button id="scCreateBtn" type="button" style="padding:10px 14px; border:none; border-radius:10px; background:#5d87ff; color:#fff; font-weight:600;">Create Shift</button>
+    <div id="scMsg" style="display:none; padding:10px 12px; border-radius:10px; background:#eef6ff; color:#1e3a5f; font-size:.88rem;"></div>
+  </div>
+
+  <div style="overflow:auto;">
+    <table style="width:100%; border-collapse:collapse; min-width:760px;">
+      <thead>
+        <tr style="text-align:left; border-bottom:2px solid #f4f6fb; color:#5b6f7e; font-size:.8rem; text-transform:uppercase;">
+          <th style="padding:10px;">Shift</th><th style="padding:10px;">Department</th><th style="padding:10px;">Time</th><th style="padding:10px;">Status</th><th style="padding:10px; text-align:right;">Action</th>
+        </tr>
+      </thead>
+      <tbody id="scBody">
+        <tr style="border-bottom:1px solid #eef2f6;"><td style="padding:12px; font-weight:600;">Morning A</td><td style="padding:12px;">Emergency</td><td style="padding:12px;">06:00 - 14:00</td><td style="padding:12px;"><span style="padding:4px 10px; border-radius:999px; background:#eefcf4; color:#17a96b; font-size:.75rem; font-weight:700;">Active</span></td><td style="padding:12px; text-align:right;"><button type="button" class="scRemove" style="padding:6px 10px; border:1px solid #f0d3d3; border-radius:8px; background:#fff;">Remove</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+(function(){
+  const body = document.getElementById('scBody');
+  const msg = document.getElementById('scMsg');
+  document.getElementById('scCreateBtn').addEventListener('click', function(){
+    const name = document.getElementById('scName').value.trim();
+    const dept = document.getElementById('scDept').value;
+    const start = document.getElementById('scStart').value;
+    const end = document.getElementById('scEnd').value;
+    if(!name || !start || !end){ msg.style.display='block'; msg.innerText='Please complete shift name and time.'; return; }
+    const row = document.createElement('tr');
+    row.style.borderBottom='1px solid #eef2f6';
+    row.innerHTML = `<td style="padding:12px; font-weight:600;">${name}</td><td style="padding:12px;">${dept}</td><td style="padding:12px;">${start} - ${end}</td><td style="padding:12px;"><span style="padding:4px 10px; border-radius:999px; background:#eefcf4; color:#17a96b; font-size:.75rem; font-weight:700;">Active</span></td><td style="padding:12px; text-align:right;"><button type="button" class="scRemove" style="padding:6px 10px; border:1px solid #f0d3d3; border-radius:8px; background:#fff;">Remove</button></td>`;
+    body.prepend(row);
+    msg.style.display='block'; msg.innerText='Success: Shift template created.';
+  });
+  body.addEventListener('click', function(e){
+    const btn = e.target.closest('.scRemove');
+    if(btn) btn.closest('tr').remove();
+  });
+})();
+</script>

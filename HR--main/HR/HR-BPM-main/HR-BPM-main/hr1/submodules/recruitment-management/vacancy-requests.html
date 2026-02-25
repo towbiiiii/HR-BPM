@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    /* --- ELEVATED HR EXECUTIVE DESIGN --- */
+    :root {
+      --hr-primary: #5d87ff;
+      --hr-bg: #f4f7fb;
+      --hr-text: #0b2a45;
+      --hr-text-light: #7c8fac;
+      /* Refined Shadow for Elevation */
+      --shadow-elevated: 0 15px 35px rgba(0, 0, 0, 0.05), 0 5px 15px rgba(0, 0, 0, 0.02);
+    }
+
+    .request-container {
+      padding: 30px; /* Increased outer spaciousness */
+      animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      background: #fbfcfe; /* Slightly lighter background to make cards pop */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header Section - Better Spacing */
+    .req-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 45px; /* More space before filters */
+    }
+
+    .req-header h2 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--hr-text);
+      letter-spacing: -0.8px;
+      margin: 0;
+    }
+
+    /* Filters - Pill Style consistent with Dashboard */
+    .filter-pill-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+
+    .filter-pill {
+      padding: 10px 22px;
+      border-radius: 50px;
+      background: white;
+      border: 1px solid #edf2f9;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--hr-text-light);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .filter-pill.active {
+      background: var(--hr-primary);
+      color: white;
+      border-color: var(--hr-primary);
+      box-shadow: 0 8px 20px rgba(93, 135, 255, 0.25);
+    }
+
+    /* Elevated Request Cards */
+    .request-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* Increased gap between boxes */
+    }
+
+    .request-card {
+      background: white;
+      padding: 32px; /* significantly increased internal padding */
+      border-radius: 24px; /* Rounder corners for a modern feel */
+      display: grid;
+      grid-template-columns: 70px 2fr 1fr 1fr 1fr;
+      align-items: center;
+      border: 1px solid rgba(237, 242, 249, 0.8);
+      box-shadow: var(--shadow-elevated);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .request-card:hover {
+      transform: translateY(-5px) scale(1.01); /* Subtle lift on hover */
+      border-color: var(--hr-primary);
+      box-shadow: 0 20px 40px rgba(93, 135, 255, 0.1);
+    }
+
+    .dept-icon {
+      width: 54px;
+      height: 54px;
+      background: #f0f5ff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--hr-primary);
+      font-size: 22px;
+    }
+
+    /* Typography Spacing */
+    .req-info h4 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--hr-text);
+    }
+
+    .req-info p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: var(--hr-text-light);
+    }
+
+    .data-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 800;
+      color: var(--hr-text-light);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .data-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--hr-text);
+    }
+
+    /* Action Buttons - Clean & Spaced */
+    .action-group {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+    }
+
+    .btn-action {
+      height: 42px;
+      width: 42px;
+      border-radius: 12px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 18px;
+    }
+
+    .btn-approve { background: #f0fdf4; color: #22c55e; }
+    .btn-approve:hover { background: #22c55e; color: white; }
+
+    .btn-deny { background: #fef2f2; color: #ef4444; }
+    .btn-deny:hover { background: #ef4444; color: white; }
+
+    /* Status Pill Spacing */
+    .status-badge {
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .status-urgent { background: #fff1f2; color: #e11d48; }
+    .status-normal { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
+
+  </style>
+</head>
+<body>
+
+<div class="request-container">
+    
+    <div class="req-header">
+        <div>
+            <h2>Vacancy Requests</h2>
+            <p style="color: var(--hr-text-light); font-size: 15px; margin-top: 8px;">Manage and approve staffing requisitions from all hospital departments.</p>
+        </div>
+        <div style="background: white; padding: 15px 25px; border-radius: 20px; box-shadow: var(--shadow-elevated); text-align: right;">
+            <span class="data-label">Action Required</span>
+            <span class="data-value" style="font-size: 20px; color: var(--hr-primary);">05 Requests</span>
+        </div>
+    </div>
+
+    <div class="filter-pill-bar">
+        <div class="filter-pill active">All Requests</div>
+        <div class="filter-pill">Nursing</div>
+        <div class="filter-pill">Clinical</div>
+        <div class="filter-pill">Administration</div>
+        <div class="filter-pill">Maintenance</div>
+    </div>
+
+    <div class="request-list">
+        
+        <div class="request-card">
+            <div class="dept-icon"><i class="ti ti-ambulance"></i></div>
+            <div class="req-info">
+                <span class="status-badge status-urgent">URGENT</span>
+                <h4>ER Registered Nurse (Night Shift)</h4>
+                <p>Req #REQ-772 · Emergency Care Unit</p>
+            </div>
+            <div>
+                <span class="data-label">Requested By</span>
+                <span class="data-value">Dr. Armando Cruz</span>
+            </div>
+            <div>
+                <span class="data-label">Submission</span>
+                <span class="data-value">Oct 24, 2026</span>
+            </div>
+            <div class="action-group">
+                <button class="btn-action btn-approve" title="Approve Request"><i class="ti ti-check"></i></button>
+                <button class="btn-action btn-deny" title="Reject Request"><i class="ti ti-x"></i></button>
+            </div>
+        </div>
+
+        <div class="request-card">
+            <div class="dept-icon" style="background: #fff7ed; color: #f59e0b;"><i class="ti ti-microscope"></i></div>
+            <div class="req-info">
+                <span class="status-badge status-normal">NORMAL</span>
+                <h4>Laboratory Technician II</h4>
+                <p>Req #REQ-768 · Pathology Dept.</p>
+            </div>
+            <div>
+                <span class="data-label">Requested By</span>
+                <span class="data-value">Maria Mercedes</span>
+            </div>
+            <div>
+                <span class="data-label">Submission</span>
+                <span class="data-value">Oct 23, 2026</span>
+            </div>
+            <div class="action-group">
+                <button class="btn-action btn-approve" title="Approve Request"><i class="ti ti-check"></i></button>
+                <button class="btn-action btn-deny" title="Reject Request"><i class="ti ti-x"></i></button>
+            </div>
+        </div>
+
+        <div class="request-card">
+            <div class="dept-icon" style="background: #f0fdf4; color: #22c55e;"><i class="ti ti-clipboard-list"></i></div>
+            <div class="req-info">
+                <span class="status-badge status-normal">NORMAL</span>
+                <h4>Medical Secretary</h4>
+                <p>Req #REQ-765 · Outpatient Services</p>
+            </div>
+            <div>
+                <span class="data-label">Requested By</span>
+                <span class="data-value">Elena Gilbert</span>
+            </div>
+            <div>
+                <span class="data-label">Submission</span>
+                <span class="data-value">Oct 21, 2026</span>
+            </div>
+            <div class="action-group">
+                <button class="btn-action btn-approve" title="Approve Request"><i class="ti ti-check"></i></button>
+                <button class="btn-action btn-deny" title="Reject Request"><i class="ti ti-x"></i></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
