@@ -1,0 +1,59 @@
+:root {
+    --primary-color: #0d6efd;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f7fa;
+}
+
+.profile-page {
+    min-height: 100vh;
+}
+
+.profile-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #dbeafe;
+}
+
+.profile-meta {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 12px;
+    color: #4b5563;
+}
+
+.profile-notice {
+    display: none;
+    margin-bottom: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.profile-notice.show {
+    display: block;
+}
+
+.profile-notice.success {
+    background: #ecfdf3;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+}
+
+.profile-notice.error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+}
+
+.card {
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
