@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Hospital HR</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/profile.css">
+</head>
+<body>
+    <main class="profile-page py-4">
+        <div class="container">
+            <div id="profileNotice" class="profile-notice" role="status" aria-live="polite"></div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                <div>
+                    <h2 class="mb-1 fw-bold">Profile</h2>
+                    <p class="text-muted mb-0">View your Hospital HR profile information.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="dashboard.html" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i>Back to Dashboard
+                    </a>
+                    <button id="logoutProfileBtn" class="btn btn-danger btn-sm">
+                        <i class="fas fa-right-from-bracket me-1"></i>Logout
+                    </button>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <img id="profileAvatar" class="profile-avatar mb-3" src="" alt="Profile Avatar">
+                            <h5 id="profileName" class="mb-1">Hospital HR User</h5>
+                            <p id="profileRole" class="text-muted mb-3">HR Role</p>
+                            <div class="small text-start profile-meta">
+                                <p class="mb-2"><strong>Employee ID:</strong> <span id="profileEmployeeId">-</span></p>
+                                <p class="mb-2"><strong>Status:</strong> <span class="badge bg-success-subtle text-success">Active</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-white border-bottom">
+                            <h5 class="mb-0">Profile Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted small mb-1">Full Name</label>
+                                    <div class="profile-display-field" id="infoFullName">-</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted small mb-1">Email Address</label>
+                                    <div class="profile-display-field" id="infoEmail">-</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted small mb-1">Phone Number</label>
+                                    <div class="profile-display-field" id="infoPhone">-</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted small mb-1">Department</label>
+                                    <div class="profile-display-field" id="infoDepartment">-</div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label text-muted small mb-1">Address</label>
+                                    <div class="profile-display-field" id="infoAddress">-</div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-4">
+                                <a href="dashboard.html" class="btn btn-primary">Back to Dashboard</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/profile.js"></script>
+</body>
+</html>

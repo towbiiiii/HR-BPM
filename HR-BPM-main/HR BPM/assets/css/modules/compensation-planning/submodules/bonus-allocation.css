@@ -1,0 +1,11 @@
+.bonus-allocation-submodule h6 {
+    font-weight: 700;
+}
+
+.bonus-allocation-submodule + .row .border {
+    background: #f8fafc;
+}
+
+.bonus-allocation-submodule + .row h5 {
+    font-weight: 700;
+}

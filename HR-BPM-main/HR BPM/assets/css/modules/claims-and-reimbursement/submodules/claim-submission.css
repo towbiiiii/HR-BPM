@@ -1,0 +1,13 @@
+.claim-submission-submodule .form-control,
+.claim-submission-submodule .form-select {
+    min-height: 40px;
+}
+
+.claim-submission-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.claim-submission-submodule .badge {
+    font-weight: 600;
+}

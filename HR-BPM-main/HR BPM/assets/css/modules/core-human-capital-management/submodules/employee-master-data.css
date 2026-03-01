@@ -1,0 +1,13 @@
+.employee-master-data-submodule .form-control,
+.employee-master-data-submodule .form-select {
+    min-height: 40px;
+}
+
+.employee-master-data-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.employee-master-data-submodule .badge {
+    font-weight: 600;
+}

@@ -1,0 +1,12 @@
+.salary-adjustment-submodule .form-control {
+    min-height: 40px;
+}
+
+.salary-adjustment-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.salary-adjustment-submodule .badge {
+    font-weight: 600;
+}

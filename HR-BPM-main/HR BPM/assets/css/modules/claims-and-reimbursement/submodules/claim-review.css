@@ -1,0 +1,12 @@
+.claim-review-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.claim-review-submodule .btn {
+    white-space: nowrap;
+}
+
+.claim-review-submodule td {
+    vertical-align: middle;
+}

@@ -1,0 +1,11 @@
+.performance-metrics-submodule h6 {
+    font-weight: 700;
+}
+
+.performance-metrics-submodule + .row .border {
+    background: #f8fafc;
+}
+
+.performance-metrics-submodule + .row h5 {
+    font-weight: 700;
+}

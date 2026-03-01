@@ -1,0 +1,12 @@
+.hmo-enrollment-submodule .form-control {
+    min-height: 40px;
+}
+
+.hmo-enrollment-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.hmo-enrollment-submodule .border {
+    background: #f8fafc;
+}

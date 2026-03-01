@@ -1,0 +1,11 @@
+.claim-history-submodule h6 {
+    font-weight: 700;
+}
+
+.claim-history-submodule + .row .border {
+    background: #f8fafc;
+}
+
+.claim-history-submodule + .row h5 {
+    font-weight: 700;
+}

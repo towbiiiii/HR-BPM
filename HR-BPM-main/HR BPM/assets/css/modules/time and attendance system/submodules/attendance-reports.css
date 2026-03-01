@@ -1,0 +1,7 @@
+.att-reports-submodule {
+    gap: 0.5rem;
+}
+
+.att-reports-submodule + .row .rounded-3 h5 {
+    font-weight: 700;
+}

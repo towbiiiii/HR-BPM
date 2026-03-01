@@ -1,0 +1,11 @@
+.benefits-reports-submodule h6 {
+    font-weight: 700;
+}
+
+.benefits-reports-submodule + .row .border {
+    background: #f8fafc;
+}
+
+.benefits-reports-submodule + .row h5 {
+    font-weight: 700;
+}

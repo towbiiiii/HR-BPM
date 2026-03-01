@@ -1,0 +1,8 @@
+.overtime-track-submodule .form-control,
+.overtime-track-submodule .btn {
+    min-height: 38px;
+}
+
+.overtime-track-submodule h6 {
+    font-weight: 600;
+}

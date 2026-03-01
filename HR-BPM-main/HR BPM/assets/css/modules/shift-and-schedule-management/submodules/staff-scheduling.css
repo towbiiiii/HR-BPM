@@ -1,0 +1,9 @@
+.staff-sched-submodule .form-control,
+.staff-sched-submodule .form-select,
+.staff-sched-submodule .btn {
+    min-height: 38px;
+}
+
+.staff-sched-submodule h6 {
+    font-weight: 600;
+}

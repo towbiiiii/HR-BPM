@@ -1,0 +1,8 @@
+.att-val-submodule .table td,
+.att-val-submodule .table th {
+    vertical-align: middle;
+}
+
+.att-val-submodule .btn {
+    min-width: 84px;
+}

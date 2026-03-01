@@ -1,0 +1,8 @@
+.ts-approval-submodule .table td,
+.ts-approval-submodule .table th {
+    vertical-align: middle;
+}
+
+.ts-approval-submodule .btn {
+    min-width: 84px;
+}

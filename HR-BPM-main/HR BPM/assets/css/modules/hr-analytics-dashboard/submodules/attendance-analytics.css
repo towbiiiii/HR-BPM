@@ -1,0 +1,11 @@
+.attendance-analytics-submodule .card-body {
+    background: #f8fafc;
+}
+
+.attendance-analytics-submodule .card-body h6 {
+    font-weight: 700;
+}
+
+.attendance-analytics-submodule .card-body p {
+    font-size: 0.9rem;
+}

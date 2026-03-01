@@ -1,0 +1,8 @@
+.corr-req-submodule .form-control,
+.corr-req-submodule .btn {
+    min-height: 38px;
+}
+
+.corr-req-submodule h6 {
+    font-weight: 600;
+}

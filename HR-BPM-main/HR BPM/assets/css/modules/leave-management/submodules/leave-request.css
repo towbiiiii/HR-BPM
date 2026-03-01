@@ -1,0 +1,9 @@
+.leave-request-submodule .form-control,
+.leave-request-submodule .form-select,
+.leave-request-submodule .btn {
+    min-height: 38px;
+}
+
+.leave-request-submodule h6 {
+    font-weight: 600;
+}

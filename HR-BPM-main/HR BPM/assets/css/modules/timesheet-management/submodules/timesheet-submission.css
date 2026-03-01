@@ -1,0 +1,9 @@
+.ts-submission-submodule .form-control,
+.ts-submission-submodule .form-select,
+.ts-submission-submodule .btn {
+    min-height: 38px;
+}
+
+.ts-submission-submodule h6 {
+    font-weight: 600;
+}

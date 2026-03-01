@@ -1,0 +1,12 @@
+.position-management-submodule .form-control {
+    min-height: 40px;
+}
+
+.position-management-submodule .badge {
+    font-weight: 600;
+}
+
+.position-management-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}

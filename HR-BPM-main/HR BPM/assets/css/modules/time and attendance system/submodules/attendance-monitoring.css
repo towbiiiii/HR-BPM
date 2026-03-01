@@ -1,0 +1,8 @@
+.att-mon-submodule .table th,
+.att-mon-submodule .table td {
+    vertical-align: middle;
+}
+
+.att-mon-submodule .border.rounded-3 p {
+    font-size: 0.875rem;
+}

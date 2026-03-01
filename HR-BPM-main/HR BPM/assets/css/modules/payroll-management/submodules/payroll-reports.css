@@ -1,0 +1,11 @@
+.payroll-reports-submodule h6 {
+    font-weight: 700;
+}
+
+.payroll-reports-submodule + .row .border {
+    background: #f8fafc;
+}
+
+.payroll-reports-submodule + .row h5 {
+    font-weight: 700;
+}

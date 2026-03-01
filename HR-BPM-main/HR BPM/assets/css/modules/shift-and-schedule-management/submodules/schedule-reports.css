@@ -1,0 +1,7 @@
+.schedule-reports-submodule {
+    gap: 0.5rem;
+}
+
+.schedule-reports-submodule + .row .rounded-3 h5 {
+    font-weight: 700;
+}

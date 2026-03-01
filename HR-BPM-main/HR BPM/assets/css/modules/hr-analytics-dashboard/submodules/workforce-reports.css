@@ -1,0 +1,12 @@
+.workforce-reports-submodule .form-control {
+    min-height: 40px;
+}
+
+.workforce-reports-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.workforce-reports-submodule .border {
+    background: #f8fafc;
+}

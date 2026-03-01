@@ -1,0 +1,12 @@
+.salary-computation-submodule .form-control {
+    min-height: 40px;
+}
+
+.salary-computation-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.salary-computation-submodule .fw-semibold {
+    color: #0f172a;
+}

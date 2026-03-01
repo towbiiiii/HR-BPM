@@ -1,0 +1,13 @@
+.benefits-claims-submodule .form-select,
+.benefits-claims-submodule .form-control {
+    min-height: 40px;
+}
+
+.benefits-claims-submodule .table thead th {
+    font-weight: 600;
+    color: #334155;
+}
+
+.benefits-claims-submodule .border {
+    background: #f8fafc;
+}
